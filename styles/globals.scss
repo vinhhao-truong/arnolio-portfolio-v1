@@ -1,0 +1,13 @@
+@import "./variables.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: $navy-theme;
+  color: $white-theme;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
