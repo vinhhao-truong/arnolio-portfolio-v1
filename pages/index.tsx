@@ -6,7 +6,7 @@ const HomePage: NextPage = () => {
   return (
     <>
       <Seo title="Arnolio" />
-      <div className="">
+      <div className="w-full">
         <div id="about">
           <p>About</p>
           <p>

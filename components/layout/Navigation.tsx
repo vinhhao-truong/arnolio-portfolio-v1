@@ -3,6 +3,7 @@ import Link from "next/link";
 import LinkInterface from "../../interfaces/LinkInterface";
 import ReactProps from "../../interfaces/ReactProps";
 import { motion, MotionStyle, TargetAndTransition } from "framer-motion";
+import { getClasses } from "../../utils/getProps";
 
 const menu: LinkInterface[] = [
   {
@@ -32,10 +33,12 @@ const logoMotion: TargetAndTransition = {
 
 const MotionLink = motion(Link);
 
-const Navigation: React.FC<ReactProps> = () => {
+const Navigation: React.FC<ReactProps> = ({ className }) => {
   return (
     <div
-      className={`w-full flex justify-between h-14 items-center py-3 overflow-hidden`}
+      className={`${getClasses(
+        className
+      )} w-full flex justify-between h-14 items-center py-3`}
     >
       {/* logo */}
       <motion.picture
