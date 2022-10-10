@@ -1,0 +1,8 @@
+.container {
+  .landing {
+    min-height: calc(100vh - 3.5rem);
+  }
+  & > *:not(.landing) {
+    min-height: 100vh;
+  }
+}

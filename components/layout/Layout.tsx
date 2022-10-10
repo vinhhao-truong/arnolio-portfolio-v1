@@ -5,7 +5,7 @@ import Navigation from "./Navigation";
 import ScrollTopBtn from "./ScrollTopBtn";
 
 const Layout: React.FC<ReactProps> = ({ children }) => {
-  const [showScrollTopBtn, setShowScrollTopBtn] = useState<boolean>(false);
+  const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = () => {
@@ -27,19 +27,21 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   //If scrolled down, set show, else hide
   useEffect(() => {
     if (scrollPosition > 0) {
-      setShowScrollTopBtn(true);
+      setIsScrolledDown(true);
       return;
     }
 
-    setShowScrollTopBtn(false);
+    setIsScrolledDown(false);
   }, [scrollPosition]);
 
   return (
     <div className="block mx-auto max-w-[100rem] w-full px-8 lg:px-32 xl:px-40">
-      <Navigation className="w-full" />
+      <Navigation
+        className={`w-full sticky top-0 ${isScrollDown && "invisible"}`}
+      />
       {children}
       <Footer />
-      {showScrollTopBtn && <ScrollTopBtn />}
+      {isScrollDown && <ScrollTopBtn />}
     </div>
   );
 };

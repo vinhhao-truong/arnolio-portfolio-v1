@@ -2,8 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import LinkInterface from "../../interfaces/LinkInterface";
 import ReactProps from "../../interfaces/ReactProps";
-import { motion, MotionStyle, TargetAndTransition } from "framer-motion";
+import {
+  motion,
+  MotionStyle,
+  TargetAndTransition,
+  useScroll,
+} from "framer-motion";
 import { getClasses } from "../../utils/getProps";
+import { useEffect } from "react";
 
 const menu: LinkInterface[] = [
   {
@@ -34,8 +40,15 @@ const logoMotion: TargetAndTransition = {
 const MotionLink = motion(Link);
 
 const Navigation: React.FC<ReactProps> = ({ className }) => {
+  const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    if (scrollYProgress)
+      console.log(scrollYProgress.onChange((pos) => console.log(pos)));
+  }, [scrollYProgress]);
+
   return (
-    <div
+    <motion.div
       className={`${getClasses(
         className
       )} w-full flex justify-between h-14 items-center py-3`}
@@ -64,7 +77,7 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
           </Link>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
