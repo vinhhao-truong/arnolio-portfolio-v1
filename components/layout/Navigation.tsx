@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { getClasses } from "../../utils/getProps";
 import { useEffect } from "react";
+import useCheckMobile from "../../hooks/useCheckMobile";
 
 const menu: LinkInterface[] = [
   {
@@ -40,44 +41,49 @@ const logoMotion: TargetAndTransition = {
 const MotionLink = motion(Link);
 
 const Navigation: React.FC<ReactProps> = ({ className }) => {
-  const { scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
+  const isMobile: boolean = useCheckMobile();
 
   useEffect(() => {
-    if (scrollYProgress)
-      console.log(scrollYProgress.onChange((pos) => console.log(pos)));
-  }, [scrollYProgress]);
+    return scrollY.onChange((pos) => {});
+  }, []);
 
   return (
-    <motion.div
-      className={`${getClasses(
-        className
-      )} w-full flex justify-between h-14 items-center py-3`}
-    >
-      {/* logo */}
-      <motion.picture
-        className="h-full hover:cursor-pointer"
-        whileHover={logoMotion}
-      >
-        <motion.img
-          className="h-full"
-          src="/circle-icon/android-chrome-512x512.png"
-          alt="logo"
-        />
-      </motion.picture>
-      {/* main-nav */}
-      <div className="flex">
-        {menu.map(({ title, url }: LinkInterface, idx: number) => (
-          <Link key={idx} href={url} scroll={false}>
-            <motion.a
-              whileHover={linkMotion}
-              className="ml-12 text-lg font-semibold"
-            >
-              {title}
-            </motion.a>
-          </Link>
-        ))}
-      </div>
-    </motion.div>
+    <>
+      {!isMobile && (
+        <motion.div
+          className={`${getClasses(
+            className
+          )} w-full flex justify-between h-14 items-center py-3`}
+        >
+          {/* logo */}
+          <motion.picture
+            className="h-full hover:cursor-pointer"
+            whileHover={logoMotion}
+          >
+            <motion.img
+              className="h-full"
+              src="/circle-icon/android-chrome-512x512.png"
+              alt="logo"
+            />
+          </motion.picture>
+          {/* main-nav */}
+          <div className="flex">
+            {menu.map(({ title, url }: LinkInterface, idx: number) => (
+              <Link key={idx} href={url} scroll={false}>
+                <motion.a
+                  whileHover={linkMotion}
+                  className="ml-12 text-lg font-semibold"
+                >
+                  {title}
+                </motion.a>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      )}
+      {isMobile && <>hi</>}
+    </>
   );
 };
 
