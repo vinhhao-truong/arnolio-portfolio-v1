@@ -5,7 +5,7 @@ import ReactProps from "../../interfaces/ReactProps";
 import { motion, TargetAndTransition, useScroll } from "framer-motion";
 import { getClasses } from "../../utils/getProps";
 import { useEffect } from "react";
-import useCheckMobile from "../../hooks/useCheckMobile";
+import useResponsive from "../../hooks/useResponsive";
 
 const menu: LinkInterface[] = [
   {
@@ -23,7 +23,7 @@ const menu: LinkInterface[] = [
 ];
 
 const linkMotion: TargetAndTransition = {
-  scale: 1.5,
+  scale: 1.2,
   // x: -2,
   // y: -2,
   cursor: "pointer",
@@ -37,7 +37,8 @@ const MotionLink = motion(Link);
 
 const Navigation: React.FC<ReactProps> = ({ className }) => {
   const { scrollY } = useScroll();
-  const isMobile: boolean = useCheckMobile();
+  const responsive = useResponsive();
+  const isMobile: boolean = responsive === "xs";
 
   useEffect(() => {
     return scrollY.onChange((pos) => {});
@@ -49,20 +50,16 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
         <motion.div
           className={`${getClasses(
             className
-          )} w-full flex justify-between h-14 items-center py-3`}
+          )} w-full flex justify-between h-20 items-center py-3`}
         >
           {/* logo */}
           <Link href="/">
-            <motion.a
-              className="h-full hover:cursor-pointer"
+            <motion.img
               whileHover={logoMotion}
-            >
-              <motion.img
-                className="h-full"
-                src="/circle-icon/android-chrome-512x512.png"
-                alt="logo"
-              />
-            </motion.a>
+              className="h-4/5 cursor-pointer"
+              src="/circle-icon/android-chrome-512x512.png"
+              alt="logo"
+            />
           </Link>
 
           {/* main-nav */}
@@ -80,7 +77,6 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
           </div>
         </motion.div>
       )}
-      {isMobile && <>hi</>}
     </>
   );
 };

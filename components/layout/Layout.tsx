@@ -36,7 +36,7 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   }, [scrollPosition]);
 
   return (
-    <div className="block mx-auto max-w-[100rem] w-full px-8 lg:px-32 xl:px-40">
+    <div className="block mx-auto max-w-[120rem] w-full px-8 md:px-14 xl:px-20">
       <Navigation
         className={`w-full sticky top-0 ${isScrollDown && "invisible"}`}
       />

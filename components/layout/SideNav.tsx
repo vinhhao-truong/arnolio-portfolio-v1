@@ -1,42 +1,31 @@
 import React from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import { getClasses } from "../../utils/getProps";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { TargetAndTransition } from "framer-motion";
+import { motion, TargetAndTransition } from "framer-motion";
+import useResponsive from "../../hooks/useResponsive";
+import ResponsiveEnum from "../../interfaces/ResponsiveEnum";
 
-const logoMotion: TargetAndTransition = {
-  x: 30,
-};
-
-interface LogoProps extends ReactProps {
-  imgSrc: string;
-  tooltipText?: string;
-}
 // const Logo: React.FC<LogoProps> = () => {
 //   return
 // }
 
 const SideNav: React.FC<ReactProps> = ({ className }) => {
-  const MotionLink = motion(Link);
+  const responsive: ResponsiveEnum = useResponsive();
+  const isMobile = responsive === "xs";
 
   return (
     <motion.div
-      className={`${getClasses(className)} fixed top-4 left-4`}
-      initial={{ x: -20 }}
-      animate={{ x: 0 }}
+      className={`${getClasses(className)} fixed top-4 -left-6 `}
+      whileInView={{ x: isMobile ? "1.75rem" : "2.5rem" }}
     >
       <Link href="/">
-        <motion.a
-          className="h-full hover:cursor-pointer"
-          whileHover={logoMotion}
-        >
-          <motion.img
-            className="h-10"
-            src="/circle-icon/android-chrome-512x512.png"
-            alt="logo"
-          />
-        </motion.a>
+        <motion.img
+          className="h-6 md:h-8 lg:h-12 cursor-pointer"
+          src="/circle-icon/android-chrome-512x512.png"
+          alt="logo"
+          whileHover={{ scale: 1.2 }}
+        />
       </Link>
     </motion.div>
   );
