@@ -3,6 +3,7 @@ import ReactProps from "../../interfaces/ReactProps";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
 import ScrollTopBtn from "./ScrollTopBtn";
+import SideNav from "./SideNav";
 
 const Layout: React.FC<ReactProps> = ({ children }) => {
   const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
@@ -39,6 +40,7 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
       <Navigation
         className={`w-full sticky top-0 ${isScrollDown && "invisible"}`}
       />
+      {isScrollDown && <SideNav />}
       {children}
       <Footer />
       {isScrollDown && <ScrollTopBtn />}

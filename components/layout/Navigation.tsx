@@ -2,12 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LinkInterface from "../../interfaces/LinkInterface";
 import ReactProps from "../../interfaces/ReactProps";
-import {
-  motion,
-  MotionStyle,
-  TargetAndTransition,
-  useScroll,
-} from "framer-motion";
+import { motion, TargetAndTransition, useScroll } from "framer-motion";
 import { getClasses } from "../../utils/getProps";
 import { useEffect } from "react";
 import useCheckMobile from "../../hooks/useCheckMobile";
@@ -57,16 +52,19 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
           )} w-full flex justify-between h-14 items-center py-3`}
         >
           {/* logo */}
-          <motion.picture
-            className="h-full hover:cursor-pointer"
-            whileHover={logoMotion}
-          >
-            <motion.img
-              className="h-full"
-              src="/circle-icon/android-chrome-512x512.png"
-              alt="logo"
-            />
-          </motion.picture>
+          <Link href="/">
+            <motion.a
+              className="h-full hover:cursor-pointer"
+              whileHover={logoMotion}
+            >
+              <motion.img
+                className="h-full"
+                src="/circle-icon/android-chrome-512x512.png"
+                alt="logo"
+              />
+            </motion.a>
+          </Link>
+
           {/* main-nav */}
           <div className="flex">
             {menu.map(({ title, url }: LinkInterface, idx: number) => (
