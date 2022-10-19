@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
+
 @import "./variables.scss";
 
 @tailwind base;
@@ -10,4 +12,5 @@ body {
   color: $white-theme;
   min-height: 100vh;
   scroll-behavior: smooth;
+  font-family: "Mukta", sans-serif;
 }

@@ -9,7 +9,6 @@ import SideNav from "./SideNav";
 
 const Layout: React.FC<ReactProps> = ({ children }) => {
   const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const { scrollYProgress } = useScroll();
 
   //Check and get scroll pos
@@ -17,21 +16,12 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
     scrollYProgress.onChange((pos) => {
       if (pos > 0) {
         setIsScrolledDown(true);
+        // console.log(pos);
         return;
       }
       setIsScrolledDown(false);
     });
-  }, [scrollYProgress]);
-
-  //If scrolled down, set show, else hide
-  // useEffect(() => {
-  //   if (scrollPosition > 0) {
-  //     setIsScrolledDown(true);
-  //     return;
-  //   }
-
-  //   setIsScrolledDown(false);
-  // }, [scrollPosition]);
+  }, [scrollYProgress, isScrollDown]);
 
   return (
     <div className="block mx-auto max-w-[120rem] w-full px-8 md:px-[4.5rem]  xl:px-20">

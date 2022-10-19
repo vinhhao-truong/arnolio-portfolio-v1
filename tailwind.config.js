@@ -10,7 +10,7 @@ module.exports = {
         "red-theme": "#ef233c",
         "white-theme": "#edf2f4",
         "navy-theme": "#2b2d42",
-        mask: "rgba(0, 0, 0, 0.6)",
+        mask: "rgba(0, 0, 0, 0.3)",
       },
     },
   },

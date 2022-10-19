@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import { getClasses } from "../../utils/getProps";
 import Link from "next/link";
-import { motion, TargetAndTransition } from "framer-motion";
+import { motion, TargetAndTransition, useScroll } from "framer-motion";
 import useResponsive from "../../hooks/useResponsive";
 import ResponsiveEnum from "../../interfaces/ResponsiveEnum";
 import { scales } from "../motion/variants";
@@ -12,10 +12,7 @@ import { GoRocket } from "react-icons/go";
 import { SiMinutemailer } from "react-icons/si";
 import { useDispatch } from "react-redux";
 import { onMasked, offMasked } from "../../redux/globalStateSlice";
-
-// const Logo: React.FC<LogoProps> = () => {
-//   return
-// }
+import ReactTooltip from "react-tooltip";
 
 const menu: NavItemInterface[] = [
   {
@@ -54,25 +51,33 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
           alt="logo"
           whileHover={{ ...scales.scaleUp }}
           whileTap={{ ...scales.scaleDown }}
-          onMouseEnter={() => dispatch(onMasked())}
-          onMouseLeave={() => dispatch(offMasked())}
         />
       </Link>
       {menu.map((nav: NavItemInterface, idx: number) => (
-        <Link key={idx} href={nav.url} scroll={false}>
-          <motion.div
-            onMouseEnter={() => dispatch(onMasked())}
-            onMouseLeave={() => dispatch(offMasked())}
-            whileHover={{
-              width: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
-              height: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
-            }}
-            whileTap={{ ...scales.scaleDown }}
-            className="flex items-center justify-center w-6 h-6 mt-4 text-white rounded-lg cursor-pointer md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
+        <div key={idx}>
+          <Link key={idx} href={nav.url} scroll={false}>
+            <motion.div
+              data-tip
+              data-for={`side-nav-${idx}`}
+              whileHover={{
+                width: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
+                height: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
+              }}
+              whileTap={{ ...scales.scaleDown }}
+              className="flex items-center justify-center w-6 h-6 mt-4 text-red-them rounded-lg cursor-pointer md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
+            >
+              {nav.icon}
+            </motion.div>
+          </Link>
+          <ReactTooltip
+            effect="float"
+            type="light"
+            place="right"
+            id={`side-nav-${idx}`}
           >
-            {nav.icon}
-          </motion.div>
-        </Link>
+            {nav.title}
+          </ReactTooltip>
+        </div>
       ))}
     </motion.div>
   );
