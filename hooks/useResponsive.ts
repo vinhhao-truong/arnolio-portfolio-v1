@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import ResponsiveEnum from "../interfaces/ResponsiveEnum";
 
@@ -8,25 +9,34 @@ export default function useResponsive(): ResponsiveEnum {
   const isLg: boolean = useMediaQuery({ query: "(max-width: 1279px)" });
   const isXl: boolean = useMediaQuery({ query: "(max-width: 1535px)" });
 
-  if (isXs) {
-    return ResponsiveEnum.Xs;
-  }
+  const [screen, setScreen] = useState<ResponsiveEnum>(ResponsiveEnum["2xl"]);
 
-  if (isSm) {
-    return ResponsiveEnum.Sm;
-  }
+  useEffect(() => {
+    if (isXs) {
+      setScreen(ResponsiveEnum.Xs);
+      return;
+    }
 
-  if (isMd) {
-    return ResponsiveEnum.Md;
-  }
+    if (isSm) {
+      setScreen(ResponsiveEnum.Sm);
+      return;
+    }
 
-  if (isLg) {
-    return ResponsiveEnum.Lg;
-  }
+    if (isMd) {
+      setScreen(ResponsiveEnum.Md);
+      return;
+    }
 
-  if (isXl) {
-    return ResponsiveEnum.Xl;
-  }
+    if (isLg) {
+      setScreen(ResponsiveEnum.Lg);
+      return;
+    }
 
-  return ResponsiveEnum["2xl"];
+    if (isXl) {
+      setScreen(ResponsiveEnum.Xl);
+      return;
+    }
+  }, [isXl, isSm, isLg, isMd, isXs]);
+
+  return screen;
 }

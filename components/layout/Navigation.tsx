@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import LinkInterface from "../../interfaces/LinkInterface";
+import NavItemInterface from "../../interfaces/NavItemInterface";
 import ReactProps from "../../interfaces/ReactProps";
-import { motion, TargetAndTransition, useScroll } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { getClasses } from "../../utils/getProps";
 import { useEffect } from "react";
 import useResponsive from "../../hooks/useResponsive";
+import { scales } from "../motion/variants";
 
-const menu: LinkInterface[] = [
+const menu: NavItemInterface[] = [
   {
     title: "About",
     url: "#about",
@@ -21,19 +22,6 @@ const menu: LinkInterface[] = [
     url: "#contact",
   },
 ];
-
-const linkMotion: TargetAndTransition = {
-  scale: 1.2,
-  // x: -2,
-  // y: -2,
-  cursor: "pointer",
-};
-
-const logoMotion: TargetAndTransition = {
-  scale: 1.5,
-};
-
-const MotionLink = motion(Link);
 
 const Navigation: React.FC<ReactProps> = ({ className }) => {
   const { scrollY } = useScroll();
@@ -55,20 +43,22 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
           {/* logo */}
           <Link href="/">
             <motion.img
-              whileHover={logoMotion}
-              className="h-4/5 cursor-pointer"
+              className="cursor-pointer h-4/5"
               src="/circle-icon/android-chrome-512x512.png"
+              whileHover={{ ...scales.scaleUp }}
+              whileTap={{ ...scales.scaleDown }}
               alt="logo"
             />
           </Link>
 
           {/* main-nav */}
           <div className="flex">
-            {menu.map(({ title, url }: LinkInterface, idx: number) => (
+            {menu.map(({ title, url }: NavItemInterface, idx: number) => (
               <Link key={idx} href={url} scroll={false}>
                 <motion.a
-                  whileHover={linkMotion}
-                  className="ml-12 text-lg font-semibold"
+                  whileHover={{ ...scales.scaleUp }}
+                  whileTap={{ ...scales.scaleDown }}
+                  className="ml-12 text-lg font-semibold cursor-pointer"
                 >
                   {title}
                 </motion.a>
