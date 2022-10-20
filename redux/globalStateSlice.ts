@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isMasked: false,
+  currentHomeView: "",
 };
 
 const globalStateSlice = createSlice({

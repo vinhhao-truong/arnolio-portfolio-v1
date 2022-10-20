@@ -5,6 +5,7 @@ interface ReactProps {
   className?: string;
   style?: React.CSSProperties;
   divRef?: React.MutableRefObject<null>;
+  id?: string;
 }
 
 export default ReactProps;

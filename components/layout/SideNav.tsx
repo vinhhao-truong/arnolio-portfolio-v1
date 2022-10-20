@@ -53,6 +53,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
   const dispatch = useDispatch();
 
   return (
+    //Whole side nav
     <motion.div
       className={`${getClasses(className)} fixed top-4 -left-6 z-10`}
       initial={{ opacity: 0 }}
@@ -70,6 +71,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
             }
       }
     >
+      {/* Main Logo */}
       <Link href="/">
         <motion.img
           className="h-6 mb-8 cursor-pointer md:h-8 lg:h-12"
@@ -79,6 +81,8 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
           whileTap={{ ...scales.scaleDown }}
         />
       </Link>
+
+      {/* Nav Items */}
       {menu.map((nav: NavItemInterface, idx: number) => (
         <div key={idx}>
           <Link key={idx} href={nav.url} scroll={false}>
@@ -95,6 +99,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
               {nav.icon}
             </motion.div>
           </Link>
+          {/* ToolTips */}
           <ReactTooltip
             effect="solid"
             type="light"

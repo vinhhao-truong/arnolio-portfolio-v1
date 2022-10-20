@@ -20,7 +20,7 @@ const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
         ...translates.x(0),
       }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className={`text-xl font-semibold text-center opacity-0 select-none md:absolute md:-left-12 md:bottom-1/4 md:text-6xl md:-rotate-90`}
+      className={`font-semibold text-center opacity-0 select-none absolute -left-16 bottom-1/4 text-6xl`}
     >
       {title}
     </motion.div>
