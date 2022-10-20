@@ -1,8 +1,15 @@
 .container {
-  .landing {
-    min-height: calc(100vh - 3.5rem);
+  //Every section
+  & > * {
+    padding: 1rem 4rem;
+    overflow: hidden;
   }
+  //Only Landing
+  .landing {
+    height: calc(100vh - 5rem);
+  }
+  //Except Landing
   & > *:not(.landing) {
-    min-height: 100vh;
+    height: 100vh;
   }
 }

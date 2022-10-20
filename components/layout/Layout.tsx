@@ -9,11 +9,11 @@ import SideNav from "./SideNav";
 
 const Layout: React.FC<ReactProps> = ({ children }) => {
   const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
-  const { scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
 
   //Check and get scroll pos
   useEffect(() => {
-    scrollYProgress.onChange((pos) => {
+    scrollY.onChange((pos) => {
       if (pos > 0) {
         setIsScrolledDown(true);
         // console.log(pos);
@@ -21,10 +21,10 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
       }
       setIsScrolledDown(false);
     });
-  }, [scrollYProgress, isScrollDown]);
+  }, [scrollY, isScrollDown]);
 
   return (
-    <div className="block mx-auto max-w-[120rem] w-full px-8 md:px-[4.5rem]  xl:px-20">
+    <div className="block mx-auto max-w-[120rem] w-full px-8 md:px-[4.5rem] xl:px-20">
       <Navigation
         className={`w-full sticky top-0 ${isScrollDown && "invisible"} z-10`}
       />

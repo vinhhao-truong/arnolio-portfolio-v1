@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
 import { motion, useScroll } from "framer-motion";
 import useResponsive from "../../hooks/useResponsive";
-import { scales } from "../motion/variants";
+import { fades, scales } from "../motion/variants";
 import Link from "next/link";
 
 const ScrollTopBtn: React.FC = () => {
-  const { scrollYProgress, scrollY } = useScroll();
   const responsive = useResponsive();
   const isMobile: boolean = responsive === "xs";
   const isTablet: boolean = responsive === "sm";
@@ -14,7 +13,15 @@ const ScrollTopBtn: React.FC = () => {
   return (
     <Link href="/">
       <motion.div
-        animate={{ y: isMobile || isTablet ? "-1rem" : "-2rem" }}
+        initial={{ opacity: 0 }}
+        animate={{
+          y: isMobile || isTablet ? "-1rem" : "-2rem",
+          ...fades.fadeIn,
+          transition: {
+            duration: 0.8,
+            ease: "easeInOut",
+          },
+        }}
         whileHover={{ ...scales.scaleUp }}
         whileTap={{ ...scales.scaleDown }}
         className="fixed p-1 rounded-full cursor-pointer -bottom-2 right-2 md:-bottom-4 md:right-4 lg:p-2 bg-red-theme"

@@ -10,7 +10,25 @@ html,
 body {
   background-color: $navy-theme;
   color: $white-theme;
-  min-height: 100vh;
   scroll-behavior: smooth;
   font-family: "Mukta", sans-serif;
+  // overflow: auto;
+  // &::-webkit-scrollbar-thumb {
+  //   display: none;
+  // }
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  background: $navy-theme;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $red-theme;
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: $navy-theme;
 }

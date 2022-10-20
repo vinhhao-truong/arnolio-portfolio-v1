@@ -42,7 +42,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
   return (
     <motion.div
       className={`${getClasses(className)} fixed top-4 -left-6 z-10`}
-      whileInView={{ x: isMobile ? "1.75rem" : "2.5rem" }}
+      animate={{ x: isMobile ? "1.75rem" : "2.5rem" }}
     >
       <Link href="/">
         <motion.img
@@ -64,7 +64,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
                 height: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
               }}
               whileTap={{ ...scales.scaleDown }}
-              className="flex items-center justify-center w-6 h-6 mt-4 text-red-them rounded-lg cursor-pointer md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
+              className="flex items-center justify-center w-6 h-6 mt-4 rounded-lg cursor-pointer text-red-them md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
             >
               {nav.icon}
             </motion.div>

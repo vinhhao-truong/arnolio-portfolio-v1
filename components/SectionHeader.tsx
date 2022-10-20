@@ -1,7 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { motion, useScroll } from "framer-motion";
+import { fades, translates } from "./motion/variants";
+import useScrollCheck from "../hooks/useScrollCheck";
+import useResponsive from "../hooks/useResponsive";
 
 const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
-  return <div className="text-center text-4xl font-semibold">{title}</div>;
+  const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
+  const responsive = useResponsive();
+  const { scrollY } = useScroll();
+
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.getVelocity() > 0) {
+        setIsScrolledDown(true);
+        return;
+      }
+      setIsScrolledDown(false);
+    });
+  }, [scrollY]);
+
+  useEffect(() => {
+    console.log(responsive);
+  }, [responsive]);
+
+  return responsive !== "sm" && responsive !== "xs" ? (
+    <motion.div
+      initial={{ x: "-3rem", rotate: -90 }}
+      whileInView={{
+        ...fades.fadeIn,
+        ...translates.x(0),
+      }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className={`text-xl font-semibold text-center opacity-0 select-none md:absolute md:-left-12 md:bottom-1/4 md:text-6xl md:-rotate-90`}
+    >
+      {title}
+    </motion.div>
+  ) : (
+    <div className="text-xl font-semibold text-center text-white">{title}</div>
+  );
 };
 
 export default SectionHeader;
