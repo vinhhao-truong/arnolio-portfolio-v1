@@ -4,9 +4,9 @@ import NavItemInterface from "../../interfaces/NavItemInterface";
 import ReactProps from "../../interfaces/ReactProps";
 import { motion, useScroll } from "framer-motion";
 import { getClasses } from "../../utils/getProps";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useResponsive from "../../hooks/useResponsive";
-import { scales } from "../motion/variants";
+import { fades, scales } from "../motion/variants";
 
 const menu: NavItemInterface[] = [
   {
@@ -25,12 +25,19 @@ const menu: NavItemInterface[] = [
 
 const Navigation: React.FC<ReactProps> = ({ className }) => {
   const { scrollY } = useScroll();
+  const [isHidden, setIsHidden] = useState(false);
   const responsive = useResponsive();
   const isMobile: boolean = responsive === "xs";
 
   useEffect(() => {
-    return scrollY.onChange((pos) => {});
-  }, []);
+    return scrollY.onChange((pos) => {
+      if (pos > 0) {
+        setIsHidden(true);
+        return;
+      }
+      setIsHidden(false);
+    });
+  }, [scrollY]);
 
   return (
     <>
@@ -39,6 +46,20 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
           className={`${getClasses(
             className
           )} w-full flex justify-between h-20 items-center py-3`}
+          initial={{ y: "-1rem", opacity: 0 }}
+          animate={
+            !isHidden
+              ? {
+                  ...fades.fadeIn,
+                  y: 0,
+                  transition: { duration: 0.3, ease: "easeIn", delay: 0.1 },
+                }
+              : {
+                  ...fades.fadeOut,
+                  y: "-1rem",
+                  transition: { duration: 0.3, ease: "easeIn" },
+                }
+          }
         >
           {/* logo */}
           <Link href="/">

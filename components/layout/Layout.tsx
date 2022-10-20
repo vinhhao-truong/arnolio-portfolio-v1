@@ -25,10 +25,8 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
 
   return (
     <div className="block mx-auto max-w-[120rem] w-full px-8 md:px-[4.5rem] xl:px-20">
-      <Navigation
-        className={`w-full sticky top-0 ${isScrollDown && "invisible"} z-10`}
-      />
-      {isScrollDown && <SideNav />}
+      <Navigation className={`w-full sticky top-0 z-10`} />
+      <SideNav />
       {children}
       <Footer />
       {isScrollDown && <ScrollTopBtn />}

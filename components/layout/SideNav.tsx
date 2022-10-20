@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import { getClasses } from "../../utils/getProps";
 import Link from "next/link";
 import { motion, TargetAndTransition, useScroll } from "framer-motion";
 import useResponsive from "../../hooks/useResponsive";
 import ResponsiveEnum from "../../interfaces/ResponsiveEnum";
-import { scales } from "../motion/variants";
+import { fades, scales } from "../motion/variants";
 import NavItemInterface from "../../interfaces/NavItemInterface";
 import { SiAboutdotme } from "react-icons/si";
 import { GoRocket } from "react-icons/go";
@@ -37,12 +37,38 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
   const isMobile = responsive === "xs";
   const isTablet = responsive === "lg";
 
+  const { scrollY } = useScroll();
+  const [isShowed, setIsShowed] = useState(false);
+
+  useEffect(() => {
+    scrollY.onChange((pos) => {
+      if (pos === 0) {
+        setIsShowed(false);
+        return;
+      }
+      setIsShowed(true);
+    });
+  }, [scrollY]);
+
   const dispatch = useDispatch();
 
   return (
     <motion.div
       className={`${getClasses(className)} fixed top-4 -left-6 z-10`}
-      animate={{ x: isMobile ? "1.75rem" : "2.5rem" }}
+      initial={{ opacity: 0 }}
+      animate={
+        isShowed
+          ? {
+              ...fades.fadeIn,
+              x: isMobile ? "1.75rem" : "2.5rem",
+              transition: { duration: 0.3, ease: "easeIn", delay: 0.3 },
+            }
+          : {
+              ...fades.fadeOut,
+              x: isMobile ? "1.5rem" : "2.25rem",
+              transition: { duration: 0.1, ease: "easeIn" },
+            }
+      }
     >
       <Link href="/">
         <motion.img
@@ -64,15 +90,19 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
                 height: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
               }}
               whileTap={{ ...scales.scaleDown }}
-              className="flex items-center justify-center w-6 h-6 mt-4 rounded-lg cursor-pointer text-red-them md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
+              className="flex items-center justify-center w-6 h-6 mt-4 rounded-lg cursor-pointer text-white md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
             >
               {nav.icon}
             </motion.div>
           </Link>
           <ReactTooltip
-            effect="float"
+            effect="solid"
             type="light"
             place="right"
+            offset={{
+              right: isMobile ? 9 : isTablet ? 13.5 : 18,
+              bottom: isMobile ? 6 : isTablet ? 9 : 12,
+            }}
             id={`side-nav-${idx}`}
           >
             {nav.title}

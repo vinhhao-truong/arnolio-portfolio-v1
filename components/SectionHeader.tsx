@@ -5,23 +5,12 @@ import useScrollCheck from "../hooks/useScrollCheck";
 import useResponsive from "../hooks/useResponsive";
 
 const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
-  const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
   const responsive = useResponsive();
   const { scrollY } = useScroll();
 
-  useEffect(() => {
-    scrollY.onChange(() => {
-      if (scrollY.getVelocity() > 0) {
-        setIsScrolledDown(true);
-        return;
-      }
-      setIsScrolledDown(false);
-    });
-  }, [scrollY]);
-
-  useEffect(() => {
-    console.log(responsive);
-  }, [responsive]);
+  // useEffect(() => {
+  //   console.log(responsive);
+  // }, [responsive]);
 
   return responsive !== "sm" && responsive !== "xs" ? (
     <motion.div

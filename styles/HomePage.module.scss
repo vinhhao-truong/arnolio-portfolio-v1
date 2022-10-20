@@ -6,10 +6,10 @@
   }
   //Only Landing
   .landing {
-    height: calc(100vh - 5rem);
+    min-height: calc(100vh - 5rem);
   }
   //Except Landing
   & > *:not(.landing) {
-    height: 100vh;
+    min-height: 100vh;
   }
 }
