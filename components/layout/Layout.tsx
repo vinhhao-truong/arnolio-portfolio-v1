@@ -24,8 +24,10 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   }, [scrollY, isScrollDown]);
 
   return (
-    <div className="block mx-auto max-w-[120rem] w-full px-8 md:px-[4.5rem] xl:px-20">
-      <Navigation className={`w-full sticky top-0 z-10`} />
+    <div className="flex-col items-center">
+      <Navigation
+        className={`w-full sticky top-0 z-10 max-w-[120rem] px-8 md:px-[9rem] xl:px-40`}
+      />
       <SideNav />
       {children}
       <Footer />

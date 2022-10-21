@@ -94,7 +94,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
                 height: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
               }}
               whileTap={{ ...scales.scaleDown }}
-              className="flex items-center justify-center w-6 h-6 mt-4 rounded-lg cursor-pointer text-white md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
+              className="flex items-center justify-center w-6 h-6 mt-4 rounded-lg cursor-pointer text-white-theme md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
             >
               {nav.icon}
             </motion.div>

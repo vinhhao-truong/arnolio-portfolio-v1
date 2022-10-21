@@ -18,7 +18,11 @@ const HomePage: NextPage = () => {
   return (
     <>
       <Seo title="Arnolio" />
-      <motion.div className={`${getClasses(styles.container)} w-full`}>
+      <motion.div
+        className={`${getClasses(
+          styles.container
+        )} w-full flex-col items-center`}
+      >
         <Landing className={`${getClasses(styles.landing)}`} />
         <About />
         <Projects />

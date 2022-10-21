@@ -7,6 +7,7 @@ import { getClasses } from "../../utils/getProps";
 import { useEffect, useState } from "react";
 import useResponsive from "../../hooks/useResponsive";
 import { fades, scales } from "../motion/variants";
+import Section from "../Section";
 
 const menu: NavItemInterface[] = [
   {
@@ -29,6 +30,8 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
   const responsive = useResponsive();
   const isMobile: boolean = responsive === "xs";
 
+  const MotionSection = motion(Section);
+
   useEffect(() => {
     return scrollY.onChange((pos) => {
       if (pos > 0) {
@@ -46,16 +49,18 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
           className={`${getClasses(
             className
           )} w-full flex justify-between h-20 items-center py-3`}
-          initial={{ y: "-1rem", opacity: 0 }}
+          initial={{ y: "-1rem", opacity: 0, display: "none" }}
           animate={
             !isHidden
               ? {
                   ...fades.fadeIn,
                   y: 0,
+                  display: "flex",
                   transition: { duration: 0.3, ease: "easeIn", delay: 0.1 },
                 }
               : {
                   ...fades.fadeOut,
+                  display: "none",
                   y: "-1rem",
                   transition: { duration: 0.3, ease: "easeIn" },
                 }

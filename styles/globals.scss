@@ -12,10 +12,6 @@ body {
   color: $white-theme;
   scroll-behavior: smooth;
   font-family: "Mukta", sans-serif;
-  // overflow: auto;
-  // &::-webkit-scrollbar-thumb {
-  //   display: none;
-  // }
 }
 
 ::-webkit-scrollbar {
@@ -31,4 +27,18 @@ body {
 
 ::-webkit-scrollbar-corner {
   background: $navy-theme;
+}
+
+.arnolio-input {
+  color: $navy-theme;
+  border-radius: 2px;
+  font-size: 14px;
+  padding: 0.25rem 0.5rem;
+  &:focus {
+    outline: $red-theme;
+  }
+}
+
+.arnolio-input {
+  resize: none;
 }

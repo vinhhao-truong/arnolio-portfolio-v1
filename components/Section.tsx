@@ -1,18 +1,13 @@
 import ReactProps from "../interfaces/ReactProps";
 import { getClasses, getStyles } from "../utils/getProps";
 
-const Container: React.FC<ReactProps> = ({
-  className,
-  children,
-  style,
-  id,
-}) => {
+const Section: React.FC<ReactProps> = ({ children, className, style, id }) => {
   return (
     <div
-      id={getClasses(id)}
       className={`${getClasses(
         className
-      )} w-full h-full lg:px-[4.5rem] xl:px-40`}
+      )} max-w-[120rem] w-full px-8 md:px-[4.5rem] xl:px-40 block mx-auto`}
+      id={getClasses(id)}
       style={getStyles(style)}
     >
       {children}
@@ -20,4 +15,4 @@ const Container: React.FC<ReactProps> = ({
   );
 };
 
-export default Container;
+export default Section;
