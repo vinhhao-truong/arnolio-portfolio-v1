@@ -21,6 +21,7 @@ import {
   startLoading,
   stopLoading,
 } from "../../redux/globalStateSlice";
+import ReactLoading from "react-loading";
 
 //Motion for hovering effect
 const expand: TargetAndTransition = {
@@ -70,6 +71,7 @@ const Contact: React.FC<ContactProps> = () => {
   const { colors } = useSelector(selectGlobalState);
 
   const [isLeft, setIsLeft] = useState<boolean | null>(null);
+  const [isFormSending, setIsFormSending] = useState<boolean>(false);
 
   const responsive = useResponsive();
   const isXs = responsive === "xs";
@@ -98,6 +100,7 @@ const Contact: React.FC<ContactProps> = () => {
   ) => {
     e.preventDefault();
     dispatch(startLoading());
+    setIsFormSending(true);
     try {
       if (emailInput && messageInput) {
         const response = await axios.post("/api/contact-form", {
@@ -116,6 +119,7 @@ const Contact: React.FC<ContactProps> = () => {
     } catch (err) {
       console.log(err);
     }
+    setIsFormSending(false);
     dispatch(stopLoading());
   };
 
@@ -138,7 +142,7 @@ const Contact: React.FC<ContactProps> = () => {
               ? { ...collapse }
               : {}
           }
-          className="md:w-[49.5%] md:flex md:flex-col md:justify-center md:text-xl relative"
+          className="md:w-[49.5%] md:flex md:flex-col md:justify-center text-xs sm:text-sm lg:text-xl relative"
         >
           {/* {isLeft === false && <TopLayer />} */}
           {contactUrlList.map((contact: ContactUrl, idx: number) => {
@@ -243,7 +247,7 @@ const Contact: React.FC<ContactProps> = () => {
             ></textarea>
             <motion.button
               type="submit"
-              className="block px-4 py-1 mx-auto rounded-lg bg-blue-theme text-white-theme"
+              className="flex items-center justify-between px-4 py-1 mx-auto rounded-lg bg-blue-theme text-white-theme"
               whileHover={{
                 ...scales.scaleUp,
                 // color: colors["white-theme"],
@@ -254,7 +258,7 @@ const Contact: React.FC<ContactProps> = () => {
                 },
               }}
             >
-              Send
+              {isFormSending ? "Sending..." : "Send"}
             </motion.button>
           </form>
         </motion.div>

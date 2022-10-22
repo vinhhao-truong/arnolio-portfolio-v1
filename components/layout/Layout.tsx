@@ -38,7 +38,7 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   return (
     <div className="flex flex-col items-center">
       <Navigation
-        className={`w-full sticky top-0 z-10 max-w-[120rem] px-8 md:px-[9rem] xl:px-40`}
+        className={`w-full sticky top-0 z-10 max-w-[120rem] px-8 lg:px-[9rem] xl:px-40`}
       />
       <SideNav />
       {children}

@@ -17,7 +17,7 @@ const LoadingGlobal: React.FC = () => {
       className="fixed top-0 right-[5vw] z-20 flex items-center justify-center p-4 rounded-full bg-white-theme"
     >
       <ReactLoading
-        color={colors["red-theme"]}
+        color={colors["blue-theme"]}
         width="1.5rem"
         height="1.5rem"
         type="spin"

@@ -4,11 +4,13 @@
     padding: 1rem 4rem;
   }
   //Only Landing
-  .landing {
-    min-height: calc(100vh - 5rem);
-  }
-  //Except Landing
-  & > *:not(.landing) {
-    min-height: 100vh;
+  @media (min-width: 768px) {
+    .landing {
+      min-height: calc(100vh - 5rem);
+    }
+    //Except Landing
+    & > * {
+      min-height: 100vh;
+    }
   }
 }

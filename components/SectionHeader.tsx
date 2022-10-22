@@ -17,10 +17,10 @@ const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
       initial={{ x: "-3rem", rotate: -90 }}
       whileInView={{
         ...fades.fadeIn,
-        ...translates.x(0),
+        x: 0,
       }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className={`font-semibold text-center opacity-0 select-none absolute md:-left-12 lg:left-6 xl:left-16 md:top-3/4 lg:top-1/4 md:text-5xl text-6xl`}
+      className={`font-semibold text-center opacity-0 select-none md:absolute md:-left-10 lg:left-6 xl:left-16 md:top-3/4 lg:top-1/4 md:text-5xl text-6xl`}
     >
       {title}
     </motion.div>

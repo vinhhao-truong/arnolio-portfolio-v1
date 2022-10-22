@@ -55,7 +55,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
   return (
     //Whole side nav
     <motion.div
-      className={`${getClasses(className)} fixed top-4 -left-6 z-10`}
+      className={`${getClasses(className)} fixed top-4 -left-6 md:z-10`}
       initial={{ opacity: 0 }}
       animate={
         isShowed
@@ -66,7 +66,6 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
             }
           : {
               ...fades.fadeOut,
-              display: "none",
               x: isMobile ? "1.5rem" : "2.25rem",
               transition: { duration: 0.1, ease: "easeIn" },
             }

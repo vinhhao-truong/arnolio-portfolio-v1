@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Seo from "../components/Seo";
@@ -13,8 +13,16 @@ import { getClasses } from "../utils/getProps";
 //motion
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import ReactProps from "../interfaces/ReactProps";
+import { useRouter } from "next/router";
 
 const HomePage: NextPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router) {
+    }
+  }, [router]);
+
   return (
     <>
       <Seo title="Arnolio" />

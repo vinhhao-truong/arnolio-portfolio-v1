@@ -28,7 +28,7 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
   const { scrollY } = useScroll();
   const [isHidden, setIsHidden] = useState(false);
   const responsive = useResponsive();
-  const isMobile: boolean = responsive === "xs";
+  const isMobile: boolean = responsive === "xs" || responsive === "sm";
 
   const MotionSection = motion(Section);
 
