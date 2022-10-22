@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import ResponsiveEnum from "../interfaces/ResponsiveEnum";
 
-export default function useResponsive(): ResponsiveEnum {
+type Responsive = "sm" | "xs" | "md" | "lg" | "xl" | "2xl";
+
+export default function useResponsive(): Responsive {
   const isXs: boolean = useMediaQuery({ query: "(max-width: 639px)" });
   const isSm: boolean = useMediaQuery({ query: "(max-width: 767px)" });
   const isMd: boolean = useMediaQuery({ query: "(max-width: 1023px)" });

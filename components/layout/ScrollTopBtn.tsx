@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
 import { motion, useScroll } from "framer-motion";
 import useResponsive from "../../hooks/useResponsive";
-import { fades, scales } from "../motion/variants";
+import { fades, scales } from "../../utils/motion/variants";
 import Link from "next/link";
 
 const ScrollTopBtn: React.FC = () => {

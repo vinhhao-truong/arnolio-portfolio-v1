@@ -6,7 +6,7 @@ import { motion, useScroll } from "framer-motion";
 import { getClasses } from "../../utils/getProps";
 import { useEffect, useState } from "react";
 import useResponsive from "../../hooks/useResponsive";
-import { fades, scales } from "../motion/variants";
+import { fades, scales } from "../../utils/motion/variants";
 import Section from "../Section";
 
 const menu: NavItemInterface[] = [

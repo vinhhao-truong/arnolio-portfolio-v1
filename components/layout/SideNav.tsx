@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, TargetAndTransition, useScroll } from "framer-motion";
 import useResponsive from "../../hooks/useResponsive";
 import ResponsiveEnum from "../../interfaces/ResponsiveEnum";
-import { fades, scales } from "../motion/variants";
+import { fades, scales } from "../../utils/motion/variants";
 import NavItemInterface from "../../interfaces/NavItemInterface";
 import { SiAboutdotme } from "react-icons/si";
 import { GoRocket } from "react-icons/go";
@@ -33,7 +33,7 @@ const menu: NavItemInterface[] = [
 ];
 
 const SideNav: React.FC<ReactProps> = ({ className }) => {
-  const responsive: ResponsiveEnum = useResponsive();
+  const responsive = useResponsive();
   const isMobile = responsive === "xs";
   const isTablet = responsive === "lg";
 
@@ -66,6 +66,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
             }
           : {
               ...fades.fadeOut,
+              display: "none",
               x: isMobile ? "1.5rem" : "2.25rem",
               transition: { duration: 0.1, ease: "easeIn" },
             }
@@ -100,7 +101,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
             </motion.div>
           </Link>
           {/* ToolTips */}
-          <ReactTooltip
+          {/* <ReactTooltip
             effect="solid"
             type="light"
             place="right"
@@ -111,7 +112,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
             id={`side-nav-${idx}`}
           >
             {nav.title}
-          </ReactTooltip>
+          </ReactTooltip> */}
         </div>
       ))}
     </motion.div>

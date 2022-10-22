@@ -2,7 +2,11 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  env: {},
+  env: {
+    ARNOLIO_USER: "arnolio.truong@outlook.com",
+    ARNOLIO_PASS: "Zhang12345",
+    TO_EMAIL: "vinhhao.truong.52@gmail.com",
+  },
 };
 
 module.exports = nextConfig;

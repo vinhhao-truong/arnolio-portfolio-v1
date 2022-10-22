@@ -32,10 +32,11 @@ body {
 .arnolio-input {
   color: $navy-theme;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: 16px;
   padding: 0.25rem 0.5rem;
   &:focus {
-    outline: $red-theme;
+    outline-color: $blue-theme;
+    outline-width: 3px;
   }
 }
 

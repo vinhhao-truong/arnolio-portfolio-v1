@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, useScroll } from "framer-motion";
-import { fades, translates } from "./motion/variants";
+import { fades, translates } from "../utils/motion/variants";
 import useScrollCheck from "../hooks/useScrollCheck";
 import useResponsive from "../hooks/useResponsive";
 

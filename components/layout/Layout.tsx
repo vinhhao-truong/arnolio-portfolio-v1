@@ -1,6 +1,9 @@
 import { useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ReactProps from "../../interfaces/ReactProps";
+import { selectGlobalState } from "../../redux/globalStateSlice";
+import LoadingGlobal from "../LoadingGlobal";
 import Mask from "../Mask";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
@@ -10,6 +13,7 @@ import SideNav from "./SideNav";
 const Layout: React.FC<ReactProps> = ({ children }) => {
   const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
   const { scrollY } = useScroll();
+  const { isGlobalLoading } = useSelector(selectGlobalState);
 
   //Check and get scroll pos
   useEffect(() => {
@@ -23,16 +27,26 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
     });
   }, [scrollY, isScrollDown]);
 
+  useEffect(() => {
+    if (isGlobalLoading) {
+      document.body.style.overflow = "hidden";
+      return;
+    }
+    document.body.style.overflow = "auto";
+  }, [isGlobalLoading]);
+
   return (
-    <div className="flex-col items-center">
+    <div className="flex flex-col items-center">
       <Navigation
         className={`w-full sticky top-0 z-10 max-w-[120rem] px-8 md:px-[9rem] xl:px-40`}
       />
       <SideNav />
       {children}
       <Footer />
+      {/* Global Components */}
       {isScrollDown && <ScrollTopBtn />}
       <Mask />
+      <LoadingGlobal />
     </div>
   );
 };

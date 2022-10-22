@@ -21,7 +21,7 @@ const HomePage: NextPage = () => {
       <motion.div
         className={`${getClasses(
           styles.container
-        )} w-full flex-col items-center`}
+        )} w-full flex flex-col items-center`}
       >
         <Landing className={`${getClasses(styles.landing)}`} />
         <About />

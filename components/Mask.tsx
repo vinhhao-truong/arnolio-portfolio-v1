@@ -5,7 +5,7 @@ const Mask: React.FC = () => {
   const { isMasked } = useSelector(selectGlobalState);
 
   return isMasked ? (
-    <div className="fixed top-0 left-0 w-full h-full bg-mask"></div>
+    <div className="fixed top-0 left-0 z-20 w-full h-full bg-mask"></div>
   ) : (
     <></>
   );
