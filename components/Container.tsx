@@ -1,7 +1,8 @@
 import ReactProps from "../interfaces/ReactProps";
 import { getClasses, getStyles } from "../utils/getProps";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { fades } from "../utils/motion/variants";
+import { useEffect, useState } from "react";
 
 const Container: React.FC<ReactProps> = ({
   className,
@@ -9,15 +10,37 @@ const Container: React.FC<ReactProps> = ({
   style,
   id,
 }) => {
+  const { scrollY } = useScroll();
+  const [initialY, setInitialY] = useState<string>();
+
+  useEffect(() => {
+    scrollY.onChange(() => {
+      //check direction
+      const goingDown = scrollY.getVelocity() > 0;
+      if (goingDown) {
+        setInitialY("3rem");
+        return;
+      }
+      setInitialY("-3rem");
+    });
+  }, [scrollY]);
+
   return (
     <motion.div
       id={getClasses(id)}
       className={`${getClasses(
         className
-      )} w-full h-full lg:px-[4.5rem] xl:px-40 opacity-0`}
+      )} w-full h-full lg:px-[4.5rem] xl:px-40`}
       style={getStyles(style)}
-      initial={{ y: "3rem" }}
-      animate={{ ...fades.fadeIn, y: 0 }}
+      initial={{ y: initialY, opacity: 0 }}
+      whileInView={{
+        ...fades.fadeIn,
+        y: 0,
+        transition: {
+          duration: 0.8,
+          ease: "easeInOut",
+        },
+      }}
     >
       {children}
     </motion.div>

@@ -152,7 +152,7 @@ const Contact: React.FC<ContactProps> = () => {
 
             return (
               <motion.div
-                className="relative flex items-center py-2"
+                className="relative flex items-center py-1 md:py-2"
                 key={`contact-item-${idx}`}
               >
                 <Link href={contact.href}>
@@ -166,7 +166,7 @@ const Contact: React.FC<ContactProps> = () => {
                         : { x: "5rem" }
                     }
                   >
-                    <span className="p-1 mr-4 rounded-full bg-white-theme md:hover:brightness-90">
+                    <span className="p-1 mr-2 rounded-full md:mr-4 bg-white-theme md:hover:brightness-90">
                       {contact.icon}
                     </span>{" "}
                     <div
@@ -231,7 +231,7 @@ const Contact: React.FC<ContactProps> = () => {
             className="flex flex-col justify-center w-full"
           >
             <input
-              className="w-1/2 mb-3 arnolio-input"
+              className="w-full mb-3 md:w-1/2 arnolio-input"
               type="email"
               placeholder="Your email here..."
               onChange={handleInput("email")}

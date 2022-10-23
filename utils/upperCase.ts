@@ -1,12 +1,12 @@
 import React from "react";
 
-export const capitalizeFirst = (sentence: string): string => {
+export const upperCaseFirst = (sentence: string): string => {
   const lowercase: string = sentence.toLowerCase().trim();
 
   return sentence[0].toUpperCase() + lowercase.slice(1);
 };
 
-export const capitalizeEveryFirst = (
+export const upperCaseEveryFirst = (
   sentence: string,
   separator?: string
 ): string => {
@@ -15,6 +15,6 @@ export const capitalizeEveryFirst = (
     : sentence.split(" ");
 
   return lowercasedArr
-    .map((word) => capitalizeFirst(word))
+    .map((word) => upperCaseFirst(word))
     .join(separator ? separator : " ");
 };

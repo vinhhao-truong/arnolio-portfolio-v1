@@ -7,6 +7,14 @@ const nextConfig = {
     ARNOLIO_PASS: "Zhang12345",
     TO_EMAIL: "vinhhao.truong.52@gmail.com",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "dummyimage.com",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

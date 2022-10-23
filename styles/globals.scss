@@ -8,10 +8,17 @@
 
 html,
 body {
-  background-color: $navy-theme;
   color: $white-theme;
   scroll-behavior: smooth;
   font-family: "Mukta", sans-serif;
+}
+
+html {
+  background-color: $navy-theme;
+}
+
+body {
+  background-color: $navy-theme;
 }
 
 ::-webkit-scrollbar {
@@ -30,13 +37,12 @@ body {
 }
 
 .arnolio-input {
-  color: $navy-theme;
+  color: $blue-theme;
   border-radius: 2px;
   font-size: 16px;
   padding: 0.25rem 0.5rem;
   &:focus {
-    outline-color: $blue-theme;
-    outline-width: 3px;
+    outline: none;
   }
 }
 

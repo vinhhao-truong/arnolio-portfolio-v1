@@ -6,7 +6,7 @@ const Section: React.FC<ReactProps> = ({ children, className, style, id }) => {
     <div
       className={`${getClasses(
         className
-      )} max-w-[120rem] w-full px-8 lg:px-[4.5rem] xl:px-40 block mx-auto`}
+      )} max-w-[120rem] w-full px-2 lg:px-[4.5rem] xl:px-40 block mx-auto`}
       id={getClasses(id)}
       style={getStyles(style)}
     >
