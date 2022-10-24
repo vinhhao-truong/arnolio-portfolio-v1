@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import SectionHeader from "../SectionHeader";
 import Container from "../Container";
-import { motion, TargetAndTransition } from "framer-motion";
+import { motion, TargetAndTransition, useScroll } from "framer-motion";
 import Section from "../Section";
 import Link from "next/link";
 //icon
@@ -67,6 +67,8 @@ const contactUrlList: ContactUrl[] = [
 
 interface ContactProps extends ReactProps {}
 const Contact: React.FC<ContactProps> = () => {
+  const contactRef = useRef<HTMLDivElement>(null);
+
   const dispatch = useDispatch();
   const { colors } = useSelector(selectGlobalState);
 
@@ -125,6 +127,7 @@ const Contact: React.FC<ContactProps> = () => {
 
   return (
     <Section
+      ref={contactRef}
       id="contact"
       className="relative justify-center md:flex md:items-center"
     >

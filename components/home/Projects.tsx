@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import Container from "../Container";
+import ProjectThumbnail from "../ProjectThumbnail";
 import Section from "../Section";
 import SectionHeader from "../SectionHeader";
 
@@ -13,10 +14,11 @@ interface ProjectItem {
   logo?: string | React.ReactNode;
   thumbnail?: string;
   imgList?: string;
+  color?: string;
 }
 const projectList: ProjectItem[] = [
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -24,7 +26,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -32,7 +34,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -40,7 +42,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -48,7 +50,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -56,7 +58,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -64,7 +66,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -72,7 +74,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -80,7 +82,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -88,7 +90,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Artoo Blogs",
+    name: "Projects",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -106,36 +108,30 @@ const Projects: React.FC<ProjectsProps> = () => {
     >
       <SectionHeader title="Projects" />
       {/* MAIN CONTENT */}
-      <Container className="grid grid-cols-12 gap-2 cursor-pointer">
-        {projectList.map(
-          (
-            { name, slug, demoUrl, description, thumbnail }: ProjectItem,
-            idx: number
-          ) => {
-            const isThree: boolean = idx < 3 || idx > 6;
+      <Container className="grid grid-cols-12 gap-2">
+        {/* Only take 10 */}
+        {projectList
+          .slice(0, 10)
+          .map(
+            (
+              { name, slug, demoUrl, description, thumbnail }: ProjectItem,
+              idx: number
+            ) => {
+              const isThree: boolean = idx < 3 || idx > 6;
 
-            return (
-              <div
-                key={idx}
-                className={`${isThree ? "col-span-4" : "col-span-3"} relative`}
-              >
-                {/* TITLE */}
-                <div className="absolute w-full h-full bg-mask-bold z-[1]">
-                  {name}
-                </div>
-                {/* THUMBNAIL */}
-                <Image
-                  layout="responsive"
-                  alt={`project-${slug}`}
-                  src={thumbnail ? thumbnail : ""}
+              return (
+                <ProjectThumbnail
+                  key={idx}
+                  className={`${isThree ? "col-span-4" : "col-span-3"}`}
+                  name={name}
+                  thumbnail={thumbnail}
+                  slug={slug}
                   width={900}
                   height={600}
-                  objectFit="cover"
                 />
-              </div>
-            );
-          }
-        )}
+              );
+            }
+          )}
       </Container>
     </Section>
   );

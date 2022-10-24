@@ -10,7 +10,7 @@ const Container: React.FC<ReactProps> = ({
   style,
   id,
 }) => {
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const [initialY, setInitialY] = useState<string>();
 
   useEffect(() => {
