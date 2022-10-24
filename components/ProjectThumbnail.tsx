@@ -36,7 +36,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
     <div
       className={`${getClasses(
         className
-      )} relative overflow-hidden flex flex-col bg-white-theme`}
+      )} relative overflow-hidden flex flex-col bg-white-theme rounded-lg`}
       style={getStyles(style)}
       onMouseEnter={() => setShowOptions(true)}
       onMouseLeave={() => setShowOptions(false)}
@@ -49,7 +49,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         width={width ? width : 900}
         height={height ? height : 600}
         objectFit="cover"
-        className="h-3/4"
+        className="h-3/4 rounded-t-lg"
       />
       {/* TITLE */}
       <div
