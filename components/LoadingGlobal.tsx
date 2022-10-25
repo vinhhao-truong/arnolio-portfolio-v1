@@ -14,7 +14,7 @@ const LoadingGlobal: React.FC = () => {
           ? { y: "5vh", display: "block" }
           : { y: 0, display: "none" }
       }
-      className="fixed top-0 right-[5vw] z-20 flex items-center justify-center p-4 rounded-full bg-white-theme"
+      className="fixed top-0 right-[5vw] z-20 flex items-center justify-center p-4 rounded-full dark:bg-white-theme"
     >
       <ReactLoading
         color={colors["blue-theme"]}

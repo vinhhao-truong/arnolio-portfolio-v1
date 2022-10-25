@@ -36,22 +36,20 @@ const handleSendContactEmail = async (
         html: msgHtmlContent,
       };
 
-      await transporter.sendMail(nodemailerOptions, (mailErr, mailInfo) => {
+      await transporter.sendMail(nodemailerOptions, (mailErr, mailResInfo) => {
         if (mailErr) {
           console.log(mailErr);
           throw Error;
         }
-        console.log(mailInfo);
         res.status(200).send({
           status: 200,
-          data: `The email has been sent to me. Thanks ${email} for your message.`,
+          data: {
+            response: mailResInfo,
+            from: email,
+            to: process.env.TO_EMAIL,
+          },
         });
-        // res.status(200).send({ status: 200, data: req.body.message });
       });
-      //   console.log(message);
-      //   console.log(msgHtmlContent);
-
-      //   res.status(200).send({ status: 200, data: "ok" });
     } catch (err) {
       console.log(err);
     }

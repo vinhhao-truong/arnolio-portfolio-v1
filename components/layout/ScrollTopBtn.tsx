@@ -26,7 +26,7 @@ const ScrollTopBtn: React.FC = () => {
         whileTap={{ ...scales.scaleDown }}
         className="fixed p-1 rounded-full cursor-pointer -bottom-2 right-2 md:-bottom-4 md:right-4 lg:p-2 bg-red-theme"
       >
-        <IoMdArrowDropup className="text-lg md:text-2xl lg:text-3xl text-white-theme-theme" />
+        <IoMdArrowDropup className="text-lg md:text-2xl lg:text-3xl dark:text-white-theme-theme" />
       </motion.div>
     </Link>
   );

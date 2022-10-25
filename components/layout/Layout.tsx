@@ -37,7 +37,7 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   }, [isGlobalLoading]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center dark">
       <Navigation
         className={`w-full z-10 max-w-[120rem] px-8 lg:px-[9rem] xl:px-40`}
       />

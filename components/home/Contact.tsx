@@ -61,7 +61,7 @@ const contactUrlList: ContactUrl[] = [
     href: "https://www.github.com/vinhhao-truong",
     icon: <GithubIcon className="text-black" />,
     displayText: "GitHub",
-    color: "text-white-theme",
+    color: "dark:text-white-theme",
   },
 ];
 
@@ -110,8 +110,7 @@ const Contact: React.FC<ContactProps> = () => {
           message: messageInput,
         });
 
-        const resData: ResponseData = await response.data;
-        console.log(resData);
+        const resData: ResponseData = await response.data.data;
 
         setEmailInput("");
         setMessageInput("");
@@ -169,7 +168,7 @@ const Contact: React.FC<ContactProps> = () => {
                         : { x: "5rem" }
                     }
                   >
-                    <span className="p-1 mr-2 rounded-full md:mr-4 bg-white-theme md:hover:brightness-90">
+                    <span className="p-1 mr-2 rounded-full md:mr-4 dark:bg-white-theme md:hover:brightness-90">
                       {contact.icon}
                     </span>{" "}
                     <div
@@ -206,8 +205,8 @@ const Contact: React.FC<ContactProps> = () => {
         </motion.div>
         {/* Separator */}
         <div className="relative justify-center w-full md:w-[1%] flex items-center">
-          <div className="absolute md:w-[1px] h-[1px] w-4/5 md:h-4/5 bg-white-theme "></div>
-          <div className="z-10 bg-navy-theme md:leading-10 ">or</div>
+          <div className="absolute md:w-[1px] h-[1px] w-4/5 md:h-4/5 dark:bg-white-theme "></div>
+          <div className="z-10 dark:bg-navy-theme md:leading-10 ">or</div>
         </div>
 
         {/* Contact form */}
@@ -250,7 +249,7 @@ const Contact: React.FC<ContactProps> = () => {
             ></textarea>
             <motion.button
               type="submit"
-              className="flex items-center justify-between px-4 py-1 mx-auto rounded-lg bg-blue-theme text-white-theme"
+              className="flex items-center justify-between px-4 py-1 mx-auto rounded-lg bg-blue-theme dark:text-white-theme"
               whileHover={{
                 ...scales.scaleUp,
                 // color: colors["white-theme"],

@@ -38,7 +38,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
     <div
       className={`${getClasses(
         className
-      )} relative overflow-hidden grid grid-rows-6 bg-white-theme`}
+      )} relative overflow-hidden grid grid-rows-6 dark:bg-white-theme`}
       style={getStyles(style)}
       onMouseEnter={() => setShowOptions(true)}
       onMouseLeave={() => setShowOptions(false)}
@@ -47,10 +47,10 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       <div
         className={`w-full z-[1] row-span-1 h-full flex justify-center items-center text-center ${
           showOptions
-            ? `text-white-theme absolute top-0 ${
+            ? `text-white absolute top-0 ${
                 size === "small" ? "text-xl" : "text-3xl"
               }`
-            : `text-navy-theme truncate ${
+            : `dark:text-navy-theme truncate ${
                 size === "small" ? "text-lg" : "text-2xl"
               }`
         }`}
@@ -67,6 +67,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
           height={height ? height : 576}
           className="w-full h-full"
           objectFit="contain"
+          priority
         />
       </div>
 
