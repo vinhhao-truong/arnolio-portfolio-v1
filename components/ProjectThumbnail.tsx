@@ -18,6 +18,7 @@ interface ProjectThumbnailProps extends ReactProps {
   color?: string;
   width?: number;
   height?: number;
+  size?: "small" | "big";
 }
 
 const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
@@ -29,6 +30,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   width,
   height,
   demoUrl,
+  size,
 }) => {
   const [showOptions, setShowOptions] = useState<boolean | null>(null);
 
@@ -36,54 +38,68 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
     <div
       className={`${getClasses(
         className
-      )} relative overflow-hidden flex flex-col bg-white-theme`}
+      )} relative overflow-hidden grid grid-rows-6 bg-white-theme`}
       style={getStyles(style)}
       onMouseEnter={() => setShowOptions(true)}
       onMouseLeave={() => setShowOptions(false)}
     >
-      {/* THUMBNAIL */}
-      <Image
-        layout="responsive"
-        alt={`project-${slug}`}
-        src={thumbnail ? thumbnail : "https://dummyimage.com/600x400/fff/000"}
-        width={width ? width : 900}
-        height={height ? height : 600}
-        objectFit="cover"
-        className="h-3/4"
-      />
       {/* TITLE */}
       <div
-        className={`w-ful z-[1] h-1/4 flex justify-center items-center ${
-          showOptions ? "text-white-theme" : "text-navy-theme"
+        className={`w-full z-[1] row-span-1 h-full flex justify-center items-center ${
+          showOptions
+            ? `text-white-theme absolute top-0 ${
+                size === "small" ? "text-xl" : "text-3xl"
+              }`
+            : `text-navy-theme truncate ${
+                size === "small" ? "text-lg" : "text-2xl"
+              }`
         }`}
       >
         {name}
       </div>
+      {/* THUMBNAIL */}
+      <div className="h-full row-span-5 overflow-hidden">
+        <Image
+          layout="responsive"
+          alt={`project-${slug}`}
+          src={thumbnail ? thumbnail : "https://dummyimage.com/600x400/fff/000"}
+          width={width ? width : 720}
+          height={height ? height : 576}
+          className="w-full h-full"
+          objectFit="contain"
+        />
+      </div>
+
       {/* MASK */}
       {showOptions && (
         <div className="absolute w-full h-full bg-mask-bold"></div>
       )}
       {/* HOVERING MASK */}
       <motion.div
-        className="absolute top-0 right-0 z-[1] w-1/3 h-full bg-red-theme flex flex-col justify-evenly items-center"
-        initial={{ opacity: 0, x: "2rem" }}
+        className="absolute bottom-0 right-0 z-[1] w-full h-[2rem] bg-red-theme flex justify-evenly items-center"
+        initial={{ opacity: 0, y: "2rem" }}
         animate={
           showOptions === true
-            ? { opacity: 1, x: 0 }
+            ? { opacity: 1, y: 0 }
             : showOptions === false
-            ? { opacity: 0, x: "2rem" }
+            ? { opacity: 0, y: "2rem" }
             : {}
         }
       >
         {demoUrl && (
-          <a href={demoUrl}>
-            <HiLink /> Demo
+          <a
+            className="flex items-center hover:underline"
+            href={demoUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <HiLink className={`mr-${size === "small" ? "2" : "3"}`} /> Demo
           </a>
         )}
         {slug && (
-          <Link href={`/project/${slug}`}>
-            <a className="flex items-center hover:brightness-[80%]">
-              <FaEye className="mr-1" />
+          <Link href={`/project/${slug}`} target="_blank">
+            <a className="flex items-center hover:underline">
+              <FaEye className="mr-3" />
               <p className="">Detail</p>
             </a>
           </Link>

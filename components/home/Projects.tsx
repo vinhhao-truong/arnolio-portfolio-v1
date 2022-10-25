@@ -42,7 +42,7 @@ const projectList: ProjectItem[] = [
     thumbnail: "https://dummyimage.com/600x400/fff/000",
   },
   {
-    name: "Projects",
+    name: "Projects aosidaiodmaiod amsdoaidm oiamdaidm aiosdmad omasd apoad",
     slug: "artoo-blogs",
     demoUrl: "https://artoo-blogs.herokuapp.com/",
     description:
@@ -126,8 +126,10 @@ const Projects: React.FC<ProjectsProps> = () => {
                   name={name}
                   thumbnail={thumbnail}
                   slug={slug}
+                  demoUrl={demoUrl}
                   width={900}
                   height={600}
+                  size={isThree ? "big" : "small"}
                 />
               );
             }
