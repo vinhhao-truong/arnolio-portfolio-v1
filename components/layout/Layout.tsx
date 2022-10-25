@@ -5,6 +5,7 @@ import ReactProps from "../../interfaces/ReactProps";
 import { selectGlobalState } from "../../redux/globalStateSlice";
 import LoadingGlobal from "../LoadingGlobal";
 import Mask from "../Mask";
+import TopProgressBar from "../TopProgressBar";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
 import ScrollTopBtn from "./ScrollTopBtn";
@@ -38,13 +39,14 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   return (
     <div className="flex flex-col items-center">
       <Navigation
-        className={`w-full sticky top-0 z-10 max-w-[120rem] px-8 lg:px-[9rem] xl:px-40`}
+        className={`w-full z-10 max-w-[120rem] px-8 lg:px-[9rem] xl:px-40`}
       />
       <SideNav />
       {children}
       <Footer />
       {/* Global Components */}
       {isScrollDown && <ScrollTopBtn />}
+      <TopProgressBar />
       <Mask />
       <LoadingGlobal />
     </div>

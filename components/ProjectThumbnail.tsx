@@ -45,7 +45,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
     >
       {/* TITLE */}
       <div
-        className={`w-full z-[1] row-span-1 h-full flex justify-center items-center ${
+        className={`w-full z-[1] row-span-1 h-full flex justify-center items-center text-center ${
           showOptions
             ? `text-white-theme absolute top-0 ${
                 size === "small" ? "text-xl" : "text-3xl"

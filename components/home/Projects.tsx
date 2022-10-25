@@ -108,7 +108,7 @@ const Projects: React.FC<ProjectsProps> = () => {
     >
       <SectionHeader title="Projects" />
       {/* MAIN CONTENT */}
-      <Container className="grid grid-cols-12 gap-2">
+      <Container className="grid grid-cols-12 gap-1 h-[90vh]">
         {/* Only take 10 */}
         {projectList
           .slice(0, 10)

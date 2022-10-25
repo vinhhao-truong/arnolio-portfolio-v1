@@ -145,7 +145,7 @@ const Contact: React.FC<ContactProps> = () => {
               ? { ...collapse }
               : {}
           }
-          className="md:w-[49.5%] md:flex md:flex-col md:justify-center text-xs sm:text-sm lg:text-xl relative"
+          className="md:w-[49.5%] md:flex md:flex-col md:justify-center text-xs sm:text-sm md:truncate lg:text-xl relative"
         >
           {/* {isLeft === false && <TopLayer />} */}
           {contactUrlList.map((contact: ContactUrl, idx: number) => {
@@ -226,7 +226,7 @@ const Contact: React.FC<ContactProps> = () => {
           } relative`}
         >
           {/* {isLeft === true && <TopLayer />} */}
-          <h2 className="mb-3 text-2xl font-semibold text-blue-theme">
+          <h2 className="mb-3 text-2xl font-semibold text-blue-theme stroke-white-theme">
             Notify Me
           </h2>
           <form

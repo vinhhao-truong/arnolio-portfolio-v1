@@ -18,19 +18,17 @@ const Container: React.FC<ReactProps> = ({
       //check direction
       const goingDown = scrollY.getVelocity() > 0;
       if (goingDown) {
-        setInitialY("3rem");
+        setInitialY("2%");
         return;
       }
-      setInitialY("-3rem");
+      setInitialY("-2%");
     });
   }, [scrollY]);
 
   return (
     <motion.div
       id={getClasses(id)}
-      className={`${getClasses(
-        className
-      )} w-full h-full lg:px-[4.5rem] xl:px-40`}
+      className={`${getClasses(className)} w-full lg:px-[4.5rem] xl:px-40`}
       style={getStyles(style)}
       initial={{ y: initialY, opacity: 0 }}
       whileInView={{

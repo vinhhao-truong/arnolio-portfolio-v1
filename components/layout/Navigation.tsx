@@ -12,15 +12,15 @@ import Section from "../Section";
 const menu: NavItemInterface[] = [
   {
     title: "About",
-    url: "#about",
+    url: "/#about",
   },
   {
     title: "Projects",
-    url: "#projects",
+    url: "/#projects",
   },
   {
     title: "Contact",
-    url: "#contact",
+    url: "/#contact",
   },
 ];
 
@@ -60,7 +60,6 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
                 }
               : {
                   ...fades.fadeOut,
-                  display: "none",
                   y: "-1rem",
                   transition: { duration: 0.3, ease: "easeIn" },
                 }
