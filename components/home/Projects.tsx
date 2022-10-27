@@ -5,102 +5,95 @@ import Container from "../Container";
 import ProjectThumbnail from "../ProjectThumbnail";
 import Section from "../Section";
 import SectionHeader from "../SectionHeader";
+import ProjectInterface from "../../interfaces/ProjectInterface";
 
-interface ProjectItem {
-  name: string;
-  slug: string;
-  demoUrl: string;
-  description: string;
-  logo?: string | React.ReactNode;
-  thumbnail?: string;
-  imgList?: string;
-  color?: string;
+// const projectList: ProjectInterface[] = [
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects aosidaiodmaiod amsdoaidm oiamdaidm aiosdmad omasd apoad",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+//   {
+//     name: "Projects",
+//     slug: "artoo-blogs",
+//     demoUrl: "https://artoo-blogs.herokuapp.com/",
+//     description:
+//       "A social media where people can upload blogs in text/img format.",
+//     thumbnail: "https://dummyimage.com/600x400/fff/000",
+//   },
+// ];
+
+interface ProjectsProps extends ReactProps {
+  projectList?: ProjectInterface[];
 }
-const projectList: ProjectItem[] = [
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects aosidaiodmaiod amsdoaidm oiamdaidm aiosdmad omasd apoad",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-  {
-    name: "Projects",
-    slug: "artoo-blogs",
-    demoUrl: "https://artoo-blogs.herokuapp.com/",
-    description:
-      "A social media where people can upload blogs in text/img format.",
-    thumbnail: "https://dummyimage.com/600x400/fff/000",
-  },
-];
-
-interface ProjectsProps extends ReactProps {}
-const Projects: React.FC<ProjectsProps> = () => {
+const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
   return (
     <Section
       id="projects"
@@ -111,12 +104,13 @@ const Projects: React.FC<ProjectsProps> = () => {
       <Container className="grid grid-cols-12 gap-1 h-[90vh]">
         {/* Only take 10 */}
         {projectList
-          .slice(0, 10)
+          ?.slice(0, 10)
           .map(
             (
-              { name, slug, demoUrl, description, thumbnail }: ProjectItem,
+              { name, slug, demoUrl, description, thumbnail }: ProjectInterface,
               idx: number
             ) => {
+              //count and render three items in a row
               const isThree: boolean = idx < 3 || idx > 6;
 
               return (

@@ -8,8 +8,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 interface ProjectThumbnailProps extends ReactProps {
-  name: string;
-  slug: string;
+  name?: string;
+  slug?: string;
   demoUrl?: string;
   description?: string;
   logo?: string | React.ReactNode;

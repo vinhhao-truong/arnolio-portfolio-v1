@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import type { NextPage } from "next";
+import type { InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
 import Seo from "../components/Seo";
 //home components
@@ -14,14 +14,21 @@ import { getClasses } from "../utils/getProps";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import ReactProps from "../interfaces/ReactProps";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router) {
-    }
-  }, [router]);
+    (async () => {
+      try {
+        const res = await axios.get("/api/project");
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -33,7 +40,7 @@ const HomePage: NextPage = () => {
       >
         <Landing className={`${getClasses(styles.landing)}`} />
         <About />
-        <Projects />
+        <Projects projectList={[]} />
         <Contact />
       </motion.div>
     </>
