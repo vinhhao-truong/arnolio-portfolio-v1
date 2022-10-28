@@ -8,23 +8,15 @@ import { useEffect, useState } from "react";
 import useResponsive from "../../hooks/useResponsive";
 import { fades, scales } from "../../utils/motion/variants";
 import Section from "../Section";
+import { useSelector } from "react-redux";
+import { selectGlobalState } from "../../redux/globalStateSlice";
 
-const menu: NavItemInterface[] = [
-  {
-    title: "About",
-    url: "/#about",
-  },
-  {
-    title: "Projects",
-    url: "/#projects",
-  },
-  {
-    title: "Contact",
-    url: "/#contact",
-  },
-];
+interface NavigationProps extends ReactProps {
+  menu?: NavItemInterface[];
+}
+const Navigation: React.FC<NavigationProps> = ({ className }) => {
+  const { navMenu } = useSelector(selectGlobalState);
 
-const Navigation: React.FC<ReactProps> = ({ className }) => {
   const { scrollY } = useScroll();
   const [isHidden, setIsHidden] = useState(false);
   const responsive = useResponsive();
@@ -78,7 +70,7 @@ const Navigation: React.FC<ReactProps> = ({ className }) => {
 
           {/* main-nav */}
           <div className="flex">
-            {menu.map(({ title, url }: NavItemInterface, idx: number) => (
+            {navMenu?.map(({ title, url }: NavItemInterface, idx: number) => (
               <Link key={idx} href={url} scroll={false}>
                 <motion.a
                   whileHover={{ ...scales.scaleUp }}

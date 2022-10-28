@@ -1,7 +1,16 @@
-import { NextPage } from "next"
+import { useEffect } from "react";
+import { NextPage } from "next";
+import { useDispatch } from "react-redux";
+import { clearMenu } from "../../redux/globalStateSlice";
 
-const Project:NextPage = () => {
-  return <></>
-}
+const Project: NextPage = () => {
+  const dispatch = useDispatch();
 
-export default Project
+  useEffect(() => {
+    dispatch(clearMenu());
+  }, []);
+
+  return <></>;
+};
+
+export default Project;

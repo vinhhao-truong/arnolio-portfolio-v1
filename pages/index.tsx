@@ -14,20 +14,60 @@ import { getClasses } from "../utils/getProps";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import ReactProps from "../interfaces/ReactProps";
 import { useRouter } from "next/router";
+//axios
 import axios from "axios";
+//redux
+import { useDispatch } from "react-redux";
+import { initiateMenu } from "../redux/globalStateSlice";
+//firebase
+import { firebaseDb } from "../store/firebase";
+import { update, ref, onValue } from "firebase/database";
+import ProjectInterface from "../interfaces/ProjectInterface";
 
-const HomePage: NextPage = () => {
+export const getServerSideProps = async () => {
+  const projects: any[] = [];
+
+  const projectRef = ref(firebaseDb, "project");
+  try {
+    onValue(projectRef, (snapshot) => {
+      const data = snapshot.val();
+      projects.push(...Object.values(data));
+    });
+  } catch (err) {
+    console.log(err);
+  }
+
+  return {
+    props: {
+      projects: projects,
+    },
+  };
+};
+const HomePage = ({
+  projects,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const db = ref(database, "/project");
+
+  //       onValue(db, async (snapshot) => {
+  //         const data = await snapshot.val();
+
+  //         console.log(data);
+  //       });
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  // }, []);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get("/api/project");
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    dispatch(initiateMenu());
+    console.log(projects);
   }, []);
 
   return (
@@ -40,7 +80,7 @@ const HomePage: NextPage = () => {
       >
         <Landing className={`${getClasses(styles.landing)}`} />
         <About />
-        <Projects projectList={[]} />
+        <Projects projectList={projects} />
         <Contact />
       </motion.div>
     </>

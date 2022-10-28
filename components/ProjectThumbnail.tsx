@@ -45,12 +45,10 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
     >
       {/* TITLE */}
       <div
-        className={`w-full z-[1] row-span-1 h-full flex justify-center items-center text-center ${
+        className={`w-full z-[1] row-span-1 absolute top-0 flex justify-center items-center text-center ${
           showOptions
-            ? `text-white absolute top-0 ${
-                size === "small" ? "text-xl" : "text-3xl"
-              }`
-            : `dark:text-navy-theme truncate ${
+            ? `text-white h-full ${size === "small" ? "text-xl" : "text-3xl"}`
+            : `text-white bg-mask-bold truncate ${
                 size === "small" ? "text-lg" : "text-2xl"
               }`
         }`}
@@ -60,13 +58,12 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       {/* THUMBNAIL */}
       <div className="h-full row-span-5 overflow-hidden">
         <Image
-          layout="responsive"
+          // layout="responsive"
           alt={`project-${slug}`}
           src={thumbnail ? thumbnail : "https://dummyimage.com/600x400/fff/000"}
-          width={width ? width : 720}
-          height={height ? height : 576}
           className="w-full h-full"
-          objectFit="contain"
+          layout="fill"
+          objectFit="cover"
           priority
         />
       </div>
@@ -90,7 +87,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         {demoUrl && (
           <a
             className="flex items-center hover:underline"
-            href={demoUrl}
+            href={demoUrl.includes("https") ? demoUrl : `https://${demoUrl}`}
             target="_blank"
             rel="noreferrer"
           >
