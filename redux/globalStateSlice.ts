@@ -27,6 +27,11 @@ const defaultNavMenu: NavItemInterface[] = [
   },
 ];
 
+const defaultThumbnails: string[] = [
+  "https://images.pexels.com/photos/6991346/pexels-photo-6991346.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/323645/pexels-photo-323645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+];
+
 type GlobalStateProps = {
   isMasked: boolean;
   currentHomeView: string;

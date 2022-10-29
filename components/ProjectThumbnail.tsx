@@ -6,6 +6,7 @@ import { HiLink } from "react-icons/hi";
 import { FaEye } from "react-icons/fa";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 interface ProjectThumbnailProps extends ReactProps {
   name?: string;
@@ -33,22 +34,33 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   size,
 }) => {
   const [showOptions, setShowOptions] = useState<boolean | null>(null);
+  const router = useRouter();
 
   return (
-    <div
+    <motion.div
       className={`${getClasses(
         className
-      )} relative overflow-hidden grid grid-rows-6 dark:bg-white-theme`}
+      )} relative overflow-hidden grid grid-rows-6 dark:bg-white-theme cursor-pointer`}
       style={getStyles(style)}
       onMouseEnter={() => setShowOptions(true)}
       onMouseLeave={() => setShowOptions(false)}
+      whileHover={{
+        scale: 1.3,
+        zIndex: 10,
+        borderRadius: 5,
+        transition: { duration: 0.2 },
+      }}
+      // whileTap={{ scale: 1.1 }}
     >
       {/* TITLE */}
       <div
-        className={`w-full z-[1] row-span-1 absolute top-0 flex justify-center items-center text-center ${
+        onClick={() => router.push(`/project/${slug}`)}
+        className={`w-full z-[1] row-span-1 flex justify-center items-center text-center select-none ${
           showOptions
-            ? `text-white h-full ${size === "small" ? "text-xl" : "text-3xl"}`
-            : `text-white bg-mask-bold truncate ${
+            ? `text-white h-full absolute top-0 ${
+                size === "small" ? "text-xl" : "text-3xl"
+              }`
+            : `text-navy-theme bg-red-theme dark:text-white-theme truncate ${
                 size === "small" ? "text-lg" : "text-2xl"
               }`
         }`}
@@ -56,11 +68,15 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         {name}
       </div>
       {/* THUMBNAIL */}
-      <div className="h-full row-span-5 overflow-hidden">
+      <div className="relative w-full h-full row-span-5 overflow-hidden">
         <Image
           // layout="responsive"
           alt={`project-${slug}`}
-          src={thumbnail ? thumbnail : "https://dummyimage.com/600x400/fff/000"}
+          src={
+            thumbnail
+              ? thumbnail
+              : "https://images.pexels.com/photos/323645/pexels-photo-323645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          }
           className="w-full h-full"
           layout="fill"
           objectFit="cover"
@@ -74,19 +90,23 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       )}
       {/* HOVERING MASK */}
       <motion.div
-        className="absolute bottom-0 right-0 z-[1] w-full h-[2rem] bg-red-theme flex justify-evenly items-center"
+        className={`absolute bottom-0 right-0 z-[1] w-full h-1/6 bg-red-theme dark:text-white-theme text-navy-theme grid ${
+          demoUrl ? "grid-cols-2" : "grid-cols-1"
+        }
+        } ${size === "small" ? "text-sm" : "text-lg"}`}
         initial={{ opacity: 0, y: "2rem" }}
         animate={
           showOptions === true
-            ? { opacity: 1, y: 0 }
+            ? { opacity: 1, y: 0, transition: { delay: 0.2 } }
             : showOptions === false
-            ? { opacity: 0, y: "2rem" }
+            ? { opacity: 0, y: "20%" }
             : {}
         }
+        transition={{ duration: 0.3, ease: "anticipate" }}
       >
         {demoUrl && (
           <a
-            className="flex items-center hover:underline"
+            className="flex items-center justify-center col-span-1 dark:hover:bg-white-theme dark:hover:text-red-theme"
             href={demoUrl.includes("https") ? demoUrl : `https://${demoUrl}`}
             target="_blank"
             rel="noreferrer"
@@ -96,14 +116,14 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         )}
         {slug && (
           <Link href={`/project/${slug}`} target="_blank">
-            <a className="flex items-center hover:underline">
+            <a className="flex items-center justify-center col-span-1 dark:hover:bg-white-theme dark:hover:text-red-theme">
               <FaEye className="mr-3" />
               <p className="">Detail</p>
             </a>
           </Link>
         )}
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

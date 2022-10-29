@@ -8,19 +8,20 @@ const LoadingGlobal: React.FC = () => {
 
   return (
     <motion.div
-      initial={{ display: "none" }}
+      initial={{ display: "none", x: "-50%" }}
       animate={
         isGlobalLoading
-          ? { y: "5vh", display: "block" }
+          ? { y: "8vh", display: "block" }
           : { y: 0, display: "none" }
       }
-      className="fixed top-0 right-[5vw] z-20 flex items-center justify-center p-4 rounded-full dark:bg-white-theme"
+      // className="fixed top-0 z-20 flex items-center justify-center p-4 rounded-full left-1/2 dark:bg-white-theme"
+      className="fixed top-0 left-1/2"
     >
       <ReactLoading
-        color={colors["blue-theme"]}
-        width="1.5rem"
-        height="1.5rem"
-        type="spin"
+        color={colors["red-theme"]}
+        width="4rem"
+        height="4rem"
+        type="bars"
       />
     </motion.div>
   );
