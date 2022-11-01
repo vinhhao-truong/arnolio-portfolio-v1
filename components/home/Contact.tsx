@@ -12,7 +12,7 @@ import { GrLinkedinOption as LinkedInIcon } from "react-icons/gr";
 import { TbBrandGithub as GithubIcon } from "react-icons/tb";
 import { fades, scales } from "../../utils/motion/variants";
 import useResponsive from "../../hooks/useResponsive";
-import TopLayer from "../TopLayer";
+import TopLayer from "../common/TopLayer";
 import axios from "axios";
 import ResponseData from "../../interfaces/ResponseData";
 import { useDispatch, useSelector } from "react-redux";

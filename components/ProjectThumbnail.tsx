@@ -97,7 +97,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         initial={{ opacity: 0, y: "2rem" }}
         animate={
           showOptions === true
-            ? { opacity: 1, y: 0, transition: { delay: 0.2 } }
+            ? { opacity: 1, y: 0, transition: { delay: 0.1 } }
             : showOptions === false
             ? { opacity: 0, y: "20%" }
             : {}

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { startLoading, stopLoading } from "../../redux/globalStateSlice";
 import ProjectInterface from "../../interfaces/ProjectInterface";
 import { lowerCaseAddSeparator } from "../../utils/lowerCase";
+import Container from "../../components/Container";
 
 export const getServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
@@ -67,12 +68,12 @@ const Dashboard = ({
     };
 
   return (
-    <>
+    <Container className="w-full">
       <p>DashBoard</p>
-      <form onSubmit={handleCreateProject} className="grid gap-3">
+      <form onSubmit={handleCreateProject} className="grid grid-cols-1 gap-3">
         <div className="text-3xl">Add Projects</div>
         <input
-          className="arnolio-input"
+          className="arnolio-input w-1/3 min-w-[3rem]"
           value={newProject.name}
           type="text"
           onChange={handleProjectChange("name")}
@@ -80,7 +81,7 @@ const Dashboard = ({
           required
         />
         <input
-          className="arnolio-input"
+          className="arnolio-input w-1/3 min-w-[3rem]"
           value={newProject.demoUrl}
           type="text"
           onChange={handleProjectChange("demoUrl")}
@@ -104,7 +105,7 @@ const Dashboard = ({
       >
         Sign Out
       </button>
-    </>
+    </Container>
   );
 };
 

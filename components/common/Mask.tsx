@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectGlobalState } from "../redux/globalStateSlice";
+import { selectGlobalState } from "../../redux/globalStateSlice";
 
 const Mask: React.FC = () => {
   const { isMasked } = useSelector(selectGlobalState);

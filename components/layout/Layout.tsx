@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ReactProps from "../../interfaces/ReactProps";
 import { selectGlobalState } from "../../redux/globalStateSlice";
 import LoadingGlobal from "../LoadingGlobal";
-import Mask from "../Mask";
+import Mask from "../common/Mask";
 import TopProgressBar from "../TopProgressBar";
 import Footer from "./Footer";
 import Navigation from "./Navigation";

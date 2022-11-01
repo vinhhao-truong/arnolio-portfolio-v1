@@ -1,5 +1,5 @@
 import React from "react";
-import ReactProps from "../interfaces/ReactProps";
+import ReactProps from "../../interfaces/ReactProps";
 
 const TopLayer: React.FC<ReactProps> = () => {
   return (

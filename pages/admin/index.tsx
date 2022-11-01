@@ -89,6 +89,7 @@ const Admin = ({
           className="arnolio-input col-span-1 text-navy-theme"
           value={password}
           placeholder="Admin Password"
+          type="password"
         />
         <button
           className="block mx-auto py-1 rounded-lg hover:text-blue-theme dark:hover:bg-white-theme px-4 col-span-1 text-white bg-blue-theme"
