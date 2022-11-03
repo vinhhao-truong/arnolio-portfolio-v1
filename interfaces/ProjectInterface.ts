@@ -4,7 +4,7 @@ interface ProjectInterface {
   demoUrl?: string;
   description?: string;
   logo?: string | React.ReactNode;
-  thumbnail?: string;
+  thumbnail?: string | File;
   imgList?: string;
   color?: string;
 }

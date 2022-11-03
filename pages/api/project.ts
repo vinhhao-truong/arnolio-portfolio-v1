@@ -9,13 +9,13 @@ const handleAllProject = async (
   res: NextApiResponse<ResponseData>
 ) => {
   if (req.method === "POST") {
-    const newProject: ProjectInterface = req.body;
+    const { slug, name, demoUrl }: ProjectInterface = req.body;
 
     const allProjectRef = ref(firebaseDb, "project");
-    const slugRef = ref(firebaseDb, `project/${newProject.slug}`);
+    const slugRef = ref(firebaseDb, `project/${slug}`);
 
     try {
-      await set(slugRef, { ...newProject });
+      await set(slugRef, { slug: slug, name: name, demoUrl: demoUrl });
       res.status(200).send({
         status: 404,
         data: "New Project Created!",

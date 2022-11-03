@@ -8,6 +8,8 @@ import { startLoading, stopLoading } from "../../redux/globalStateSlice";
 import ProjectInterface from "../../interfaces/ProjectInterface";
 import { lowerCaseAddSeparator } from "../../utils/lowerCase";
 import Container from "../../components/Container";
+import { firebaseStorage } from "../../store/firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 export const getServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
@@ -24,6 +26,7 @@ const Dashboard = ({
   const initialNewProject: ProjectInterface = {
     name: "",
     demoUrl: "",
+    thumbnail: "",
   };
 
   const router = useRouter();
@@ -45,9 +48,13 @@ const Dashboard = ({
     if (newProject) {
       try {
         const res = await axios.post("/api/project", {
-          ...newProject,
+          name: newProject.name,
+          demoUrl: newProject.demoUrl,
           slug: newProject.name && lowerCaseAddSeparator(newProject.name, "-"),
         });
+
+        const storageRef = ref(firebaseStorage, "projects");
+        // await uploadBytes(storageRef, newProject.)
 
         alert(res.data.data);
         setNewProject({ ...initialNewProject });
@@ -58,13 +65,23 @@ const Dashboard = ({
   };
 
   const handleProjectChange =
-    (field: "name" | "demoUrl"): React.ChangeEventHandler<HTMLInputElement> =>
+    (
+      field: "name" | "demoUrl" | "thumbnail"
+    ): React.ChangeEventHandler<HTMLInputElement> =>
     (e) => {
       e.preventDefault();
-      setNewProject((prev) => ({
-        ...prev,
-        [field]: e.target.value,
-      }));
+      if (field !== "thumbnail") {
+        setNewProject((prev) => ({
+          ...prev,
+          [field]: e.target.value,
+        }));
+        return;
+      }
+
+      // setNewProject((prev) => ({
+      //   ...prev,
+      //   thumbnail: e.target.files[0],
+      // }));
     };
 
   return (
@@ -86,6 +103,11 @@ const Dashboard = ({
           type="text"
           onChange={handleProjectChange("demoUrl")}
           placeholder="Project Demo Url"
+        />
+        <input
+          type="file"
+          onChange={handleProjectChange("thumbnail")}
+          // value={newProject.thumbnail}
         />
         <button type="submit">Create</button>
       </form>

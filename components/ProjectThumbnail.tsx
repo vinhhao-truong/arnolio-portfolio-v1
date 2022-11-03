@@ -12,6 +12,7 @@ interface ProjectThumbnailProps extends ReactProps {
   name?: string;
   slug?: string;
   demoUrl?: string;
+  srcCodeUrl?: string;
   description?: string;
   logo?: string | React.ReactNode;
   thumbnail?: string;
@@ -31,6 +32,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   width,
   height,
   demoUrl,
+  srcCodeUrl,
   size,
 }) => {
   const [showOptions, setShowOptions] = useState<boolean | null>(null);
@@ -114,14 +116,28 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
             <HiLink className={`mr-${size === "small" ? "2" : "3"}`} /> Demo
           </a>
         )}
-        {slug && (
+        {srcCodeUrl && (
+          <a
+            className="flex items-center justify-center col-span-1 dark:hover:bg-white-theme dark:hover:text-red-theme"
+            href={
+              srcCodeUrl.includes("https")
+                ? srcCodeUrl
+                : `https://${srcCodeUrl}`
+            }
+            target="_blank"
+            rel="noreferrer"
+          >
+            <HiLink className={`mr-${size === "small" ? "2" : "3"}`} /> Demo
+          </a>
+        )}
+        {/* {slug && (
           <Link href={`/project/${slug}`} target="_blank">
             <a className="flex items-center justify-center col-span-1 dark:hover:bg-white-theme dark:hover:text-red-theme">
               <FaEye className="mr-3" />
               <p className="">Detail</p>
             </a>
           </Link>
-        )}
+        )} */}
       </motion.div>
     </motion.div>
   );

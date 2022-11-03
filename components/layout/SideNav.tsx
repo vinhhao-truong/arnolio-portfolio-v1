@@ -74,8 +74,8 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
       {/* Main Logo */}
       <Link href="/">
         <motion.img
-          className="h-6 mb-8 cursor-pointer md:h-8 lg:h-12"
-          src="/circle-icon/android-chrome-512x512.png"
+          className="h-6 mb-8 rounded-full cursor-pointer md:h-8 lg:h-12"
+          src="/rounded-icon/android-chrome-512x512.png"
           alt="logo"
           whileHover={{ ...scales.scaleUp }}
           whileTap={{ ...scales.scaleDown }}
