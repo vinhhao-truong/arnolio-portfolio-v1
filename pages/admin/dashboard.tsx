@@ -26,6 +26,7 @@ const Dashboard = ({
   const initialNewProject: ProjectInterface = {
     name: "",
     demoUrl: "",
+    srcCodeUrl: "",
     thumbnail: "",
   };
 
@@ -50,6 +51,7 @@ const Dashboard = ({
         const res = await axios.post("/api/project", {
           name: newProject.name,
           demoUrl: newProject.demoUrl,
+          srcCodeUrl: newProject.srcCodeUrl,
           slug: newProject.name && lowerCaseAddSeparator(newProject.name, "-"),
         });
 
@@ -66,7 +68,7 @@ const Dashboard = ({
 
   const handleProjectChange =
     (
-      field: "name" | "demoUrl" | "thumbnail"
+      field: "name" | "demoUrl" | "srcCodeUrl" | "thumbnail"
     ): React.ChangeEventHandler<HTMLInputElement> =>
     (e) => {
       e.preventDefault();
@@ -103,6 +105,13 @@ const Dashboard = ({
           type="text"
           onChange={handleProjectChange("demoUrl")}
           placeholder="Project Demo Url"
+        />
+        <input
+          className="arnolio-input w-1/3 min-w-[3rem]"
+          value={newProject.srcCodeUrl}
+          type="text"
+          onChange={handleProjectChange("srcCodeUrl")}
+          placeholder="Source Code Url"
         />
         <input
           type="file"

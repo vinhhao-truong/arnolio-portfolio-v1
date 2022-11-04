@@ -31,8 +31,7 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
     //7 same as 10 (default), 5 different
     console.log(projectCount);
 
-    if (isOne) setThumbnailClass("md:col-span-12");
-    if (isTwoOrFour) setThumbnailClass("md:col-span-6");
+    if (isTwoOrFour || isOne) setThumbnailClass("md:col-span-6");
     if (isThreeSixNine) setThumbnailClass("md:col-span-4");
     if (isEight) setThumbnailClass("md:col-span-3");
   }, []);
@@ -58,7 +57,7 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
           ?.slice(0, 10)
           .map(
             (
-              { name, slug, demoUrl, thumbnail }: ProjectInterface,
+              { name, slug, demoUrl, srcCodeUrl, thumbnail }: ProjectInterface,
               idx: number
             ) => {
               //count and render three items in a row
@@ -79,6 +78,7 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
                   thumbnail={thumbnail}
                   slug={slug}
                   demoUrl={demoUrl}
+                  srcCodeUrl={srcCodeUrl}
                   width={900}
                   height={600}
                   size={isTen && !threePerRow ? "small" : "big"}

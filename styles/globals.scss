@@ -15,11 +15,15 @@ body {
 }
 
 html {
-  background-color: $navy-theme;
+  background: rgb(17, 24, 39);
+  background-repeat: no-repeat;
 }
 
 body {
-  background-color: $navy-theme;
+  // min-width: 100vw;
+  min-height: 100vh;
+  background: $space-theme;
+  background-repeat: no-repeat;
 }
 
 ::-webkit-scrollbar {

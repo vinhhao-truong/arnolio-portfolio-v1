@@ -205,8 +205,15 @@ const Contact: React.FC<ContactProps> = () => {
         </motion.div>
         {/* Separator */}
         <div className="relative justify-center w-full md:w-[1%] flex items-center">
-          <div className="absolute md:w-[1px] h-[1px] w-4/5 md:h-4/5 dark:bg-white-theme "></div>
-          <div className="z-10 dark:bg-navy-theme md:leading-10 ">or</div>
+          <div
+            style={isSm || isXs ? { left: 0 } : {}}
+            className={`absolute h-[1px] w-[40%] md:top-0 bg-white-theme md:w-[1px] md:h-[45%]`}
+          ></div>
+          <div className="z-10 md:leading-10 ">or</div>
+          <div
+            style={isSm || isXs ? { right: 0 } : {}}
+            className={`absolute h-[1px] w-[40%] md:bottom-0 bg-white-theme md:w-[1px] md:h-[45%]`}
+          ></div>
         </div>
 
         {/* Contact form */}
