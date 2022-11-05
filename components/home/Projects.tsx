@@ -6,6 +6,8 @@ import ProjectThumbnail from "../ProjectThumbnail";
 import Section from "../Section";
 import SectionHeader from "../SectionHeader";
 import ProjectInterface from "../../interfaces/ProjectInterface";
+import { ref, getDownloadURL } from "firebase/storage";
+import { firebaseStorage } from "../../store/firebase";
 
 interface ProjectsProps extends ReactProps {
   projectList?: ProjectInterface[];

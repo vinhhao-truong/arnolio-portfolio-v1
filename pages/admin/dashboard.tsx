@@ -9,7 +9,7 @@ import ProjectInterface from "../../interfaces/ProjectInterface";
 import { lowerCaseAddSeparator } from "../../utils/lowerCase";
 import Container from "../../components/Container";
 import { firebaseStorage } from "../../store/firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export const getServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
@@ -35,6 +35,7 @@ const Dashboard = ({
   const [newProject, setNewProject] = useState<ProjectInterface>({
     ...initialNewProject,
   });
+  const [uploadedImg, setUploadedImg] = useState<FileList | null>(null);
 
   //Persist if being signed in
   useEffect(() => {
@@ -48,17 +49,26 @@ const Dashboard = ({
     e.preventDefault();
     if (newProject) {
       try {
-        const res = await axios.post("/api/project", {
+        let imgUrl: string = "";
+
+        if (uploadedImg) {
+          const storageRef = ref(firebaseStorage, "projects");
+          const upload = await uploadBytes(storageRef, uploadedImg[0]);
+          const url: string = await getDownloadURL(upload.ref);
+
+          imgUrl = url;
+        }
+
+        await axios.post("/api/project", {
           name: newProject.name,
           demoUrl: newProject.demoUrl,
-          srcCodeUrl: newProject.srcCodeUrl,
           slug: newProject.name && lowerCaseAddSeparator(newProject.name, "-"),
+          thumbnail: imgUrl,
         });
 
-        const storageRef = ref(firebaseStorage, "projects");
         // await uploadBytes(storageRef, newProject.)
 
-        alert(res.data.data);
+        alert("New blog created");
         setNewProject({ ...initialNewProject });
       } catch (err) {
         console.log(err);
@@ -68,17 +78,15 @@ const Dashboard = ({
 
   const handleProjectChange =
     (
-      field: "name" | "demoUrl" | "srcCodeUrl" | "thumbnail"
+      field: "name" | "demoUrl" | "srcCodeUrl"
     ): React.ChangeEventHandler<HTMLInputElement> =>
     (e) => {
       e.preventDefault();
-      if (field !== "thumbnail") {
-        setNewProject((prev) => ({
-          ...prev,
-          [field]: e.target.value,
-        }));
-        return;
-      }
+      setNewProject((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+      return;
 
       // setNewProject((prev) => ({
       //   ...prev,
@@ -113,10 +121,14 @@ const Dashboard = ({
           onChange={handleProjectChange("srcCodeUrl")}
           placeholder="Source Code Url"
         />
+        {/* UPLOAD */}
         <input
           type="file"
-          onChange={handleProjectChange("thumbnail")}
-          // value={newProject.thumbnail}
+          onChange={(e) => {
+            e.preventDefault();
+            setUploadedImg(e.target.files);
+          }}
+          // value={uploadedImg}
         />
         <button type="submit">Create</button>
       </form>

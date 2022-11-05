@@ -43,6 +43,7 @@ export const getServerSideProps = async () => {
     },
   };
 };
+
 const HomePage = ({
   projects,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {

@@ -9,7 +9,8 @@ const handleAllProject = async (
   res: NextApiResponse<ResponseData>
 ) => {
   if (req.method === "POST") {
-    const { slug, name, demoUrl, srcCodeUrl }: ProjectInterface = req.body;
+    const { slug, name, demoUrl, srcCodeUrl, thumbnail }: ProjectInterface =
+      req.body;
 
     const allProjectRef = ref(firebaseDb, "project");
     const slugRef = ref(firebaseDb, `project/${slug}`);
@@ -20,6 +21,7 @@ const handleAllProject = async (
         name: name,
         demoUrl: demoUrl,
         srcCodeUrl: srcCodeUrl,
+        thumbnail: thumbnail,
       });
       res.status(200).send({
         status: 404,
