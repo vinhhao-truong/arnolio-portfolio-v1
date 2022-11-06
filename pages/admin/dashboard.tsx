@@ -48,31 +48,38 @@ const Dashboard = ({
   const handleCreateProject: React.FormEventHandler = async (e) => {
     e.preventDefault();
     if (newProject) {
+      dispatch(startLoading());
       try {
         let imgUrl: string = "";
+        const slug = newProject.name
+          ? lowerCaseAddSeparator(newProject.name, "-")
+          : "";
 
         if (uploadedImg) {
-          const storageRef = ref(firebaseStorage, "projects");
+          const storageRef = ref(firebaseStorage, `projects/${slug}`);
           const upload = await uploadBytes(storageRef, uploadedImg[0]);
           const url: string = await getDownloadURL(upload.ref);
 
           imgUrl = url;
         }
 
-        await axios.post("/api/project", {
+        const res = await axios.post("/api/project", {
           name: newProject.name,
           demoUrl: newProject.demoUrl,
-          slug: newProject.name && lowerCaseAddSeparator(newProject.name, "-"),
-          thumbnail: imgUrl,
+          slug: slug,
+          thumbnail: imgUrl ? imgUrl : "",
+          srcCodeUrl: newProject.srcCodeUrl,
         });
 
         // await uploadBytes(storageRef, newProject.)
 
         alert("New blog created");
         setNewProject({ ...initialNewProject });
+        setUploadedImg(null);
       } catch (err) {
         console.log(err);
       }
+      dispatch(stopLoading());
     }
   };
 

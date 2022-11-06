@@ -15,6 +15,8 @@ const handleAllProject = async (
     const allProjectRef = ref(firebaseDb, "project");
     const slugRef = ref(firebaseDb, `project/${slug}`);
 
+    console.log(thumbnail);
+
     try {
       await set(slugRef, {
         slug: slug,
@@ -23,14 +25,15 @@ const handleAllProject = async (
         srcCodeUrl: srcCodeUrl,
         thumbnail: thumbnail,
       });
+      console.log("nice");
       res.status(200).send({
-        status: 404,
+        status: 200,
         data: "New Project Created!",
       });
     } catch (err) {
       res.status(404).send({
         status: 404,
-        data: err,
+        data: "Some Error",
       });
     }
   }
