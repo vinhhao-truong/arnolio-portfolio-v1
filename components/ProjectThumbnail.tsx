@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { selectGlobalState } from "../redux/globalStateSlice";
 import { useSelector } from "react-redux";
+import useResponsive from "../hooks/useResponsive";
 
 interface ProjectThumbnailProps extends ReactProps {
   name?: string;
@@ -39,6 +40,10 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   const router = useRouter();
 
   const { colors } = useSelector(selectGlobalState);
+  const responsive = useResponsive();
+
+  const isMobileTablet =
+    responsive === "sm" || responsive === "xs" || responsive === "md";
 
   return (
     <motion.div
@@ -46,26 +51,43 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         className
       )} relative overflow-hidden dark:bg-white-theme`}
       style={getStyles(style)}
-      onMouseEnter={() => setShowOptions(true)}
-      onMouseLeave={() => setShowOptions(false)}
+      onMouseEnter={() => {
+        if (!isMobileTablet) setShowOptions(true);
+      }}
+      onMouseLeave={() => {
+        if (!isMobileTablet) setShowOptions(false);
+      }}
       whileHover={{
-        scale: 1.3,
+        // scale: 1.3,
         zIndex: 10,
         borderRadius: 5,
         transition: { duration: 0.2 },
       }}
       // whileTap={{ scale: 1.1 }}
+      onClick={() => {
+        isMobileTablet &&
+          window.open(
+            demoUrl?.includes("https") ? demoUrl : `https://${demoUrl}`,
+            "_blank"
+          );
+      }}
     >
       {/* TITLE */}
       <motion.div
         // onClick={() => router.push(`/project/${slug}`)}
         className={`w-full z-[1] bg-mask-bold text-white-theme absolute top-0 flex justify-center items-center text-center ${
-          showOptions
-            ? `${size === "small" ? "text-xl" : "text-3xl"}`
-            : `truncate ${size === "small" ? "text-lg" : "text-2xl"}`
+          showOptions && !isMobileTablet
+            ? `${size === "small" ? "text-xl" : "text-3xl"} p-3`
+            : `lg:truncate ${
+                size === "small" ? "lg:text-lg" : "lg:text-2xl"
+              } h-full`
         }`}
-        animate={showOptions ? { height: "100%" } : { height: "15%" }}
-        transition={{ duration: 0.2 }}
+        animate={
+          showOptions || isMobileTablet
+            ? { height: "100%", borderRadius: 5 }
+            : { height: "15%", borderRadius: 0 }
+        }
+        transition={isMobileTablet ? {} : { duration: 0.2 }}
       >
         {name}
       </motion.div>
@@ -92,7 +114,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       )} */}
       {/* HOVERING MASK */}
       <motion.div
-        className={`absolute bottom-0 right-0 z-[1] w-full h-1/6 max-h-[3.5rem] flex justify-evenly
+        className={`absolute bottom-[10%] right-0 z-[1] w-full h-1/6 max-h-[3.5rem] flex justify-evenly
         ${size === "small" ? "text-sm" : "text-lg"}`}
         initial={{ opacity: 0, y: "2rem" }}
         animate={
@@ -104,18 +126,23 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
         }
         transition={{ duration: 0.3, ease: "anticipate" }}
       >
-        {demoUrl && (
+        {demoUrl && !isMobileTablet && (
           <motion.a
             className="flex items-center justify-center text-white-theme"
             href={demoUrl.includes("https") ? demoUrl : `https://${demoUrl}`}
             target="_blank"
             rel="noreferrer"
-            whileHover={{ scale: 1.2, color: colors["blue-theme"] }}
+            whileHover={{
+              scale: 1.8,
+              color: colors["blue-theme"],
+            }}
+            whileTap={{ scale: 1.6 }}
+            transition={{ duration: 0.2 }}
           >
-            <HiLink className={`mr-${size === "small" ? "2" : "3"}`} /> Demo
+            <HiLink className={size === "small" ? "mr-2" : "mr-3"} /> Demo
           </motion.a>
         )}
-        {srcCodeUrl && (
+        {srcCodeUrl && !isMobileTablet && (
           <motion.a
             className="flex items-center justify-center text-white-theme"
             href={
@@ -125,20 +152,17 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
             }
             target="_blank"
             rel="noreferrer"
-            whileHover={{ scale: 1.2, color: colors["blue-theme"] }}
+            whileHover={{
+              scale: 1.8,
+              color: colors["blue-theme"],
+            }}
+            whileTap={{ scale: 1.6 }}
+            transition={{ duration: 0.2 }}
           >
-            <HiOutlineCode className={`mr-${size === "small" ? "2" : "3"}`} />{" "}
+            <HiOutlineCode className={size === "small" ? "mr-2" : "mr-3"} />{" "}
             Source Code
           </motion.a>
         )}
-        {/* {slug && (
-          <Link href={`/project/${slug}`} target="_blank">
-            <a className="flex items-center justify-center col-span-1 dark:hover:bg-white-theme dark:hover:text-red-theme">
-              <FaEye className="mr-3" />
-              <p className="">Detail</p>
-            </a>
-          </Link>
-        )} */}
       </motion.div>
     </motion.div>
   );

@@ -68,7 +68,7 @@ const HomePage = ({
 
   useEffect(() => {
     dispatch(initiateMenu());
-    console.log(projects);
+    // console.log(projects);
   }, []);
 
   return (

@@ -31,7 +31,7 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
 
   useEffect(() => {
     //7 same as 10 (default), 5 different
-    console.log(projectCount);
+    // console.log(projectCount);
 
     if (isTwoOrFour || isOne) setThumbnailClass("md:col-span-6");
     if (isThreeSixNine) setThumbnailClass("md:col-span-4");
@@ -46,7 +46,7 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
       <SectionHeader title="Projects" />
       {/* MAIN CONTENT */}
       <Container
-        className={`md:grid md:grid-cols-12 ${
+        className={`grid grid-cols-12 gap-2 ${
           isOneRow
             ? "h-[40vh] md:gap-2"
             : isTwoRows
@@ -69,13 +69,13 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
               return (
                 <ProjectThumbnail
                   key={idx}
-                  className={
+                  className={`${
                     isSevenOrTen
                       ? `${threePerRow ? "md:col-span-4" : "md:col-span-3"}`
                       : isFive
                       ? `${twoPerRow ? "md:col-span-6" : "md:col-span-4"}`
                       : thumbnailClass
-                  }
+                  } col-span-6`}
                   name={name}
                   thumbnail={thumbnail}
                   slug={slug}

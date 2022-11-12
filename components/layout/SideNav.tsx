@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import { getClasses } from "../../utils/getProps";
@@ -101,7 +103,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
           </Link>
           {/* ToolTips */}
           {/* <ReactTooltip
-            effect="solid"
+            effect="float"
             type="light"
             place="right"
             offset={{
@@ -110,7 +112,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
             }}
             id={`side-nav-${idx}`}
           >
-            {nav.title}
+            <div className="text-navy-theme">{nav.title}</div>
           </ReactTooltip> */}
         </div>
       ))}
