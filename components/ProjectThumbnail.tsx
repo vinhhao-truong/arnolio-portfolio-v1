@@ -49,7 +49,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
     <motion.div
       className={`${getClasses(
         className
-      )} relative overflow-hidden dark:bg-white-theme`}
+      )} relative overflow-hidden dark:bg-white-theme rounded-md lg:rounded-lg`}
       style={getStyles(style)}
       onMouseEnter={() => {
         if (!isMobileTablet) setShowOptions(true);
@@ -60,7 +60,6 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       whileHover={{
         // scale: 1.3,
         zIndex: 10,
-        borderRadius: 5,
         transition: { duration: 0.2 },
       }}
       // whileTap={{ scale: 1.1 }}
@@ -75,7 +74,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       {/* TITLE */}
       <motion.div
         // onClick={() => router.push(`/project/${slug}`)}
-        className={`w-full z-[1] bg-mask-bold text-white-theme absolute top-0 flex justify-center items-center text-center ${
+        className={`rounded-md lg:rounded-lg w-full z-[1] bg-mask-bold text-white-theme absolute top-0 flex justify-center items-center text-center ${
           showOptions && !isMobileTablet
             ? `${size === "small" ? "text-xl" : "text-3xl"} p-3`
             : `lg:truncate ${
@@ -83,9 +82,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
               } h-full`
         }`}
         animate={
-          showOptions || isMobileTablet
-            ? { height: "100%", borderRadius: 5 }
-            : { height: "15%", borderRadius: 0 }
+          showOptions || isMobileTablet ? { height: "100%" } : { height: "15%" }
         }
         transition={isMobileTablet ? {} : { duration: 0.2 }}
       >
@@ -133,10 +130,10 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
             target="_blank"
             rel="noreferrer"
             whileHover={{
-              scale: 1.8,
+              scale: 1.2,
               color: colors["blue-theme"],
             }}
-            whileTap={{ scale: 1.6 }}
+            whileTap={{ scale: 1 }}
             transition={{ duration: 0.2 }}
           >
             <HiLink className={size === "small" ? "mr-2" : "mr-3"} /> Demo
@@ -153,10 +150,10 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
             target="_blank"
             rel="noreferrer"
             whileHover={{
-              scale: 1.8,
+              scale: 1.2,
               color: colors["blue-theme"],
             }}
-            whileTap={{ scale: 1.6 }}
+            whileTap={{ scale: 1 }}
             transition={{ duration: 0.2 }}
           >
             <HiOutlineCode className={size === "small" ? "mr-2" : "mr-3"} />{" "}
