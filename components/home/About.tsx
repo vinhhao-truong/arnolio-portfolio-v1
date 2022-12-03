@@ -1,6 +1,12 @@
 "use client";
 
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ReactProps from "../../interfaces/ReactProps";
 import SectionHeader from "../SectionHeader";
 import Container from "../Container";
@@ -11,23 +17,38 @@ import getRandomNum from "../../utils/getRandomNum";
 import useResponsive from "../../hooks/useResponsive";
 import { upperCaseFirst } from "../../utils/upperCase";
 import Image from "next/image";
+import { duration } from "moment";
+import { BsFillInfoCircleFill as MeIcon } from "react-icons/bs";
+import {
+  IoLogoCodepen as TechIcon,
+  IoMdClose as CloseIcon,
+} from "react-icons/io";
+import { SiBuildkite as ExpIcon } from "react-icons/si";
+import { FaHandSparkles as HandIcon } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  onMasked,
+  offMasked,
+  selectGlobalState,
+} from "../../redux/globalStateSlice";
+import Link from "next/link";
 
 const colorList: string[] = [
-  "bg-sky-300",
+  "bg-amber-300",
+  "bg-red-300",
   "bg-indigo-300",
+  "bg-teal-300",
+  "bg-violet-300",
   "bg-rose-300",
+  "bg-sky-300",
   "bg-green-300",
   "bg-lime-300",
-  "bg-red-300",
-  "bg-violet-300",
   "bg-blue-300",
   "bg-yellow-300",
   "bg-orange-300",
   "bg-pink-300",
   "bg-purple-300",
-  "bg-amber-300",
   "bg-emerald-300",
-  "bg-teal-300",
   "bg-cyan-300",
 ];
 
@@ -41,28 +62,48 @@ const About: React.FC<AboutProps> = ({}) => {
   const isDesktop: boolean = ["lg"].includes(responsive);
   const isTablet: boolean = ["sm", "md"].includes(responsive);
 
+  const dispatch = useDispatch();
+  const { isMasked } = useSelector(selectGlobalState);
+
+  const appear: TargetAndTransition = {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: "easeInOut" },
+  };
+
+  const disappear: TargetAndTransition = {
+    opacity: 0,
+    userSelect: "none",
+    x: "-5vw",
+    transition: { duration: 0.8, ease: "easeInOut" },
+  };
+
   interface card {
     title: string;
     description?: string;
     className?: string;
     coord: number[];
     titlePlacement: "top" | "bottom" | "left" | "right";
+    icon?: ReactNode;
   }
   const cardList: card[] = [
     {
-      title: "About me",
+      title: "me",
       coord: isBigScreen ? [-10, -20] : [-5, 20],
       titlePlacement: "left",
+      icon: <MeIcon className="" />,
     },
     {
-      title: "Tech stacks",
+      title: "tech",
       coord: isBigScreen ? [-10, 70] : [-5, 50],
       titlePlacement: "right",
+      icon: <TechIcon className="" />,
     },
     {
-      title: "Experience",
+      title: "exp",
       coord: isBigScreen ? [60, 30] : [50, -10],
       titlePlacement: "bottom",
+      icon: <ExpIcon className="mr-2" />,
     },
   ];
 
@@ -72,6 +113,7 @@ const About: React.FC<AboutProps> = ({}) => {
     coord: number[];
     title: string;
     titlePlacement: "top" | "bottom" | "left" | "right";
+    icon?: React.ReactNode;
   }
   const Card: React.FC<CardProps> = ({
     children,
@@ -82,6 +124,7 @@ const About: React.FC<AboutProps> = ({}) => {
     coord,
     title,
     titlePlacement,
+    icon,
   }) => {
     const random: number = getRandomNum(-15, 15);
     const animate: TargetAndTransition =
@@ -89,7 +132,6 @@ const About: React.FC<AboutProps> = ({}) => {
         ? {
             x: isOnTop ? "-50%" : 0,
             y: isOnTop ? "-50%" : 0,
-            zIndex: isOnTop ? 1 : 0,
             top: isOnTop ? "50%" : `${coord[0]}%`,
             left: isOnTop ? "50%" : `${coord[1]}%`,
             scale:
@@ -109,9 +151,9 @@ const About: React.FC<AboutProps> = ({}) => {
         className={`lg:absolute ${getClasses(
           className
         )} rounded-lg shadow-lg lg:w-[12rem] lg:h-[20rem] xl:w-[15rem] xl:h-[25rem] ${
-          isOnTop ? "cursor-grab" : "cursor-pointer"
-        } ${isOnTop ? "shadow-md" : ""}`}
-        whileHover={isOnTop ? {} : { scale: 1.02 }}
+          isOnTop || currentCard === null ? "shadow-md cursor-pointer" : ""
+        }`}
+        whileHover={isOnTop || currentCard !== null ? {} : { scale: 1.02 }}
         animate={animate}
         style={
           isDesktop || isBigScreen
@@ -127,6 +169,9 @@ const About: React.FC<AboutProps> = ({}) => {
         // dragConstraints={cardContainerRef}
         // onDragExit={() => {}}
       >
+        {isOnTop && (
+          <CloseIcon className="absolute hidden text-white lg:block top-3 right-3" />
+        )}
         <div
           className={`lg:absolute ${
             isTitleSide
@@ -144,17 +189,18 @@ const About: React.FC<AboutProps> = ({}) => {
           style={{
             [titlePlacement]: 0,
             textAlign:
-              isTitleSide &&
-              (titlePlacement === "left" || titlePlacement === "right")
-                ? titlePlacement
-                : "center", //@ts-ignore
+              isTitleSide && (isLeft || isRight) ? titlePlacement : "center",
+            transform: `translateX(${
+              isLeft ? "-1rem" : isRight ? "1rem" : "0"
+            }) translateY(${isBottom ? "0.5rem" : "0"})`,
           }}
         >
           <div
-            className={`bg-red-theme ${
-              isTitleSide ? "py-10 px-1" : "px-4 py-2"
-            }`}
+            className={`bg-red-theme flex items-center ${
+              isTitleSide ? "flex-col" : ""
+            } ${isTitleSide ? "py-10 px-1" : "px-4 py-2"}`}
           >
+            {icon}
             {title}
           </div>
         </div>
@@ -188,31 +234,39 @@ const About: React.FC<AboutProps> = ({}) => {
       <SectionHeader title="About" />
       <Container className="h-[80vh] lg:grid lg:grid-cols-2">
         {/* LEFT */}
-        <div className="relative flex items-center justify-center lg:h-full">
+        <div className="flex items-center justify-center lg:h-full">
           <div
             className="lg:relative lg:w-4/5 max-h-[40rem] max-w-[30rem] lg:h-4/5"
             ref={cardContainerRef}
           >
             {cardList.map(
-              ({ className, title, coord, titlePlacement }, idx) => {
+              ({ className, title, coord, titlePlacement, icon }, idx) => {
                 const isOnTop: boolean = currentCard === idx;
 
                 return (
                   <Card
-                    className={`${getClasses(className)} ${colorList[idx]}`}
+                    className={`${getClasses(className)} ${colorList[idx]} ${
+                      isOnTop ? "z-30" : ""
+                    }`}
                     key={idx}
                     coord={coord}
                     onClick={() => {
-                      if (typeof currentCard === "number") {
-                        setCurrentCard((prev) => null);
+                      if (isOnTop) {
+                        setCurrentCard(null);
+                        return;
                       }
-                      setCurrentCard((prev) => idx);
+                      if (currentCard === null) {
+                        dispatch(onMasked());
+                        setCurrentCard(idx);
+                        return;
+                      }
                     }}
                     isOnTop={isOnTop}
                     titlePlacement={titlePlacement}
                     title={title}
+                    icon={icon}
                   >
-                    {title === "About me" && (
+                    {title === "me" && (
                       <div className={`h-full`}>
                         <div
                           className={`flex flex-col items-center h-full justify-center`}
@@ -238,8 +292,84 @@ const About: React.FC<AboutProps> = ({}) => {
           </div>
         </div>
         {/* RIGHT */}
-        <div className="flex items-center justify-end">
-          <div className="">Pick a card for more detail</div>
+        <div className="relative flex items-center justify-end xl:ml-6">
+          {/* No Card Chosen */}
+          <motion.div
+            initial={{ opacity: 0, x: "-5vw" }}
+            whileInView={currentCard === null ? appear : disappear}
+            animate={
+              currentCard === null
+                ? {
+                    transition: {
+                      delay: 0.8,
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      bounce: 0.5,
+                    },
+                    y: ["0.5vh", "-1vh", "0.5vh"],
+                  }
+                : { transition: { delay: 0.8 }, zIndex: -1 }
+            }
+            style={{ transform: "translateY(-50%)" }}
+            className="flex flex-col items-center justify-center select-none text-7xl 2xl:text-[7rem] absolute right-0 top-1/2"
+          >
+            pick a card <HandIcon />
+          </motion.div>
+          {/* About content */}
+          <motion.div
+            initial={{ opacity: 0, x: "-5vw" }}
+            whileInView={
+              currentCard === 0 ? { ...appear } : { ...disappear, zIndex: -1 }
+            }
+            className="absolute right-0 top-1/2 h-fit"
+            style={{ transform: "translateY(-50%)" }}
+          >
+            <div className="my-5">
+              <span className="mx-2 text-4xl font-semibold">Who am I?</span> a
+              developer, a gamer with a passion of web development.
+            </div>
+            <div className="my-5 ">
+              <span className="mx-2 text-4xl font-semibold">What I do?</span>
+              mostly front-end, sometimes back-end and even UX design
+            </div>
+            <div className="my-5 ">
+              <span className="mx-2 text-4xl font-semibold">
+                Why accompany me?
+              </span>
+              deliver high-quality website with the most modern tools (see tech
+              card)
+            </div>
+            <div className="my-5 ">
+              <span className="mx-2 text-4xl font-semibold">
+                How to contact me?
+              </span>
+              <Link scroll={false} href="#contact">
+                <a
+                  onClick={() => {
+                    if (isMasked) {
+                      dispatch(offMasked());
+                    }
+                    setCurrentCard(null);
+                  }}
+                  className="text-blue-300 hover:underline"
+                >
+                  click here
+                </a>
+              </Link>
+            </div>
+          </motion.div>
+          {/* About content */}
+          <motion.div
+            initial={{ opacity: 0, x: "-5vw" }}
+            whileInView={
+              currentCard === 2 ? { ...appear } : { ...disappear, zIndex: -1 }
+            }
+            className="absolute right-0 z-30 top-1/2 h-fit"
+            style={{ transform: "translateY(-50%)" }}
+          >
+            content
+          </motion.div>
         </div>
       </Container>
     </Section>

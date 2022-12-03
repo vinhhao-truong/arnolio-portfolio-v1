@@ -38,6 +38,7 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col items-center dark">
+      <Mask />
       <Navigation
         className={`w-full z-10 max-w-[120rem] px-8 lg:px-[9rem] xl:px-40`}
       />
@@ -47,7 +48,6 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
       {/* Global Components */}
       {isScrollDown && <ScrollTopBtn />}
       <TopProgressBar />
-      <Mask />
       <LoadingGlobal />
     </div>
   );
