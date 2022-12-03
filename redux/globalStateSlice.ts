@@ -1,5 +1,5 @@
 import { RootState } from "./portfolioStore";
-import { Action, createSlice } from "@reduxjs/toolkit";
+import { Action, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import NavItemInterface from "../interfaces/NavItemInterface";
 
 const defaultColors = {
@@ -34,6 +34,7 @@ const defaultThumbnails: string[] = [
 
 type GlobalStateProps = {
   isMasked: boolean;
+  isMaskClosable: boolean;
   currentHomeView: string;
   isGlobalLoading: boolean;
   colors: any;
@@ -42,6 +43,7 @@ type GlobalStateProps = {
 
 const initialState: GlobalStateProps = {
   isMasked: false,
+  isMaskClosable: false,
   currentHomeView: "",
   isGlobalLoading: false,
   colors: defaultColors,
@@ -52,11 +54,15 @@ const globalStateSlice = createSlice({
   name: "globalState",
   initialState: { ...initialState },
   reducers: {
-    onMasked: (state) => {
-      return { ...state, isMasked: true };
+    onMasked: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        isMasked: true,
+        isMaskClosable: action.payload ? true : false,
+      };
     },
     offMasked: (state) => {
-      return { ...state, isMasked: false };
+      return { ...state, isMasked: false, isMaskClosable: false };
     },
     startLoading: (state) => {
       return { ...state, isGlobalLoading: true, isMasked: true };

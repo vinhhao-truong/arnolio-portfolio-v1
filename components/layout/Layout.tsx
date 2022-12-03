@@ -14,7 +14,7 @@ import SideNav from "./SideNav";
 const Layout: React.FC<ReactProps> = ({ children }) => {
   const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
   const { scrollY } = useScroll();
-  const { isGlobalLoading } = useSelector(selectGlobalState);
+  const { isGlobalLoading, isMasked } = useSelector(selectGlobalState);
 
   //Check and get scroll pos
   useEffect(() => {

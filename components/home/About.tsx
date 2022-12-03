@@ -1,5 +1,4 @@
 "use client";
-
 import React, {
   forwardRef,
   ReactNode,
@@ -32,6 +31,8 @@ import {
   selectGlobalState,
 } from "../../redux/globalStateSlice";
 import Link from "next/link";
+import { GiWorld } from "react-icons/gi";
+import ExpSvg from "../svg/undraw_developer_activity_re_39tg.svg";
 
 const colorList: string[] = [
   "bg-amber-300",
@@ -229,6 +230,26 @@ const About: React.FC<AboutProps> = ({}) => {
   //   console.log(getRandomNum(-30, 30));
   // }, []);
 
+  useEffect(() => {
+    if (!isMasked && typeof currentCard === "number") {
+      setCurrentCard(null);
+    }
+  }, [currentCard, isMasked]);
+
+  useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && typeof currentCard === "number") {
+        setCurrentCard(null);
+        dispatch(offMasked());
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [currentCard]);
+
   return (
     <Section id="about" className="relative">
       <SectionHeader title="About" />
@@ -253,10 +274,11 @@ const About: React.FC<AboutProps> = ({}) => {
                     onClick={() => {
                       if (isOnTop) {
                         setCurrentCard(null);
+                        dispatch(offMasked());
                         return;
                       }
                       if (currentCard === null) {
-                        dispatch(onMasked());
+                        dispatch(onMasked(true));
                         setCurrentCard(idx);
                         return;
                       }
@@ -279,10 +301,31 @@ const About: React.FC<AboutProps> = ({}) => {
                             objectFit="cover"
                             className={`rounded-full`}
                           />
-                          <h2 className="my-4 text-2xl text-center">
+                          <h2 className="my-4 text-3xl text-center">
                             Arnold Truong
                           </h2>
                         </div>
+                      </div>
+                    )}
+
+                    {title === "tech" && (
+                      <div className="flex flex-col h-full justify-evenly">
+                        <div className="text-4xl">
+                          Modern web development and more
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="">
+                            <div className="text-sky-500">#frontend</div>
+                            <div className="text-sky-500">#backend</div>
+                          </div>
+                          <GiWorld className="text-3xl text-sky-400" />
+                        </div>
+                      </div>
+                    )}
+
+                    {title === "exp" && (
+                      <div>
+                        <ExpSvg className="w-full h-full" />
                       </div>
                     )}
                   </Card>
@@ -320,7 +363,9 @@ const About: React.FC<AboutProps> = ({}) => {
           <motion.div
             initial={{ opacity: 0, x: "-5vw" }}
             whileInView={
-              currentCard === 0 ? { ...appear } : { ...disappear, zIndex: -1 }
+              currentCard === 0
+                ? { ...appear, zIndex: 30 }
+                : { ...disappear, zIndex: -1 }
             }
             className="absolute right-0 top-1/2 h-fit"
             style={{ transform: "translateY(-50%)" }}
@@ -344,6 +389,7 @@ const About: React.FC<AboutProps> = ({}) => {
               <span className="mx-2 text-4xl font-semibold">
                 How to contact me?
               </span>
+              simple, just{" "}
               <Link scroll={false} href="#contact">
                 <a
                   onClick={() => {

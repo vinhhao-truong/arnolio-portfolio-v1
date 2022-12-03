@@ -11,7 +11,7 @@ const Container: React.FC<ReactProps> = ({
   id,
 }) => {
   const { scrollY, scrollYProgress } = useScroll();
-  const [initialY, setInitialY] = useState<string>();
+  const [initialY, setInitialY] = useState<string>("0%");
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -28,9 +28,10 @@ const Container: React.FC<ReactProps> = ({
   return (
     <motion.div
       id={getClasses(id)}
-      className={`${getClasses(className)} w-full lg:px-[4.5rem] xl:px-40`}
+      className={`${getClasses(
+        className
+      )} w-full lg:px-[4.5rem] xl:px-40 opacity-0`}
       style={getStyles(style)}
-      initial={{ y: initialY, opacity: 0 }}
       whileInView={{
         ...fades.fadeIn,
         y: 0,
