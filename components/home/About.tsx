@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React, {
   forwardRef,
   ReactNode,
@@ -16,7 +16,7 @@ import getRandomNum from "../../utils/getRandomNum";
 import useResponsive from "../../hooks/useResponsive";
 import { upperCaseFirst } from "../../utils/upperCase";
 import Image from "next/image";
-import { duration } from "moment";
+import moment, { duration } from "moment";
 import { BsFillInfoCircleFill as MeIcon } from "react-icons/bs";
 import {
   IoLogoCodepen as TechIcon,
@@ -33,6 +33,12 @@ import {
 import Link from "next/link";
 import { GiWorld } from "react-icons/gi";
 import ExpSvg from "../svg/undraw_feeling_proud_qne1.svg";
+import { Icon } from "@iconify/react";
+import Iconify from "../common/Iconify";
+import { v4 as uuid } from "uuid";
+import ReactTooltip from "react-tooltip";
+import { MdDoneAll } from "react-icons/md";
+import MaqroLogo from "../svg/about_logo_414122832b.svg";
 
 const colorList: string[] = [
   "bg-amber-300",
@@ -51,6 +57,71 @@ const colorList: string[] = [
   "bg-purple-300",
   "bg-emerald-300",
   "bg-cyan-300",
+];
+
+interface TechIconProps {
+  icon: string;
+  color: string;
+  title: string;
+}
+const ProgrammingTechIconList: TechIconProps[] = [
+  { icon: "akar-icons:html-fill", color: "#e34c26", title: "HTML" },
+  { icon: "akar-icons:css-fill", color: "#2965f1", title: "CSS" },
+  { icon: "ion:logo-javascript", color: "#f0db4f", title: "JavaScript" },
+  { icon: "mdi:react", color: "#61DBFB", title: "ReactJS" },
+  { icon: "ion:logo-nodejs", color: "#68a063", title: "NodeJS" },
+  { icon: "teenyicons:nextjs-solid", color: "white", title: "NextJS" },
+  { icon: "ion:logo-sass", color: "#cc6699", title: "SASS" },
+  { icon: "mdi:bootstrap", color: "#563d7c", title: "Bootstrap" },
+  { icon: "mdi:tailwind", color: "#38bdf8", title: "TailwindCSS" },
+];
+const OtherTechIconList: TechIconProps[] = [
+  { icon: "simple-icons:postman", color: "#ef5b25", title: "Postman" },
+  { icon: "logos:figma", color: "#a259ff", title: "Figma" },
+];
+
+interface ExpTimelineProps {
+  date: string;
+  logo?: React.ReactNode;
+  action: string;
+  detail?: string;
+  isDone: boolean;
+}
+const expTimeline: ExpTimelineProps[] = [
+  {
+    date: `${moment().format("MMM' YYYY")}`,
+    action: "Keep improving",
+    isDone: false,
+  },
+  {
+    date: "Sep' 2022",
+    action: "Maqro Internship",
+    detail:
+      "Working as a front-end developer to build and enhance Maqro Portal",
+    isDone: false,
+    logo: (
+      <div className="w-[12%] h-full mr-2">
+        <MaqroLogo />
+      </div>
+    ),
+  },
+  {
+    date: "May' 2022",
+    action: "JDS Volunteering",
+    detail: "Helped build automatic email system (SMTP) for New Relic One",
+    isDone: true,
+    logo: (
+      <div className="mr-2 select-none">
+        <Image
+          src="https://www.jds.net.au/images/cropped-JDS_Logo_redLarge.png"
+          alt="jds-logo"
+          width="40%"
+          height="40%"
+          objectFit="contain"
+        />
+      </div>
+    ),
+  },
 ];
 
 interface AboutProps extends ReactProps {}
@@ -90,19 +161,19 @@ const About: React.FC<AboutProps> = ({}) => {
   const cardList: card[] = [
     {
       title: "me",
-      coord: isBigScreen ? [-10, -20] : [-5, 20],
+      coord: isBigScreen ? [-10, -20] : [-5, 10],
       titlePlacement: "left",
       icon: <MeIcon className="" />,
     },
     {
       title: "tech",
-      coord: isBigScreen ? [-10, 70] : [-5, 50],
+      coord: isBigScreen ? [-10, 70] : [-5, 60],
       titlePlacement: "right",
       icon: <TechIcon className="" />,
     },
     {
       title: "exp",
-      coord: isBigScreen ? [60, 30] : [50, -10],
+      coord: isBigScreen ? [60, 30] : [40, 30],
       titlePlacement: "bottom",
       icon: <ExpIcon className="mr-2" />,
     },
@@ -301,8 +372,11 @@ const About: React.FC<AboutProps> = ({}) => {
                             objectFit="cover"
                             className={`rounded-full`}
                           />
-                          <h2 className="my-4 text-3xl text-center">
-                            Arnold Truong
+                          <h2 className="my-4 text-lg text-center xl:text-xl">
+                            <span className="text-2xl xl:text-3xl text-red-theme">
+                              Arnold
+                            </span>{" "}
+                            Truong
                           </h2>
                         </div>
                       </div>
@@ -310,7 +384,7 @@ const About: React.FC<AboutProps> = ({}) => {
 
                     {title === "tech" && (
                       <div className="flex flex-col h-full justify-evenly">
-                        <div className="text-4xl">
+                        <div className="text-2xl xl:text-4xl">
                           Modern web development and more
                         </div>
                         <div className="flex items-center justify-between">
@@ -326,8 +400,8 @@ const About: React.FC<AboutProps> = ({}) => {
                     {title === "exp" && (
                       <div className="flex flex-col items-center justify-between h-full">
                         <div className="mt-3 text-3xl text-center text-white theme">
-                          What I <span className="text-red-theme">have</span>{" "}
-                          been through
+                          What I have{" "}
+                          <span className="text-red-theme">achieved</span>
                         </div>
                         <ExpSvg className="w-full h-full" />
                       </div>
@@ -355,6 +429,14 @@ const About: React.FC<AboutProps> = ({}) => {
                       bounce: 0.5,
                     },
                     y: ["0.5vh", "-1vh", "0.5vh"],
+                    color: [
+                      "#fcd34d",
+                      "#fca5a5",
+                      "#a5b4fc",
+                      "#a5b4fc",
+                      "#fca5a5",
+                      "#fcd34d",
+                    ],
                   }
                 : { transition: { delay: 0.8 }, zIndex: -1 }
             }
@@ -375,23 +457,27 @@ const About: React.FC<AboutProps> = ({}) => {
             style={{ transform: "translateY(-50%)" }}
           >
             <div className="my-5">
-              <span className="mx-2 text-4xl font-semibold">Who am I?</span> a
-              developer, a gamer with a passion of web development.
+              <span className="mx-2 text-4xl font-semibold">
+                Who am I<span className="text-blue-300">?</span>
+              </span>{" "}
+              a developer, a gamer with a passion of web development.
             </div>
             <div className="my-5 ">
-              <span className="mx-2 text-4xl font-semibold">What I do?</span>
+              <span className="mx-2 text-4xl font-semibold">
+                What I do<span className="text-blue-300">?</span>
+              </span>
               mostly front-end, sometimes back-end and even UX design
             </div>
             <div className="my-5 ">
               <span className="mx-2 text-4xl font-semibold">
-                Why accompany me?
+                Why accompany me<span className="text-blue-300">?</span>
               </span>
               deliver high-quality website with the most modern tools (see tech
               card)
             </div>
             <div className="my-5 ">
               <span className="mx-2 text-4xl font-semibold">
-                How to contact me?
+                How to contact me<span className="text-blue-300">?</span>
               </span>
               simple, just{" "}
               <Link scroll={false} href="#contact">
@@ -402,23 +488,141 @@ const About: React.FC<AboutProps> = ({}) => {
                     }
                     setCurrentCard(null);
                   }}
-                  className="text-blue-300 hover:underline"
+                  className="text-blue-400 underline hover:text-blue-500"
                 >
                   click here
                 </a>
               </Link>
             </div>
           </motion.div>
-          {/* About content */}
+          {/* Tech content */}
+          <motion.div
+            initial={{ opacity: 0, x: "-5vw" }}
+            whileInView={
+              currentCard === 1 ? { ...appear } : { ...disappear, zIndex: -1 }
+            }
+            className="absolute top-0 right-0 z-30 flex flex-col w-full h-full justify-evenly"
+            onClick={() => {
+              dispatch(offMasked());
+              setCurrentCard(null);
+            }}
+          >
+            <div className="h-max">
+              <div className="mb-5 text-3xl">Programming:</div>
+              <div className="flex flex-wrap pl-6">
+                {ProgrammingTechIconList.map(({ icon, color, title }) => {
+                  return (
+                    <div key={uuid()} className="mb-5">
+                      <a data-tip data-for={title + "-tooltip"}>
+                        <Iconify
+                          icon={icon}
+                          color={color}
+                          className="mr-6 text-6xl"
+                        />
+                      </a>
+
+                      <ReactTooltip
+                        id={title + "-tooltip"}
+                        place="bottom"
+                        effect="float"
+                        backgroundColor={color}
+                        textColor="black"
+                      >
+                        <span className="text-lg">{title}</span>
+                      </ReactTooltip>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="h-max">
+              <div className="mb-5 text-3xl">Other:</div>
+              <div className="flex flex-wrap pl-6">
+                {OtherTechIconList.map(({ icon, color, title }) => {
+                  return (
+                    <div key={uuid()} className="">
+                      <a data-tip data-for={title + "-tooltip"}>
+                        <Iconify
+                          icon={icon}
+                          color={color}
+                          className="mr-6 text-6xl"
+                        />
+                      </a>
+
+                      <ReactTooltip
+                        id={title + "-tooltip"}
+                        place="bottom"
+                        effect="float"
+                        backgroundColor={color}
+                        textColor="black"
+                      >
+                        <span className="text-lg">{title}</span>
+                      </ReactTooltip>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+          {/* Exp content */}
           <motion.div
             initial={{ opacity: 0, x: "-5vw" }}
             whileInView={
               currentCard === 2 ? { ...appear } : { ...disappear, zIndex: -1 }
             }
-            className="absolute right-0 z-30 top-1/2 h-fit"
-            style={{ transform: "translateY(-50%)" }}
+            className="absolute top-0 right-0 z-30 flex flex-col justify-center w-full h-full"
+            onClick={() => {
+              dispatch(offMasked());
+              setCurrentCard(null);
+            }}
           >
-            content
+            {expTimeline
+              .slice(0, 5)
+              .map(({ date, action, detail, isDone, logo }, idx: number) => {
+                const last: number =
+                  expTimeline.length < 5 ? expTimeline.length - 1 : 4;
+                const isFirstItem = idx === 0;
+                const isLastItem = idx === last;
+
+                return (
+                  <div key={uuid()} className="grid grid-cols-8 gap-4">
+                    <div className="flex items-center justify-end col-span-3 text-lg">
+                      {date}
+                    </div>
+                    <div className="relative flex items-center justify-center">
+                      <div
+                        className={`w-6 h-6 z-[1] rounded-full flex justify-center items-center ring-[0.5rem] ${
+                          isDone
+                            ? "bg-gray-300 ring-gray-300/40"
+                            : "bg-indigo-300 ring-indigo-300/40"
+                        }`}
+                      >
+                        {isDone && <MdDoneAll className="text-gray-700" />}
+                      </div>
+                      {/* line */}
+                      <div
+                        className={`absolute top-0 left-1/2 w-1 ${
+                          isFirstItem ? "rounded-t" : ""
+                        } ${isLastItem ? "h-1/2" : "h-full"} ${
+                          isDone ? "bg-gray-300/20" : "bg-indigo-300/20"
+                        }`}
+                        style={{ transform: "translateX(-50%)" }}
+                      ></div>
+                    </div>
+                    <div className="col-span-4">
+                      <div
+                        className={`mt-12 mb-2 text-2xl flex items-center ${
+                          isDone ? "text-gray-400" : "text-indigo-400"
+                        }`}
+                      >
+                        {logo}
+                        {action}
+                      </div>
+                      <div className="mb-12">{detail}</div>
+                    </div>
+                  </div>
+                );
+              })}
           </motion.div>
         </div>
       </Container>

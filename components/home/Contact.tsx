@@ -146,7 +146,7 @@ const Contact: React.FC<ContactProps> = () => {
               ? { ...collapse }
               : {}
           }
-          className="block md:grid md:grid-cols-2 mx-auto w-max md:w-full lg:mx-0 lg:w-[49.5%] lg:flex lg:flex-col lg:justify-center text-xs xs:text-sm sm:text-base lg:truncate lg:text-xl relative"
+          className="block md:grid md:grid-cols-2 mx-auto w-max md:w-full lg:mx-0 lg:w-[49.5%] lg:flex lg:flex-col lg:justify-center text-xs xs:text-sm sm:text-base lg:truncate lg:text-2xl relative"
         >
           {/* {isLeft === false && <TopLayer />} */}
           {contactUrlList.map((contact: ContactUrl, idx: number) => {
@@ -163,7 +163,7 @@ const Contact: React.FC<ContactProps> = () => {
                   <motion.a
                     href={contact.href}
                     target={isEmailHref || isTelHref ? "_self" : "_blank"}
-                    className="flex items-center mr-2"
+                    className="flex items-center mr-2 lg:text-2xl"
                     animate={
                       isLeft === true || isLeft === null || isMobile
                         ? { position: "relative" }
@@ -186,7 +186,7 @@ const Contact: React.FC<ContactProps> = () => {
                   <motion.a
                     href={contact.href}
                     target={isEmailHref || isTelHref ? "_self" : "_blank"}
-                    className={`lg:whitespace-nowrap hover:underline active:text-${contact.color}`}
+                    className={`lg:whitespace-nowrap lg:text-2xl hover:underline active:text-${contact.color}`}
                     animate={
                       isLeft === true || isLeft === null || isMobile
                         ? { ...fades.fadeIn }
