@@ -6,13 +6,14 @@ import useResponsive from "../hooks/useResponsive";
 
 const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
   const responsive = useResponsive();
+  const isDesktop: boolean = ["lg", "xl", "2xl"].includes(responsive);
   const { scrollY } = useScroll();
 
   // useEffect(() => {
   //   console.log(responsive);
   // }, [responsive]);
 
-  return responsive !== "sm" && responsive !== "xs" ? (
+  return isDesktop ? (
     <motion.div
       initial={{ x: "-3rem", rotate: -90 }}
       whileInView={{
@@ -25,7 +26,7 @@ const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
       {title}
     </motion.div>
   ) : (
-    <div className="mb-2 text-xl font-semibold text-center dark:text-white-theme">
+    <div className="mt-4 mb-2 text-3xl font-semibold uppercase dark:text-white-theme">
       {title}
     </div>
   );

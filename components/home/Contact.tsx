@@ -80,6 +80,8 @@ const Contact: React.FC<ContactProps> = () => {
   const isSm = responsive === "sm";
   const isMd = responsive === "md";
 
+  const isMobile: boolean = ["xs", "2xs", "sm", "md"].includes(responsive);
+
   const [emailInput, setEmailInput] = useState<string>("");
   const [messageInput, setMessageInput] = useState<string>("");
 
@@ -128,23 +130,23 @@ const Contact: React.FC<ContactProps> = () => {
     <Section
       ref={contactRef}
       id="contact"
-      className="relative justify-center md:flex md:items-center"
+      className="relative justify-center lg:flex lg:items-center"
     >
       <SectionHeader title="Contact" />
       {/* Main section */}
-      <Container className="h-full md:flex md:justify-between">
+      <Container className="h-full lg:flex lg:justify-between">
         {/* Urls to contact */}
         <motion.div
           onMouseEnter={() => setIsLeft(true)}
           transition={{ duration: 0.2, ease: "easeIn" }}
           animate={
-            isLeft === true && !(isSm || isXs)
+            isLeft === true && !isMobile
               ? { ...expand }
-              : isLeft === false && !(isSm || isXs)
+              : isLeft === false && !isMobile
               ? { ...collapse }
               : {}
           }
-          className="md:w-[49.5%] md:flex md:flex-col md:justify-center text-xs sm:text-sm md:truncate lg:text-xl relative"
+          className="block md:grid md:grid-cols-2 mx-auto w-max md:w-full lg:mx-0 lg:w-[49.5%] lg:flex lg:flex-col lg:justify-center text-xs xs:text-sm sm:text-base lg:truncate lg:text-xl relative"
         >
           {/* {isLeft === false && <TopLayer />} */}
           {contactUrlList.map((contact: ContactUrl, idx: number) => {
@@ -154,7 +156,7 @@ const Contact: React.FC<ContactProps> = () => {
 
             return (
               <motion.div
-                className="relative flex items-center py-1 md:py-2"
+                className="relative flex items-center py-1 lg:py-2"
                 key={`contact-item-${idx}`}
               >
                 <Link href={contact.href}>
@@ -163,19 +165,19 @@ const Contact: React.FC<ContactProps> = () => {
                     target={isEmailHref || isTelHref ? "_self" : "_blank"}
                     className="flex items-center mr-2"
                     animate={
-                      isLeft === true || isLeft === null || isXs || isSm
+                      isLeft === true || isLeft === null || isMobile
                         ? { position: "relative" }
                         : { x: "5rem" }
                     }
                   >
-                    <span className="p-1 mr-2 rounded-full md:mr-4 dark:bg-white-theme md:hover:brightness-90">
+                    <span className="p-1 mr-2 rounded-full lg:mr-4 dark:bg-white-theme lg:hover:brightness-90">
                       {contact.icon}
                     </span>{" "}
                     <div
-                      className={`${contact.color} md:whitespace-nowrap md:hover:brightness-75`}
+                      className={`${contact.color} lg:whitespace-nowrap lg:hover:brightness-75`}
                     >
                       {contact.displayText}
-                      {(isLeft || isLeft === null || isXs || isSm) && ":"}
+                      {(isLeft || isLeft === null || isMobile) && ":"}
                     </div>
                   </motion.a>
                 </Link>
@@ -184,9 +186,9 @@ const Contact: React.FC<ContactProps> = () => {
                   <motion.a
                     href={contact.href}
                     target={isEmailHref || isTelHref ? "_self" : "_blank"}
-                    className={`md:whitespace-nowrap hover:underline active:text-${contact.color}`}
+                    className={`lg:whitespace-nowrap hover:underline active:text-${contact.color}`}
                     animate={
-                      isLeft === true || isLeft === null || isXs || isSm
+                      isLeft === true || isLeft === null || isMobile
                         ? { ...fades.fadeIn }
                         : {
                             ...fades.fadeOut,
@@ -204,15 +206,15 @@ const Contact: React.FC<ContactProps> = () => {
           })}
         </motion.div>
         {/* Separator */}
-        <div className="relative justify-center w-full md:w-[1%] flex items-center">
+        <div className="relative justify-center w-full lg:w-[1%] flex items-center my-4 lg:my-0">
           <div
-            style={isSm || isXs ? { left: 0 } : {}}
-            className={`absolute h-[1px] w-[40%] md:top-0 bg-white-theme md:w-[1px] md:h-[45%]`}
+            style={isMobile ? { left: 0 } : {}}
+            className={`absolute h-[1px] w-[40%] lg:top-0 bg-white-theme lg:w-[1px] lg:h-[45%]`}
           ></div>
-          <div className="z-10 md:leading-10 ">or</div>
+          <div className="z-10 lg:leading-10 ">or</div>
           <div
-            style={isSm || isXs ? { right: 0 } : {}}
-            className={`absolute h-[1px] w-[40%] md:bottom-0 bg-white-theme md:w-[1px] md:h-[45%]`}
+            style={isMobile ? { right: 0 } : {}}
+            className={`absolute h-[1px] w-[40%] lg:bottom-0 bg-white-theme lg:w-[1px] lg:h-[45%]`}
           ></div>
         </div>
 
@@ -220,15 +222,15 @@ const Contact: React.FC<ContactProps> = () => {
         <motion.div
           onMouseEnter={() => setIsLeft(false)}
           animate={
-            isLeft === false && !(isSm || isXs)
+            isLeft === false && !isMobile
               ? { ...expand }
-              : isLeft === true && !(isSm || isXs)
+              : isLeft === true && !isMobile
               ? { ...collapse }
               : {}
           }
           transition={{ duration: 0.2, ease: "easeIn" }}
-          className={`w-full md:w-[49.5%] ${
-            !isLeft ? "md:p-5" : "md:p-4"
+          className={`w-full lg:w-[49.5%] ${
+            !isLeft ? "lg:p-5" : "lg:p-4"
           } relative`}
         >
           {/* {isLeft === true && <TopLayer />} */}
@@ -240,7 +242,7 @@ const Contact: React.FC<ContactProps> = () => {
             className="flex flex-col justify-center w-full"
           >
             <input
-              className="w-full mb-3 md:w-1/2 arnolio-input"
+              className="w-full mb-3 lg:w-1/2 arnolio-input"
               type="email"
               placeholder="Your email here..."
               onChange={handleInput("email")}

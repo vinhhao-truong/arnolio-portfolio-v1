@@ -8,7 +8,7 @@ const TopProgressBar: React.FC = () => {
   return (
     <motion.div
       style={{ scaleX: scrollYProgress }}
-      className="hidden md:block md:fixed left-0 top-0 right-0 max-w-[100vw] z-20 h-1 bg-red-theme"
+      className="hidden lg:block lg:fixed left-0 top-0 right-0 max-w-[100vw] z-20 h-1 bg-red-theme"
     />
   );
 };

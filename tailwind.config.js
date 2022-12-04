@@ -18,6 +18,10 @@ module.exports = {
         "mask-bold": "rgba(0, 0, 0, 0.95)",
         "top-layer": "rgba(255, 255, 255, 0.05)",
       },
+      screens: {
+        xs: "480px",
+        "2xs": "330px",
+      },
     },
   },
   plugins: [

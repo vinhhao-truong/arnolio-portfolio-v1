@@ -25,25 +25,26 @@ body {
   background: $space-theme;
   background-repeat: no-repeat;
 }
-
-::-webkit-scrollbar {
-  // display: none;
-  height: 5px;
-  width: 5px;
-  background-color: $navy-theme;
-}
-
-::-webkit-scrollbar-thumb {
-  // display: none;
-  background-color: $red-theme;
-  &:hover {
-    background-color: #dc2f02;
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    // display: none;
+    height: 5px;
+    width: 5px;
+    background-color: $navy-theme;
   }
-  -webkit-border-radius: 1ex;
-}
 
-::-webkit-scrollbar-corner {
-  background-color: $navy-theme;
+  ::-webkit-scrollbar-thumb {
+    // display: none;
+    background-color: $red-theme;
+    &:hover {
+      background-color: #dc2f02;
+    }
+    -webkit-border-radius: 1ex;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: $navy-theme;
+  }
 }
 
 .arnolio-input {

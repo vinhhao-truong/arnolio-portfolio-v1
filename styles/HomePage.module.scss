@@ -4,7 +4,7 @@
     padding: 1rem 4rem;
   }
   //Only Landing
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .landing {
       min-height: calc(100vh - 5rem);
     }

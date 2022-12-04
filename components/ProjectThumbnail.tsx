@@ -42,14 +42,15 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   const { colors } = useSelector(selectGlobalState);
   const responsive = useResponsive();
 
-  const isMobileTablet =
-    responsive === "sm" || responsive === "xs" || responsive === "md";
+  const isMobileTablet: boolean = ["2xs", "xs", "sm", "md"].includes(
+    responsive
+  );
 
   return (
     <motion.div
       className={`${getClasses(
         className
-      )} relative overflow-hidden dark:bg-white-theme rounded-md lg:rounded-lg`}
+      )} relative overflow-hidden dark:bg-white-theme rounded-md lg:rounded-lg cursor-pointer lg:cursor-default`}
       style={getStyles(style)}
       onMouseEnter={() => {
         if (!isMobileTablet) setShowOptions(true);
@@ -74,7 +75,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
       {/* TITLE */}
       <motion.div
         // onClick={() => router.push(`/project/${slug}`)}
-        className={`rounded-md lg:rounded-lg w-full z-[1] bg-mask-bold text-white-theme absolute top-0 flex justify-center items-center text-center ${
+        className={`rounded-md lg:rounded-lg w-full z-[1] sm:text-lg md:text-2xl bg-black/70 lg:bg-mask-bold text-white-theme absolute top-0 flex justify-center items-center text-center ${
           showOptions && !isMobileTablet
             ? `${size === "small" ? "text-xl" : "text-3xl"} p-3`
             : `lg:truncate ${

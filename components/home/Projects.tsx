@@ -33,25 +33,25 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
     //7 same as 10 (default), 5 different
     // console.log(projectCount);
 
-    if (isTwoOrFour || isOne) setThumbnailClass("md:col-span-6");
-    if (isThreeSixNine) setThumbnailClass("md:col-span-4");
-    if (isEight) setThumbnailClass("md:col-span-3");
+    if (isTwoOrFour || isOne) setThumbnailClass("lg:col-span-6");
+    if (isThreeSixNine) setThumbnailClass("lg:col-span-4");
+    if (isEight) setThumbnailClass("lg:col-span-3");
   }, []);
 
   return (
     <Section
       id="projects"
-      className="relative justify-center md:flex md:items-center"
+      className="relative justify-center lg:flex lg:items-center"
     >
       <SectionHeader title="Projects" />
       {/* MAIN CONTENT */}
       <Container
         className={`grid grid-cols-12 gap-2 ${
           isOneRow
-            ? "h-[40vh] md:gap-2"
+            ? "h-[40vh] lg:gap-2"
             : isTwoRows
-            ? "h-[60vh] md:gap-3"
-            : "h-[90vh] md:gap-2"
+            ? "h-[60vh] lg:gap-3"
+            : "h-[90vh] lg:gap-2"
         }`}
       >
         {/* Only take 10 */}
@@ -71,9 +71,9 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
                   key={idx}
                   className={`${
                     isSevenOrTen
-                      ? `${threePerRow ? "md:col-span-4" : "md:col-span-3"}`
+                      ? `${threePerRow ? "lg:col-span-4" : "lg:col-span-3"}`
                       : isFive
-                      ? `${twoPerRow ? "md:col-span-6" : "md:col-span-4"}`
+                      ? `${twoPerRow ? "lg:col-span-6" : "lg:col-span-4"}`
                       : thumbnailClass
                   } col-span-6`}
                   name={name}

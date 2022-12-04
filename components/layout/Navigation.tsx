@@ -20,7 +20,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const { scrollY } = useScroll();
   const [isHidden, setIsHidden] = useState(false);
   const responsive = useResponsive();
-  const isMobile: boolean = responsive === "xs" || responsive === "sm";
+  const isMobile: boolean = ["2xs", "xs", "sm", "md"].includes(responsive);
 
   const MotionSection = motion(Section);
 
@@ -60,7 +60,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           {/* logo */}
           <Link href="/">
             <motion.img
-              className="cursor-pointer h-4/5 rounded-full"
+              className="rounded-full cursor-pointer h-4/5"
               src="/rounded-icon/android-chrome-512x512.png"
               whileHover={{ ...scales.scaleUp }}
               whileTap={{ ...scales.scaleDown }}

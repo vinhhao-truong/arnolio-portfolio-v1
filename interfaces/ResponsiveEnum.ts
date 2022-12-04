@@ -1,4 +1,5 @@
 enum ResponsiveEnum {
+  "2xs" = "2xs",
   Xs = "xs",
   Sm = "sm",
   Md = "md",

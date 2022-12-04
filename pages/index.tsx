@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import type { InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
 import Seo from "../components/Seo";
+import useResponsive from "../hooks/useResponsive";
 //home components
 import About from "../components/home/About";
 import Contact from "../components/home/Contact";
@@ -23,6 +24,7 @@ import { initiateMenu } from "../redux/globalStateSlice";
 import { firebaseDb } from "../store/firebase";
 import { update, ref, onValue } from "firebase/database";
 import ProjectInterface from "../interfaces/ProjectInterface";
+import AboutMobile from "../components/home/AboutMobile";
 
 export const getServerSideProps = async () => {
   const projects: any[] = [];
@@ -49,6 +51,9 @@ const HomePage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const responsive = useResponsive();
+  const isDesktop: boolean = ["lg", "xl", "2xl"].includes(responsive);
 
   // useEffect(() => {
   //   (async () => {
@@ -80,7 +85,7 @@ const HomePage = ({
         )} w-full flex flex-col items-center`}
       >
         <Landing className={`${getClasses(styles.landing)}`} />
-        <About />
+        {isDesktop ? <About /> : <AboutMobile />}
         <Projects projectList={projects} />
         <Contact />
       </motion.div>

@@ -32,7 +32,7 @@ import {
 } from "../../redux/globalStateSlice";
 import Link from "next/link";
 import { GiWorld } from "react-icons/gi";
-import ExpSvg from "../svg/undraw_developer_activity_re_39tg.svg";
+import ExpSvg from "../svg/undraw_feeling_proud_qne1.svg";
 
 const colorList: string[] = [
   "bg-amber-300",
@@ -324,7 +324,11 @@ const About: React.FC<AboutProps> = ({}) => {
                     )}
 
                     {title === "exp" && (
-                      <div>
+                      <div className="flex flex-col items-center justify-between h-full">
+                        <div className="mt-3 text-3xl text-center text-white theme">
+                          What I <span className="text-red-theme">have</span>{" "}
+                          been through
+                        </div>
                         <ExpSvg className="w-full h-full" />
                       </div>
                     )}
