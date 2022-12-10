@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import type { InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
 import Seo from "../components/Seo";
@@ -19,41 +19,46 @@ import { useRouter } from "next/router";
 import axios from "axios";
 //redux
 import { useDispatch } from "react-redux";
-import { initiateMenu } from "../redux/globalStateSlice";
+import {
+  initiateMenu,
+  startLoading,
+  stopLoading,
+} from "../redux/globalStateSlice";
 //firebase
 import { firebaseDb } from "../store/firebase";
 import { update, ref, onValue } from "firebase/database";
 import ProjectInterface from "../interfaces/ProjectInterface";
 import AboutMobile from "../components/home/AboutMobile";
 
-export const getServerSideProps = async () => {
-  const projects: any[] = [];
+// export const getServerSideProps = async () => {
+//   const projects: any[] = [];
 
-  const projectRef = ref(firebaseDb, "project");
-  try {
-    onValue(projectRef, (snapshot) => {
-      const data = snapshot.val();
-      projects.push(...Object.values(data));
-    });
-  } catch (err) {
-    console.log(err);
-  }
+//   const projectRef = ref(firebaseDb, "project");
+//   try {
+//     onValue(projectRef, (snapshot) => {
+//       const data = snapshot.val();
+//       projects.push(...Object.values(data));
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
 
-  return {
-    props: {
-      projects: projects,
-    },
-  };
-};
+//   return {
+//     props: {
+//       projects: projects,
+//     },
+//   };
+// };
 
-const HomePage = ({
-  projects,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const HomePage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const responsive = useResponsive();
   const isDesktop: boolean = ["lg", "xl", "2xl"].includes(responsive);
+
+  const [projectList, setProjectList] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // useEffect(() => {
   //   (async () => {
@@ -74,21 +79,35 @@ const HomePage = ({
   useEffect(() => {
     dispatch(initiateMenu());
     // console.log(projects);
+
+    dispatch(startLoading());
+    try {
+      const projectRef = ref(firebaseDb, "project");
+      onValue(projectRef, async (snapshot) => {
+        const data = await snapshot.val();
+        setProjectList(Object.values(data).reverse());
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    dispatch(stopLoading());
   }, []);
 
   return (
     <>
       <Seo title="Arnolio" />
-      <motion.div
-        className={`${getClasses(
-          styles.container
-        )} w-full flex flex-col items-center`}
-      >
-        <Landing className={`${getClasses(styles.landing)}`} />
-        <About />
-        <Projects projectList={projects} />
-        <Contact />
-      </motion.div>
+      {
+        <motion.div
+          className={`${getClasses(
+            styles.container
+          )} w-full flex flex-col items-center`}
+        >
+          <Landing className={`${getClasses(styles.landing)}`} />
+          <About />
+          {projectList && <Projects projectList={projectList} />}
+          <Contact />
+        </motion.div>
+      }
     </>
   );
 };

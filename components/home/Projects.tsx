@@ -45,50 +45,61 @@ const Projects: React.FC<ProjectsProps> = ({ projectList }) => {
     >
       <SectionHeader title="Projects" />
       {/* MAIN CONTENT */}
-      <Container
-        className={`grid grid-cols-12 gap-2 ${
-          isOneRow
-            ? "h-[40vh] lg:gap-2"
-            : isTwoRows
-            ? "h-[60vh] lg:gap-3"
-            : "h-[90vh] lg:gap-2"
-        }`}
-      >
-        {/* Only take 10 */}
-        {projectList
-          ?.slice(0, 10)
-          .map(
-            (
-              { name, slug, demoUrl, srcCodeUrl, thumbnail }: ProjectInterface,
-              idx: number
-            ) => {
-              //count and render three items in a row
-              const threePerRow: boolean = idx < 3 || idx > 6;
-              const twoPerRow: boolean = idx < 2;
+      {projectList && (
+        <Container
+          className={`grid grid-cols-12 gap-2 ${
+            isOneRow
+              ? "h-[40vh] lg:gap-2"
+              : isTwoRows
+              ? "h-[60vh] lg:gap-3"
+              : "h-[90vh] lg:gap-2"
+          }`}
+        >
+          {/* Only take 10 */}
+          {projectList
+            ?.slice(0, 10)
+            .map(
+              (
+                {
+                  name,
+                  slug,
+                  demoUrl,
+                  srcCodeUrl,
+                  thumbnail,
+                }: ProjectInterface,
+                idx: number
+              ) => {
+                //count and render three items in a row
+                const threePerRow: boolean = idx < 3 || idx > 6;
+                const twoPerRow: boolean = idx < 2;
 
-              return (
-                <ProjectThumbnail
-                  key={idx}
-                  className={`${
-                    isSevenOrTen
-                      ? `${threePerRow ? "lg:col-span-4" : "lg:col-span-3"}`
-                      : isFive
-                      ? `${twoPerRow ? "lg:col-span-6" : "lg:col-span-4"}`
-                      : thumbnailClass
-                  } col-span-6`}
-                  name={name}
-                  thumbnail={thumbnail}
-                  slug={slug}
-                  demoUrl={demoUrl}
-                  srcCodeUrl={srcCodeUrl}
-                  width={900}
-                  height={600}
-                  size={isTen && !threePerRow ? "small" : "big"}
-                />
-              );
-            }
+                return (
+                  <ProjectThumbnail
+                    key={idx}
+                    className={`${
+                      isSevenOrTen
+                        ? `${threePerRow ? "lg:col-span-4" : "lg:col-span-3"}`
+                        : isFive
+                        ? `${twoPerRow ? "lg:col-span-6" : "lg:col-span-4"}`
+                        : thumbnailClass
+                    } col-span-6`}
+                    name={name}
+                    thumbnail={thumbnail}
+                    slug={slug}
+                    demoUrl={demoUrl}
+                    srcCodeUrl={srcCodeUrl}
+                    width={900}
+                    height={600}
+                    size={isTen && !threePerRow ? "small" : "big"}
+                  />
+                );
+              }
+            )}
+          {!projectList && (
+            <div>Something went wrong, cannot show projects right now :(</div>
           )}
-      </Container>
+        </Container>
+      )}
     </Section>
   );
 };
