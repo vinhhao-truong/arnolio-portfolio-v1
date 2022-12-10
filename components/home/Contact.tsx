@@ -267,7 +267,7 @@ const Contact: React.FC<ContactProps> = () => {
                 },
               }}
             >
-              {isFormSending ? "Sending..." : "Send"}
+              {isFormSending ? "Sending..." : "Send "}
             </motion.button>
           </form>
         </motion.div>
