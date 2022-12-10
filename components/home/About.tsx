@@ -698,6 +698,20 @@ const About: React.FC<AboutProps> = ({}) => {
                 animate={{ y: 0, opacity: 1, transition: { duration: 0.5 } }}
                 className="block sm:mx-12"
               >
+                <div className="flex flex-col items-center justify-center mb-4">
+                  <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.jpg?alt=media&token=22b035c9-64cc-4dd3-844f-ab4420f20339"
+                    alt="avatar"
+                    height={124}
+                    width={124}
+                    objectFit="cover"
+                    className={`rounded-full block md:mx-auto`}
+                  />
+                  <div className="mt-2 text-lg text-blue-300">
+                    Arnold Truong
+                  </div>
+                </div>
+
                 <div className="md:mx-10">
                   <span className="text-2xl font-semibold">
                     Who am I<span className="text-blue-300">?</span>
@@ -824,7 +838,7 @@ const About: React.FC<AboutProps> = ({}) => {
                           </div>
                           <div className="relative flex items-center justify-center">
                             <div
-                              className={`w-6 h-6 z-[1] rounded-full flex justify-center items-center ring-[0.5rem] ${
+                              className={`w-4 h-4 z-[1] rounded-full flex justify-center items-center ring-[0.5rem] ${
                                 isDone
                                   ? "bg-gray-300 ring-gray-300/40"
                                   : "bg-indigo-300 ring-indigo-300/40"
@@ -846,14 +860,14 @@ const About: React.FC<AboutProps> = ({}) => {
                           </div>
                           <div className="col-span-4">
                             <div
-                              className={`mt-12 mb-2 text-2xl flex items-center ${
+                              className={`mt-6 mb-2 text-lg sm:text-xl md:text-2xl flex items-center ${
                                 isDone ? "text-gray-400" : "text-indigo-400"
                               }`}
                             >
                               {logo}
                               {action}
                             </div>
-                            <div className="mb-12">{detail}</div>
+                            <div className="mb-6">{detail}</div>
                           </div>
                         </div>
                       );
