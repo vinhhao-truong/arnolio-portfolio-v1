@@ -39,6 +39,7 @@ import { v4 as uuid } from "uuid";
 import ReactTooltip from "react-tooltip";
 import { MdDoneAll } from "react-icons/md";
 import MaqroLogo from "../svg/about_logo_414122832b.svg";
+import Delayed from "../common/Delayed";
 
 const colorList: string[] = ["bg-amber-300", "bg-red-300", "bg-indigo-300"];
 
@@ -370,109 +371,111 @@ const About: React.FC<AboutProps> = ({}) => {
             className="flex items-center justify-evenly w-full lg:relative lg:w-4/5 lg:max-h-[40rem] lg:max-w-[30rem] lg:h-4/5"
             ref={cardContainerRef}
           >
-            {cardList.map(
-              (
-                { className, title, coord, titlePlacement, icon, fullTitle },
-                idx
-              ) => {
-                const isActive: boolean =
-                  currentCard === idx || currentMobileCard === idx;
+            <Delayed waitBeforeShow={100}>
+              {cardList.map(
+                (
+                  { className, title, coord, titlePlacement, icon, fullTitle },
+                  idx
+                ) => {
+                  const isActive: boolean = currentMobileCard === idx;
+                  const isOnTop: boolean = currentCard === idx;
 
-                return isMobileOrTablet ? (
-                  <div
-                    key={"card" + idx}
-                    className="flex flex-col items-center justify-between"
-                    onClick={() => setCurrentMobileCard(idx)}
-                  >
-                    <MobileCard
-                      className={`${getClasses(className)}`}
+                  return isMobileOrTablet ? (
+                    <div
+                      key={"card" + idx}
+                      className="flex flex-col items-center justify-between"
+                      onClick={() => setCurrentMobileCard(idx)}
+                    >
+                      <MobileCard
+                        className={`${getClasses(className)}`}
+                        title={title}
+                        icon={icon}
+                        isActive={isActive}
+                      />
+                      <div
+                        className={`${
+                          isActive ? `text-white-theme` : textColorList[idx]
+                        } mt-2`}
+                      >
+                        {fullTitle}
+                      </div>
+                    </div>
+                  ) : (
+                    <Card
+                      className={`${getClasses(className)} ${colorList[idx]} ${
+                        isOnTop ? "z-30" : ""
+                      }`}
+                      key={"card" + idx}
+                      coord={coord}
+                      onClick={() => {
+                        if (isOnTop) {
+                          setCurrentCard(null);
+                          dispatch(offMasked());
+                          return;
+                        }
+                        if (currentCard === null) {
+                          dispatch(onMasked(true));
+                          setCurrentCard(idx);
+                          return;
+                        }
+                      }}
+                      isOnTop={isOnTop}
+                      titlePlacement={titlePlacement}
                       title={title}
                       icon={icon}
-                      isActive={isActive}
-                    />
-                    <div
-                      className={`${
-                        isActive ? `text-white-theme` : textColorList[idx]
-                      } mt-2`}
                     >
-                      {fullTitle}
-                    </div>
-                  </div>
-                ) : (
-                  <Card
-                    className={`${getClasses(className)} ${colorList[idx]} ${
-                      isActive ? "z-30" : ""
-                    }`}
-                    key={"card" + idx}
-                    coord={coord}
-                    onClick={() => {
-                      if (isActive) {
-                        setCurrentCard(null);
-                        dispatch(offMasked());
-                        return;
-                      }
-                      if (currentCard === null) {
-                        dispatch(onMasked(true));
-                        setCurrentCard(idx);
-                        return;
-                      }
-                    }}
-                    isOnTop={isActive}
-                    titlePlacement={titlePlacement}
-                    title={title}
-                    icon={icon}
-                  >
-                    {title === "me" && (
-                      <div className={`h-full`}>
-                        <div
-                          className={`flex flex-col items-center h-full justify-center`}
-                        >
-                          <Image
-                            src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.jpg?alt=media&token=22b035c9-64cc-4dd3-844f-ab4420f20339"
-                            alt="avatar"
-                            height={156}
-                            width={156}
-                            objectFit="cover"
-                            className={`rounded-full`}
-                          />
-                          <h2 className="my-4 text-lg text-center xl:text-xl">
-                            <span className="text-2xl xl:text-3xl text-red-theme">
-                              Arnold
-                            </span>{" "}
-                            Truong
-                          </h2>
-                        </div>
-                      </div>
-                    )}
-
-                    {title === "tech" && (
-                      <div className="flex flex-col h-full justify-evenly">
-                        <div className="text-2xl xl:text-4xl">
-                          Modern web development and more
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="">
-                            <div className="text-sky-500">#frontend</div>
-                            <div className="text-sky-500">#backend</div>
+                      {title === "me" && (
+                        <div className={`h-full`}>
+                          <div
+                            className={`flex flex-col items-center h-full justify-center`}
+                          >
+                            <Image
+                              src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.jpg?alt=media&token=22b035c9-64cc-4dd3-844f-ab4420f20339"
+                              alt="avatar"
+                              height={156}
+                              width={156}
+                              objectFit="cover"
+                              className={`rounded-full`}
+                            />
+                            <h2 className="my-4 text-lg text-center xl:text-xl">
+                              <span className="text-2xl xl:text-3xl text-red-theme">
+                                Arnold
+                              </span>{" "}
+                              Truong
+                            </h2>
                           </div>
-                          <GiWorld className="text-3xl text-sky-400" />
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {title === "exp" && (
-                      <div className="flex flex-col items-center justify-between h-full">
-                        <div className="mt-3 text-3xl text-center text-white theme">
-                          What I have{" "}
-                          <span className="text-red-theme">achieved</span>
+                      {title === "tech" && (
+                        <div className="flex flex-col h-full justify-evenly">
+                          <div className="text-2xl xl:text-4xl">
+                            Modern web development and more
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="">
+                              <div className="text-sky-500">#frontend</div>
+                              <div className="text-sky-500">#backend</div>
+                            </div>
+                            <GiWorld className="text-3xl text-sky-400" />
+                          </div>
                         </div>
-                        <ExpSvg className="w-full h-full" />
-                      </div>
-                    )}
-                  </Card>
-                );
-              }
-            )}
+                      )}
+
+                      {title === "exp" && (
+                        <div className="flex flex-col items-center justify-between h-full">
+                          <div className="mt-3 text-3xl text-center text-white theme">
+                            What I have{" "}
+                            <span className="text-red-theme">achieved</span>
+                          </div>
+                          <ExpSvg className="w-full h-full" />
+                        </div>
+                      )}
+                    </Card>
+                  );
+                }
+              )}
+            </Delayed>
           </div>
         </div>
         {/* RIGHT */}
@@ -529,20 +532,20 @@ const About: React.FC<AboutProps> = ({}) => {
               <div className="my-5 ">
                 <span className="mx-2 text-4xl font-semibold">
                   What I do<span className="text-blue-300">?</span>
-                </span>
+                </span>{" "}
                 mostly front-end, sometimes back-end and even UX design
               </div>
               <div className="my-5 ">
                 <span className="mx-2 text-4xl font-semibold">
                   Why accompany me<span className="text-blue-300">?</span>
-                </span>
+                </span>{" "}
                 deliver high-quality website with the most modern tools (see
                 tech card)
               </div>
               <div className="my-5 ">
                 <span className="mx-2 text-4xl font-semibold">
                   How to contact me<span className="text-blue-300">?</span>
-                </span>
+                </span>{" "}
                 simple, just{" "}
                 <Link scroll={false} href="#contact">
                   <a
@@ -721,20 +724,20 @@ const About: React.FC<AboutProps> = ({}) => {
                 <div className="my-5 md:mx-10">
                   <span className="text-2xl font-semibold">
                     What I do<span className="text-blue-300">?</span>
-                  </span>
+                  </span>{" "}
                   mostly front-end, sometimes back-end and even UX design
                 </div>
                 <div className="my-5 md:mx-10">
                   <span className="text-2xl font-semibold">
                     Why accompany me<span className="text-blue-300">?</span>
-                  </span>
+                  </span>{" "}
                   deliver high-quality website with the most modern tools (see
                   tech card)
                 </div>
                 <div className="my-5 md:mx-10">
                   <span className="text-2xl font-semibold">
                     How to contact me<span className="text-blue-300">?</span>
-                  </span>
+                  </span>{" "}
                   simple, just{" "}
                   <Link scroll={false} href="#contact">
                     <a
@@ -867,7 +870,9 @@ const About: React.FC<AboutProps> = ({}) => {
                               {logo}
                               {action}
                             </div>
-                            <div className="mb-6">{detail}</div>
+                            <div className={`${isLastItem ? "" : "mb-6"}`}>
+                              {detail}
+                            </div>
                           </div>
                         </div>
                       );
