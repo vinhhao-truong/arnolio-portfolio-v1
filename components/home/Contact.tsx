@@ -173,9 +173,7 @@ const Contact: React.FC<ContactProps> = () => {
                     <span className="p-1 mr-2 rounded-full lg:mr-4 dark:bg-white-theme lg:hover:brightness-90">
                       {contact.icon}
                     </span>{" "}
-                    <div
-                      className={`${contact.color} lg:whitespace-nowrap lg:hover:brightness-75`}
-                    >
+                    <div className={`${contact.color} lg:whitespace-nowrap`}>
                       {contact.displayText}
                       {(isLeft || isLeft === null || isMobile) && ":"}
                     </div>
