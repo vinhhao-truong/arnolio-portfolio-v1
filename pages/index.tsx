@@ -81,15 +81,16 @@ const HomePage = () => {
     // console.log(projects);
 
     dispatch(startLoading());
-    try {
-      const projectRef = ref(firebaseDb, "project");
-      onValue(projectRef, async (snapshot) => {
-        const data = await snapshot.val();
-        setProjectList(Object.values(data).reverse());
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    (async () => {
+      try {
+        // @ts-ignore
+        const res = await axios.get(process.env.PROJECT_API);
+
+        setProjectList(Object.values(res.data).reverse());
+      } catch (err) {
+        console.log(err);
+      }
+    })();
     dispatch(stopLoading());
   }, []);
 
@@ -104,7 +105,7 @@ const HomePage = () => {
         >
           <Landing className={`${getClasses(styles.landing)}`} />
           <About />
-          <Projects projectList={projectList} />
+          {projectList && <Projects projectList={projectList} />}
           <Contact />
         </motion.div>
       }
