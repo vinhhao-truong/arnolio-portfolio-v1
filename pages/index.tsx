@@ -85,7 +85,7 @@ const HomePage = ({
         )} w-full flex flex-col items-center`}
       >
         <Landing className={`${getClasses(styles.landing)}`} />
-        {isDesktop ? <About /> : <AboutMobile />}
+        <About />
         <Projects projectList={projects} />
         <Contact />
       </motion.div>

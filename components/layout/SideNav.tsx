@@ -38,6 +38,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
   const responsive = useResponsive();
   const isMobile = responsive === "xs";
   const isTablet = responsive === "lg";
+  const isDesktop: boolean = ["lg", "xl", "2xl"].includes(responsive);
 
   const { scrollY } = useScroll();
   const [isShowed, setIsShowed] = useState(false);
@@ -54,10 +55,12 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
 
   const dispatch = useDispatch();
 
-  return (
+  return isDesktop ? (
     //Whole side nav
     <motion.div
-      className={`${getClasses(className)} fixed top-4 -left-6 md:z-10`}
+      className={`${getClasses(
+        className
+      )} lg:fixed hidden top-4 -left-6 md:z-10`}
       initial={{ opacity: 0 }}
       animate={
         isShowed
@@ -117,6 +120,8 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
         </div>
       ))}
     </motion.div>
+  ) : (
+    <></>
   );
 };
 

@@ -40,23 +40,12 @@ import ReactTooltip from "react-tooltip";
 import { MdDoneAll } from "react-icons/md";
 import MaqroLogo from "../svg/about_logo_414122832b.svg";
 
-const colorList: string[] = [
-  "bg-amber-300",
-  "bg-red-300",
-  "bg-indigo-300",
-  "bg-teal-300",
-  "bg-violet-300",
-  "bg-rose-300",
-  "bg-sky-300",
-  "bg-green-300",
-  "bg-lime-300",
-  "bg-blue-300",
-  "bg-yellow-300",
-  "bg-orange-300",
-  "bg-pink-300",
-  "bg-purple-300",
-  "bg-emerald-300",
-  "bg-cyan-300",
+const colorList: string[] = ["bg-amber-300", "bg-red-300", "bg-indigo-300"];
+
+const textColorList: string[] = [
+  "text-amber-300",
+  "text-red-300",
+  "text-indigo-300",
 ];
 
 interface TechIconProps {
@@ -126,13 +115,18 @@ const expTimeline: ExpTimelineProps[] = [
 
 interface AboutProps extends ReactProps {}
 const About: React.FC<AboutProps> = ({}) => {
-  const cardContainerRef = useRef(null);
-
-  const [currentCard, setCurrentCard] = useState<number | null>(null);
   const responsive = useResponsive();
   const isBigScreen: boolean = ["xl", "2xl"].includes(responsive);
   const isDesktop: boolean = ["lg"].includes(responsive);
   const isTablet: boolean = ["sm", "md"].includes(responsive);
+  const isMobileOrTablet: boolean = ["sm", "md", "xs", "2xs"].includes(
+    responsive
+  );
+
+  const cardContainerRef = useRef(null);
+
+  const [currentCard, setCurrentCard] = useState<number | null>(null);
+  const [currentMobileCard, setCurrentMobileCard] = useState<number>(0);
 
   const dispatch = useDispatch();
   const { isMasked } = useSelector(selectGlobalState);
@@ -152,6 +146,7 @@ const About: React.FC<AboutProps> = ({}) => {
 
   interface card {
     title: string;
+    fullTitle: string;
     description?: string;
     className?: string;
     coord: number[];
@@ -161,24 +156,46 @@ const About: React.FC<AboutProps> = ({}) => {
   const cardList: card[] = [
     {
       title: "me",
+      fullTitle: "About me",
       coord: isBigScreen ? [-10, -20] : [-5, 10],
       titlePlacement: "left",
-      icon: <MeIcon className="" />,
+      icon: (
+        <MeIcon
+          className={`text-xl lg:text-base ${
+            currentMobileCard === 0 ? "text-white-theme" : textColorList[0]
+          } lg:text-white`}
+        />
+      ),
     },
     {
       title: "tech",
+      fullTitle: "Technology",
       coord: isBigScreen ? [-10, 70] : [-5, 60],
       titlePlacement: "right",
-      icon: <TechIcon className="" />,
+      icon: (
+        <TechIcon
+          className={`text-xl lg:text-base ${
+            currentMobileCard === 1 ? "text-white-theme" : textColorList[1]
+          } lg:text-white`}
+        />
+      ),
     },
     {
       title: "exp",
+      fullTitle: "Experience",
       coord: isBigScreen ? [60, 30] : [40, 30],
       titlePlacement: "bottom",
-      icon: <ExpIcon className="mr-2" />,
+      icon: (
+        <ExpIcon
+          className={`text-xl lg:mr-2 lg:text-base ${
+            currentMobileCard === 2 ? "text-white-theme" : textColorList[2]
+          } lg:text-white`}
+        />
+      ),
     },
   ];
 
+  //DESKTOP CARD
   interface CardProps extends ReactProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     isOnTop?: boolean;
@@ -297,9 +314,31 @@ const About: React.FC<AboutProps> = ({}) => {
     );
   };
 
-  // useEffect(() => {
-  //   console.log(getRandomNum(-30, 30));
-  // }, []);
+  //MOBILE CARD (CIRCLE)
+  interface MobileCardProps extends ReactProps {
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
+    isActive: boolean;
+    title: string;
+    icon?: React.ReactNode;
+  }
+  const MobileCard: React.FC<MobileCardProps> = ({
+    onClick,
+    isActive,
+    title,
+    icon,
+    className,
+  }) => {
+    return (
+      <div
+        onClick={onClick}
+        className={`${className} ${
+          isActive ? "bg-white-theme/20" : ""
+        } w-10 h-10 rounded-full flex justify-center items-center`}
+      >
+        {icon}
+      </div>
+    );
+  };
 
   useEffect(() => {
     if (!isMasked && typeof currentCard === "number") {
@@ -324,26 +363,50 @@ const About: React.FC<AboutProps> = ({}) => {
   return (
     <Section id="about" className="relative">
       <SectionHeader title="About" />
-      <Container className="h-[80vh] lg:grid lg:grid-cols-2">
+      <Container className="lg:h-[80vh] lg:grid lg:grid-cols-2">
         {/* LEFT */}
         <div className="flex items-center justify-center lg:h-full">
           <div
-            className="lg:relative lg:w-4/5 max-h-[40rem] max-w-[30rem] lg:h-4/5"
+            className="flex items-center justify-evenly w-full lg:relative lg:w-4/5 lg:max-h-[40rem] lg:max-w-[30rem] lg:h-4/5"
             ref={cardContainerRef}
           >
             {cardList.map(
-              ({ className, title, coord, titlePlacement, icon }, idx) => {
-                const isOnTop: boolean = currentCard === idx;
+              (
+                { className, title, coord, titlePlacement, icon, fullTitle },
+                idx
+              ) => {
+                const isActive: boolean =
+                  currentCard === idx || currentMobileCard === idx;
 
-                return (
+                return isMobileOrTablet ? (
+                  <div
+                    key={"card" + idx}
+                    className="flex flex-col items-center justify-between"
+                    onClick={() => setCurrentMobileCard(idx)}
+                  >
+                    <MobileCard
+                      className={`${getClasses(className)}`}
+                      title={title}
+                      icon={icon}
+                      isActive={isActive}
+                    />
+                    <div
+                      className={`${
+                        isActive ? `text-white-theme` : textColorList[idx]
+                      } mt-2`}
+                    >
+                      {fullTitle}
+                    </div>
+                  </div>
+                ) : (
                   <Card
                     className={`${getClasses(className)} ${colorList[idx]} ${
-                      isOnTop ? "z-30" : ""
+                      isActive ? "z-30" : ""
                     }`}
-                    key={idx}
+                    key={"card" + idx}
                     coord={coord}
                     onClick={() => {
-                      if (isOnTop) {
+                      if (isActive) {
                         setCurrentCard(null);
                         dispatch(offMasked());
                         return;
@@ -354,7 +417,7 @@ const About: React.FC<AboutProps> = ({}) => {
                         return;
                       }
                     }}
-                    isOnTop={isOnTop}
+                    isOnTop={isActive}
                     titlePlacement={titlePlacement}
                     title={title}
                     icon={icon}
@@ -413,218 +476,393 @@ const About: React.FC<AboutProps> = ({}) => {
           </div>
         </div>
         {/* RIGHT */}
-        <div className="relative flex items-center justify-end xl:ml-6">
-          {/* No Card Chosen */}
-          <motion.div
-            initial={{ opacity: 0, x: "-5vw" }}
-            whileInView={currentCard === null ? appear : disappear}
-            animate={
-              currentCard === null
-                ? {
-                    transition: {
-                      delay: 0.8,
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      bounce: 0.5,
-                    },
-                    y: ["0.5vh", "-1vh", "0.5vh"],
-                    color: [
-                      "#fcd34d",
-                      "#fca5a5",
-                      "#a5b4fc",
-                      "#a5b4fc",
-                      "#fca5a5",
-                      "#fcd34d",
-                    ],
-                  }
-                : { transition: { delay: 0.8 }, zIndex: -1 }
-            }
-            style={{ transform: "translateY(-50%)" }}
-            className="flex flex-col items-center justify-center select-none text-7xl 2xl:text-[7rem] absolute right-0 top-1/2"
-          >
-            pick a card <HandIcon />
-          </motion.div>
-          {/* About content */}
-          <motion.div
-            initial={{ opacity: 0, x: "-5vw" }}
-            whileInView={
-              currentCard === 0
-                ? { ...appear, zIndex: 30 }
-                : { ...disappear, zIndex: -1 }
-            }
-            className="absolute right-0 top-1/2 h-fit"
-            style={{ transform: "translateY(-50%)" }}
-          >
-            <div className="my-5">
-              <span className="mx-2 text-4xl font-semibold">
-                Who am I<span className="text-blue-300">?</span>
-              </span>{" "}
-              a developer, a gamer with a passion of web development.
-            </div>
-            <div className="my-5 ">
-              <span className="mx-2 text-4xl font-semibold">
-                What I do<span className="text-blue-300">?</span>
-              </span>
-              mostly front-end, sometimes back-end and even UX design
-            </div>
-            <div className="my-5 ">
-              <span className="mx-2 text-4xl font-semibold">
-                Why accompany me<span className="text-blue-300">?</span>
-              </span>
-              deliver high-quality website with the most modern tools (see tech
-              card)
-            </div>
-            <div className="my-5 ">
-              <span className="mx-2 text-4xl font-semibold">
-                How to contact me<span className="text-blue-300">?</span>
-              </span>
-              simple, just{" "}
-              <Link scroll={false} href="#contact">
-                <a
-                  onClick={() => {
-                    if (isMasked) {
-                      dispatch(offMasked());
+        {!isMobileOrTablet && (
+          <div className="relative flex items-center justify-end xl:ml-6">
+            {/* No Card Chosen */}
+            <motion.div
+              initial={{ opacity: 0, x: "-5vw" }}
+              whileInView={currentCard === null ? appear : disappear}
+              animate={
+                currentCard === null
+                  ? {
+                      transition: {
+                        delay: 0.8,
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        bounce: 0.5,
+                      },
+                      y: ["0.5vh", "-1vh", "0.5vh"],
+                      color: [
+                        "#fcd34d",
+                        "#fca5a5",
+                        "#a5b4fc",
+                        "#a5b4fc",
+                        "#fca5a5",
+                        "#fcd34d",
+                      ],
                     }
-                    setCurrentCard(null);
-                  }}
-                  className="text-blue-400 underline hover:text-blue-500"
+                  : { transition: { delay: 0.8 }, zIndex: -1 }
+              }
+              style={{ transform: "translateY(-50%)" }}
+              className="flex flex-col items-center justify-center select-none text-7xl 2xl:text-[7rem] absolute right-0 top-1/2"
+            >
+              pick a card <HandIcon />
+            </motion.div>
+            {/* About content */}
+            <motion.div
+              initial={{ opacity: 0, x: "-5vw" }}
+              whileInView={
+                currentCard === 0
+                  ? { ...appear, zIndex: 30 }
+                  : { ...disappear, zIndex: -1 }
+              }
+              className="absolute right-0 top-1/2 h-fit"
+              style={{ transform: "translateY(-50%)" }}
+            >
+              <div className="my-5">
+                <span className="mx-2 text-4xl font-semibold">
+                  Who am I<span className="text-blue-300">?</span>
+                </span>{" "}
+                a developer, a gamer with a passion of web development.
+              </div>
+              <div className="my-5 ">
+                <span className="mx-2 text-4xl font-semibold">
+                  What I do<span className="text-blue-300">?</span>
+                </span>
+                mostly front-end, sometimes back-end and even UX design
+              </div>
+              <div className="my-5 ">
+                <span className="mx-2 text-4xl font-semibold">
+                  Why accompany me<span className="text-blue-300">?</span>
+                </span>
+                deliver high-quality website with the most modern tools (see
+                tech card)
+              </div>
+              <div className="my-5 ">
+                <span className="mx-2 text-4xl font-semibold">
+                  How to contact me<span className="text-blue-300">?</span>
+                </span>
+                simple, just{" "}
+                <Link scroll={false} href="#contact">
+                  <a
+                    onClick={() => {
+                      if (isMasked) {
+                        dispatch(offMasked());
+                      }
+                      setCurrentCard(null);
+                    }}
+                    className="text-blue-400 underline hover:text-blue-500"
+                  >
+                    click here
+                  </a>
+                </Link>
+              </div>
+            </motion.div>
+            {/* Tech content */}
+            <motion.div
+              initial={{ opacity: 0, x: "-5vw" }}
+              whileInView={
+                currentCard === 1 ? { ...appear } : { ...disappear, zIndex: -1 }
+              }
+              className="absolute top-0 right-0 z-30 flex flex-col w-full h-full justify-evenly"
+              onClick={() => {
+                dispatch(offMasked());
+                setCurrentCard(null);
+              }}
+            >
+              <div className="h-max">
+                <div className="mb-5 text-3xl">Programming:</div>
+                <div className="flex flex-wrap pl-6">
+                  {ProgrammingTechIconList.map(({ icon, color, title }) => {
+                    return (
+                      <div key={uuid()} className="mb-5">
+                        <a data-tip data-for={title + "-tooltip"}>
+                          <Iconify
+                            icon={icon}
+                            color={color}
+                            className="mr-6 text-6xl"
+                          />
+                        </a>
+
+                        <ReactTooltip
+                          id={title + "-tooltip"}
+                          place="bottom"
+                          effect="float"
+                          backgroundColor={color}
+                          textColor="black"
+                        >
+                          <span className="text-lg">{title}</span>
+                        </ReactTooltip>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="h-max">
+                <div className="mb-5 text-3xl">Other:</div>
+                <div className="flex flex-wrap pl-6">
+                  {OtherTechIconList.map(({ icon, color, title }) => {
+                    return (
+                      <div key={uuid()} className="">
+                        <a data-tip data-for={title + "-tooltip"}>
+                          <Iconify
+                            icon={icon}
+                            color={color}
+                            className="mr-6 text-6xl"
+                          />
+                        </a>
+
+                        <ReactTooltip
+                          id={title + "-tooltip"}
+                          place="bottom"
+                          effect="float"
+                          backgroundColor={color}
+                          textColor="black"
+                        >
+                          <span className="text-lg">{title}</span>
+                        </ReactTooltip>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+            {/* Exp content */}
+            <motion.div
+              initial={{ opacity: 0, x: "-5vw" }}
+              whileInView={
+                currentCard === 2 ? { ...appear } : { ...disappear, zIndex: -1 }
+              }
+              className="absolute top-0 right-0 z-30 flex flex-col justify-center w-full h-full"
+              onClick={() => {
+                dispatch(offMasked());
+                setCurrentCard(null);
+              }}
+            >
+              {expTimeline
+                .slice(0, 5)
+                .map(({ date, action, detail, isDone, logo }, idx: number) => {
+                  const last: number =
+                    expTimeline.length < 5 ? expTimeline.length - 1 : 4;
+                  const isFirstItem = idx === 0;
+                  const isLastItem = idx === last;
+
+                  return (
+                    <div key={uuid()} className="grid grid-cols-8 gap-4">
+                      <div className="flex items-center justify-end col-span-3 text-lg">
+                        {date}
+                      </div>
+                      <div className="relative flex items-center justify-center">
+                        <div
+                          className={`w-6 h-6 z-[1] rounded-full flex justify-center items-center ring-[0.5rem] ${
+                            isDone
+                              ? "bg-gray-300 ring-gray-300/40"
+                              : "bg-indigo-300 ring-indigo-300/40"
+                          }`}
+                        >
+                          {isDone && <MdDoneAll className="text-gray-700" />}
+                        </div>
+                        {/* line */}
+                        <div
+                          className={`absolute top-0 left-1/2 w-1 ${
+                            isFirstItem ? "rounded-t" : ""
+                          } ${isLastItem ? "h-1/2" : "h-full"} ${
+                            isDone ? "bg-gray-300/20" : "bg-indigo-300/20"
+                          }`}
+                          style={{ transform: "translateX(-50%)" }}
+                        ></div>
+                      </div>
+                      <div className="col-span-4">
+                        <div
+                          className={`mt-12 mb-2 text-2xl flex items-center ${
+                            isDone ? "text-gray-400" : "text-indigo-400"
+                          }`}
+                        >
+                          {logo}
+                          {action}
+                        </div>
+                        <div className="mb-12">{detail}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </motion.div>
+          </div>
+        )}
+        {isMobileOrTablet && (
+          <div className="my-5">
+            {currentMobileCard === 0 && (
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1, transition: { duration: 0.5 } }}
+                className="block sm:mx-12"
+              >
+                <div className="md:mx-10">
+                  <span className="text-2xl font-semibold">
+                    Who am I<span className="text-blue-300">?</span>
+                  </span>{" "}
+                  a developer, a gamer with a passion of web development.
+                </div>
+                <div className="my-5 md:mx-10">
+                  <span className="text-2xl font-semibold">
+                    What I do<span className="text-blue-300">?</span>
+                  </span>
+                  mostly front-end, sometimes back-end and even UX design
+                </div>
+                <div className="my-5 md:mx-10">
+                  <span className="text-2xl font-semibold">
+                    Why accompany me<span className="text-blue-300">?</span>
+                  </span>
+                  deliver high-quality website with the most modern tools (see
+                  tech card)
+                </div>
+                <div className="my-5 md:mx-10">
+                  <span className="text-2xl font-semibold">
+                    How to contact me<span className="text-blue-300">?</span>
+                  </span>
+                  simple, just{" "}
+                  <Link scroll={false} href="#contact">
+                    <a
+                      onClick={() => {
+                        if (isMasked) {
+                          dispatch(offMasked());
+                        }
+                        setCurrentCard(null);
+                      }}
+                      className="text-blue-400 underline hover:text-blue-500"
+                    >
+                      click here
+                    </a>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+            {currentMobileCard === 1 && (
+              <div className="flex justify-center">
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1, transition: { duration: 0.5 } }}
                 >
-                  click here
-                </a>
-              </Link>
-            </div>
-          </motion.div>
-          {/* Tech content */}
-          <motion.div
-            initial={{ opacity: 0, x: "-5vw" }}
-            whileInView={
-              currentCard === 1 ? { ...appear } : { ...disappear, zIndex: -1 }
-            }
-            className="absolute top-0 right-0 z-30 flex flex-col w-full h-full justify-evenly"
-            onClick={() => {
-              dispatch(offMasked());
-              setCurrentCard(null);
-            }}
-          >
-            <div className="h-max">
-              <div className="mb-5 text-3xl">Programming:</div>
-              <div className="flex flex-wrap pl-6">
-                {ProgrammingTechIconList.map(({ icon, color, title }) => {
-                  return (
-                    <div key={uuid()} className="mb-5">
-                      <a data-tip data-for={title + "-tooltip"}>
-                        <Iconify
-                          icon={icon}
-                          color={color}
-                          className="mr-6 text-6xl"
-                        />
-                      </a>
+                  <div className="h-max md:px-10">
+                    <div className="mb-2 text-2xl">Programming:</div>
+                    <div className="flex flex-wrap pl-6">
+                      {ProgrammingTechIconList.map(({ icon, color, title }) => {
+                        return (
+                          <div key={uuid()} className="mb-5">
+                            <a data-tip data-for={title + "-tooltip"}>
+                              <Iconify
+                                icon={icon}
+                                color={color}
+                                className="mr-3 text-4xl md:text-5xl"
+                              />
+                            </a>
 
-                      <ReactTooltip
-                        id={title + "-tooltip"}
-                        place="bottom"
-                        effect="float"
-                        backgroundColor={color}
-                        textColor="black"
-                      >
-                        <span className="text-lg">{title}</span>
-                      </ReactTooltip>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="h-max">
-              <div className="mb-5 text-3xl">Other:</div>
-              <div className="flex flex-wrap pl-6">
-                {OtherTechIconList.map(({ icon, color, title }) => {
-                  return (
-                    <div key={uuid()} className="">
-                      <a data-tip data-for={title + "-tooltip"}>
-                        <Iconify
-                          icon={icon}
-                          color={color}
-                          className="mr-6 text-6xl"
-                        />
-                      </a>
-
-                      <ReactTooltip
-                        id={title + "-tooltip"}
-                        place="bottom"
-                        effect="float"
-                        backgroundColor={color}
-                        textColor="black"
-                      >
-                        <span className="text-lg">{title}</span>
-                      </ReactTooltip>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-          {/* Exp content */}
-          <motion.div
-            initial={{ opacity: 0, x: "-5vw" }}
-            whileInView={
-              currentCard === 2 ? { ...appear } : { ...disappear, zIndex: -1 }
-            }
-            className="absolute top-0 right-0 z-30 flex flex-col justify-center w-full h-full"
-            onClick={() => {
-              dispatch(offMasked());
-              setCurrentCard(null);
-            }}
-          >
-            {expTimeline
-              .slice(0, 5)
-              .map(({ date, action, detail, isDone, logo }, idx: number) => {
-                const last: number =
-                  expTimeline.length < 5 ? expTimeline.length - 1 : 4;
-                const isFirstItem = idx === 0;
-                const isLastItem = idx === last;
-
-                return (
-                  <div key={uuid()} className="grid grid-cols-8 gap-4">
-                    <div className="flex items-center justify-end col-span-3 text-lg">
-                      {date}
-                    </div>
-                    <div className="relative flex items-center justify-center">
-                      <div
-                        className={`w-6 h-6 z-[1] rounded-full flex justify-center items-center ring-[0.5rem] ${
-                          isDone
-                            ? "bg-gray-300 ring-gray-300/40"
-                            : "bg-indigo-300 ring-indigo-300/40"
-                        }`}
-                      >
-                        {isDone && <MdDoneAll className="text-gray-700" />}
-                      </div>
-                      {/* line */}
-                      <div
-                        className={`absolute top-0 left-1/2 w-1 ${
-                          isFirstItem ? "rounded-t" : ""
-                        } ${isLastItem ? "h-1/2" : "h-full"} ${
-                          isDone ? "bg-gray-300/20" : "bg-indigo-300/20"
-                        }`}
-                        style={{ transform: "translateX(-50%)" }}
-                      ></div>
-                    </div>
-                    <div className="col-span-4">
-                      <div
-                        className={`mt-12 mb-2 text-2xl flex items-center ${
-                          isDone ? "text-gray-400" : "text-indigo-400"
-                        }`}
-                      >
-                        {logo}
-                        {action}
-                      </div>
-                      <div className="mb-12">{detail}</div>
+                            <ReactTooltip
+                              id={title + "-tooltip"}
+                              place="bottom"
+                              effect="solid"
+                              backgroundColor={color}
+                              textColor="black"
+                            >
+                              <span className="text-lg">{title}</span>
+                            </ReactTooltip>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-                );
-              })}
-          </motion.div>
-        </div>
+                  <div className="h-max md:px-10">
+                    <div className="mb-2 text-2xl">Other:</div>
+                    <div className="flex flex-wrap pl-6">
+                      {OtherTechIconList.map(({ icon, color, title }) => {
+                        return (
+                          <div key={uuid()} className="">
+                            <a data-tip data-for={title + "-tooltip"}>
+                              <Iconify
+                                icon={icon}
+                                color={color}
+                                className="mr-3 text-4xl md:text-5xl"
+                              />
+                            </a>
+
+                            <ReactTooltip
+                              id={title + "-tooltip"}
+                              place="bottom"
+                              effect="solid"
+                              backgroundColor={color}
+                              textColor="black"
+                            >
+                              <span className="text-lg">{title}</span>
+                            </ReactTooltip>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+            {currentMobileCard === 2 && (
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1, transition: { duration: 0.5 } }}
+              >
+                {expTimeline
+                  .slice(0, 5)
+                  .map(
+                    ({ date, action, detail, isDone, logo }, idx: number) => {
+                      const last: number =
+                        expTimeline.length < 5 ? expTimeline.length - 1 : 4;
+                      const isFirstItem = idx === 0;
+                      const isLastItem = idx === last;
+
+                      return (
+                        <div key={uuid()} className="grid grid-cols-7 gap-4">
+                          <div className="flex items-center justify-end col-span-2 text-lg">
+                            {date}
+                          </div>
+                          <div className="relative flex items-center justify-center">
+                            <div
+                              className={`w-6 h-6 z-[1] rounded-full flex justify-center items-center ring-[0.5rem] ${
+                                isDone
+                                  ? "bg-gray-300 ring-gray-300/40"
+                                  : "bg-indigo-300 ring-indigo-300/40"
+                              }`}
+                            >
+                              {isDone && (
+                                <MdDoneAll className="text-gray-700" />
+                              )}
+                            </div>
+                            {/* line */}
+                            <div
+                              className={`absolute top-0 left-1/2 w-1 ${
+                                isFirstItem ? "rounded-t" : ""
+                              } ${isLastItem ? "h-1/2" : "h-full"} ${
+                                isDone ? "bg-gray-300/20" : "bg-indigo-300/20"
+                              }`}
+                              style={{ transform: "translateX(-50%)" }}
+                            ></div>
+                          </div>
+                          <div className="col-span-4">
+                            <div
+                              className={`mt-12 mb-2 text-2xl flex items-center ${
+                                isDone ? "text-gray-400" : "text-indigo-400"
+                              }`}
+                            >
+                              {logo}
+                              {action}
+                            </div>
+                            <div className="mb-12">{detail}</div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
+              </motion.div>
+            )}
+          </div>
+        )}
       </Container>
     </Section>
   );

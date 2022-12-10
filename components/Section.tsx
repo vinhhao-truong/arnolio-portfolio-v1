@@ -11,7 +11,7 @@ const Section = forwardRef<HTMLDivElement, ReactProps>(
         ref={ref}
         className={`${getClasses(
           className
-        )} max-w-[120rem] w-full px-2 lg:px-[4.5rem] xl:px-40 block mx-auto`}
+        )} max-w-[120rem] w-full px-4 mb-12 lg:mb-0 lg:px-[4.5rem] xl:px-40 block mx-auto`}
         id={getClasses(id)}
         style={{ ...getStyles(style) }}
       >
