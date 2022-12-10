@@ -8,7 +8,7 @@ interface LandingProps extends ReactProps {}
 const Landing: React.FC<LandingProps> = ({ className }) => {
   return (
     <Section id="landing" className={`${getClasses(className)}`}>
-      Landing
+      Hello
     </Section>
   );
 };
