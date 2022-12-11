@@ -26,7 +26,7 @@ const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
       {title}
     </motion.div>
   ) : (
-    <div className="mt-4 mb-2 text-3xl font-semibold uppercase dark:text-white-theme">
+    <div className="mt-4 mb-4 text-3xl font-semibold uppercase lg:mb-2 dark:text-white-theme">
       {title}
     </div>
   );
