@@ -96,7 +96,16 @@ const HomePage = () => {
 
   return (
     <>
-      <Seo title="Arnolio" />
+      <Seo
+        title="Arnolio"
+        description="Arnold Truong's portfolio to showcase his development projects."
+        og={{
+          title: "Arnolio",
+          url: "arnolio.vercel.app",
+          description:
+            "Arnold Truong's portfolio to showcase his development projects.",
+        }}
+      />
       {
         <motion.div
           className={`${getClasses(
