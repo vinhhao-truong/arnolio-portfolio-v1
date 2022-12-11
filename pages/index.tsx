@@ -100,7 +100,7 @@ const HomePage = () => {
         title="Arnolio"
         description="Arnold Truong's portfolio to showcase his development projects."
         og={{
-          title: "Arnolio",
+          title: "Arnolio - Arnold Truong's portfolio",
           url: "arnolio.vercel.app",
           description:
             "Arnold Truong's portfolio to showcase his development projects.",
