@@ -1,14 +1,28 @@
 .container {
   //Every section
   //Only Landing
+  .landing {
+    min-height: calc(100vh);
+  }
+  & > *:not(.landing) {
+    margin-bottom: 10rem;
+  }
   @media (min-width: 1024px) {
-    .landing {
-      min-height: calc(100vh - 5rem);
-    }
+    min-height: calc(100vh - 5rem);
     //Except Landing
     & > * {
       min-height: 100vh;
       padding: 1rem 4rem;
+      margin-bottom: 0;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    //Except Landing
+    & > * {
+      min-height: 80vh;
+      padding: 1rem 4rem;
+      margin-bottom: 0;
     }
   }
 }

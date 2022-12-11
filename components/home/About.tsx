@@ -36,7 +36,6 @@ import ExpSvg from "../svg/undraw_feeling_proud_qne1.svg";
 import { Icon } from "@iconify/react";
 import Iconify from "../common/Iconify";
 import { v4 as uuid } from "uuid";
-import ReactTooltip from "react-tooltip";
 import { MdDoneAll } from "react-icons/md";
 import MaqroLogo from "../svg/about_logo_414122832b.svg";
 import Delayed from "../common/Delayed";
@@ -579,24 +578,21 @@ const About: React.FC<AboutProps> = ({}) => {
                 <div className="flex flex-wrap pl-6">
                   {ProgrammingTechIconList.map(({ icon, color, title }) => {
                     return (
-                      <div key={uuid()} className="mb-5">
-                        <a data-tip data-for={title + "-tooltip"}>
-                          <Iconify
-                            icon={icon}
-                            color={color}
-                            className="mr-6 text-6xl"
-                          />
-                        </a>
-
-                        <ReactTooltip
-                          id={title + "-tooltip"}
-                          place="bottom"
-                          effect="float"
-                          backgroundColor={color}
-                          textColor="black"
+                      <div
+                        key={uuid()}
+                        className="flex flex-col items-center mb-5 mr-6"
+                      >
+                        <Iconify
+                          icon={icon}
+                          color={color}
+                          className="block text-6xl "
+                        />
+                        <div
+                          className={`px-2 mt-2 rounded-sm text-black`}
+                          style={{ backgroundColor: color }}
                         >
-                          <span className="text-lg">{title}</span>
-                        </ReactTooltip>
+                          {title}
+                        </div>
                       </div>
                     );
                   })}
@@ -607,24 +603,21 @@ const About: React.FC<AboutProps> = ({}) => {
                 <div className="flex flex-wrap pl-6">
                   {OtherTechIconList.map(({ icon, color, title }) => {
                     return (
-                      <div key={uuid()} className="">
-                        <a data-tip data-for={title + "-tooltip"}>
-                          <Iconify
-                            icon={icon}
-                            color={color}
-                            className="mr-6 text-6xl"
-                          />
-                        </a>
-
-                        <ReactTooltip
-                          id={title + "-tooltip"}
-                          place="bottom"
-                          effect="float"
-                          backgroundColor={color}
-                          textColor="black"
+                      <div
+                        key={uuid()}
+                        className="flex flex-col items-center mb-5 mr-6"
+                      >
+                        <Iconify
+                          icon={icon}
+                          color={color}
+                          className="block text-6xl "
+                        />
+                        <div
+                          className={`px-2 mt-2 rounded-sm text-black`}
+                          style={{ backgroundColor: color }}
                         >
-                          <span className="text-lg">{title}</span>
-                        </ReactTooltip>
+                          {title}
+                        </div>
                       </div>
                     );
                   })}
@@ -766,24 +759,21 @@ const About: React.FC<AboutProps> = ({}) => {
                     <div className="flex flex-wrap pl-6">
                       {ProgrammingTechIconList.map(({ icon, color, title }) => {
                         return (
-                          <div key={uuid()} className="mb-5">
-                            <a data-tip data-for={title + "-tooltip"}>
-                              <Iconify
-                                icon={icon}
-                                color={color}
-                                className="mr-3 text-4xl md:text-5xl"
-                              />
-                            </a>
-
-                            <ReactTooltip
-                              id={title + "-tooltip"}
-                              place="bottom"
-                              effect="solid"
-                              backgroundColor={color}
-                              textColor="black"
+                          <div
+                            key={uuid()}
+                            className="flex flex-col items-center mb-2 mr-3"
+                          >
+                            <Iconify
+                              icon={icon}
+                              color={color}
+                              className="text-4xl md:text-5xl"
+                            />
+                            <div
+                              className={`px-2 mt-2 rounded-sm text-black`}
+                              style={{ backgroundColor: color }}
                             >
-                              <span className="text-lg">{title}</span>
-                            </ReactTooltip>
+                              {title}
+                            </div>
                           </div>
                         );
                       })}
@@ -794,24 +784,21 @@ const About: React.FC<AboutProps> = ({}) => {
                     <div className="flex flex-wrap pl-6">
                       {OtherTechIconList.map(({ icon, color, title }) => {
                         return (
-                          <div key={uuid()} className="">
-                            <a data-tip data-for={title + "-tooltip"}>
-                              <Iconify
-                                icon={icon}
-                                color={color}
-                                className="mr-3 text-4xl md:text-5xl"
-                              />
-                            </a>
-
-                            <ReactTooltip
-                              id={title + "-tooltip"}
-                              place="bottom"
-                              effect="solid"
-                              backgroundColor={color}
-                              textColor="black"
+                          <div
+                            key={uuid()}
+                            className="flex flex-col items-center mb-2 mr-3"
+                          >
+                            <Iconify
+                              icon={icon}
+                              color={color}
+                              className="text-4xl md:text-5xl"
+                            />
+                            <div
+                              className={`px-2 mt-2 rounded-sm text-black`}
+                              style={{ backgroundColor: color }}
                             >
-                              <span className="text-lg">{title}</span>
-                            </ReactTooltip>
+                              {title}
+                            </div>
                           </div>
                         );
                       })}
