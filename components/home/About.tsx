@@ -56,7 +56,12 @@ interface TechIconProps {
 const ProgrammingTechIconList: TechIconProps[] = [
   { icon: "akar-icons:html-fill", color: "#e34c26", title: "HTML" },
   { icon: "akar-icons:css-fill", color: "#2965f1", title: "CSS" },
-  { icon: "ion:logo-javascript", color: "#f0db4f", title: "JavaScript" },
+  { icon: "mdi:language-javascript", color: "#f0db4f", title: "JavaScript" },
+  {
+    icon: "mdi:language-typescript",
+    color: "#007acc",
+    title: "TypeScript",
+  },
   { icon: "mdi:react", color: "#61DBFB", title: "ReactJS" },
   { icon: "ion:logo-nodejs", color: "#68a063", title: "NodeJS" },
   { icon: "teenyicons:nextjs-solid", color: "white", title: "NextJS" },
