@@ -11,7 +11,7 @@ const ScrollTopBtn: React.FC = () => {
   const isTablet: boolean = responsive === "sm";
 
   return (
-    <Link href="/">
+    <Link href="/#landing" scroll={false}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
