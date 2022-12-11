@@ -48,13 +48,35 @@ const Seo: React.FC<HeadProps> = ({ title, description, og }) => {
     //     <meta property="og:description" content={og.description} />
     //   )}
     // </Head>
-    <NextSeo
-      title={title}
-      description={description}
-      openGraph={{
-        ...og,
-      }}
-    />
+    <>
+      <NextSeo
+        title={title}
+        description={description}
+        openGraph={{
+          ...og,
+        }}
+      />
+      <Head>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="rounded-icon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="rounded-icon/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="rounded-icon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="rounded-icon/site.webmanifest" />
+      </Head>
+    </>
   );
 };
 
