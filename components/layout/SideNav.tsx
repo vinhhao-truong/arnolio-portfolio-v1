@@ -15,6 +15,7 @@ import { SiMinutemailer } from "react-icons/si";
 import { useDispatch } from "react-redux";
 import { onMasked, offMasked } from "../../redux/globalStateSlice";
 import ReactTooltip from "react-tooltip";
+import { useRouter } from "next/router";
 
 const menu: NavItemInterface[] = [
   {
@@ -42,6 +43,8 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
 
   const { scrollY } = useScroll();
   const [isShowed, setIsShowed] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     scrollY.onChange((pos) => {
@@ -79,7 +82,9 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
       {/* Main Logo */}
       <Link href="/">
         <motion.img
-          className="h-6 mb-8 rounded-full cursor-pointer md:h-8 lg:h-12"
+          className={`"h-6 mb-8 rounded-full ${
+            isShowed ? "cursor-pointer" : ""
+          } md:h-8 lg:h-12"`}
           src="/rounded-icon/android-chrome-512x512.png"
           alt="logo"
           whileHover={{ ...scales.scaleUp }}
@@ -90,7 +95,7 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
       {/* Nav Items */}
       {menu.map((nav: NavItemInterface, idx: number) => (
         <div key={idx}>
-          <Link key={idx} href={nav.url} scroll={false}>
+          <Link key={idx} href={isShowed ? nav.url : ""} scroll={false}>
             <motion.div
               data-tip
               data-for={`side-nav-${idx}`}
@@ -99,7 +104,9 @@ const SideNav: React.FC<ReactProps> = ({ className }) => {
                 height: isMobile ? "2rem" : isTablet ? "3rem" : "4rem",
               }}
               whileTap={{ ...scales.scaleDown }}
-              className="flex items-center justify-center w-6 h-6 mt-4 rounded-lg cursor-pointer dark:text-white-theme md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme"
+              className={`flex items-center justify-center w-6 h-6 mt-4 rounded-lg ${
+                isShowed ? "cursor-pointer" : ""
+              } dark:text-white-theme md:h-6 lg:h-10 md:w-6 lg:w-10 bg-red-theme`}
             >
               {nav.icon}
             </motion.div>

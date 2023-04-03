@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReactProps from "../../interfaces/ReactProps";
 import { selectGlobalState } from "../../redux/globalStateSlice";
-import LoadingGlobal from "../LoadingGlobal";
+import LoadingGlobal from "../common/LoadingGlobal";
 import Mask from "../common/Mask";
 import TopProgressBar from "../TopProgressBar";
 import Footer from "./Footer";
@@ -14,7 +14,8 @@ import SideNav from "./SideNav";
 const Layout: React.FC<ReactProps> = ({ children }) => {
   const [isScrollDown, setIsScrolledDown] = useState<boolean>(false);
   const { scrollY } = useScroll();
-  const { isGlobalLoading, isMasked } = useSelector(selectGlobalState);
+  const { isGlobalLoading, isMasked, successState } =
+    useSelector(selectGlobalState);
 
   //Check and get scroll pos
   useEffect(() => {
@@ -29,19 +30,17 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
   }, [scrollY, isScrollDown]);
 
   useEffect(() => {
-    if (isGlobalLoading) {
+    if (isGlobalLoading || successState.msg) {
       document.body.style.overflow = "hidden";
       return;
     }
     document.body.style.overflow = "auto";
-  }, [isGlobalLoading]);
+  }, [isGlobalLoading, successState.msg]);
 
   return (
     <div className="flex flex-col items-center dark">
       <Mask />
-      <Navigation
-        className={`w-full z-10 max-w-[120rem] lg:px-[9rem] xl:px-40`}
-      />
+      <Navigation className={`w-full lg:px-[4.5rem] xl:px-40`} />
       <SideNav />
       {children}
       <Footer />

@@ -39,6 +39,10 @@ type GlobalStateProps = {
   isGlobalLoading: boolean;
   colors: any;
   navMenu: NavItemInterface[];
+  successState: {
+    color?: string;
+    msg: string;
+  };
 };
 
 const initialState: GlobalStateProps = {
@@ -48,6 +52,10 @@ const initialState: GlobalStateProps = {
   isGlobalLoading: false,
   colors: defaultColors,
   navMenu: defaultNavMenu,
+  successState: {
+    color: "#52b788",
+    msg: "",
+  },
 };
 
 const globalStateSlice = createSlice({
@@ -55,29 +63,46 @@ const globalStateSlice = createSlice({
   initialState: { ...initialState },
   reducers: {
     onMasked: (state, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        isMasked: true,
-        isMaskClosable: action.payload ? true : false,
-      };
+      state.isMasked = true;
+      state.isMaskClosable = action.payload ? true : false;
     },
     offMasked: (state) => {
-      return { ...state, isMasked: false, isMaskClosable: false };
+      state.isMasked = false;
+      state.isMaskClosable = false;
     },
     startLoading: (state) => {
-      return { ...state, isGlobalLoading: true, isMasked: true };
+      state.isGlobalLoading = true;
+      state.isMasked = true;
     },
-    stopLoading: (state) => {
-      return { ...state, isGlobalLoading: false, isMasked: false };
+    stopLoading: (
+      state,
+      action: PayloadAction<{ msg?: string; color?: string } | undefined>
+    ) => {
+      if (action.payload?.msg) {
+        state.successState = {
+          msg: action.payload?.msg,
+          color: action.payload?.color ? action.payload?.color : "#52b788",
+        };
+      } else {
+        state.isMasked = false;
+      }
+      state.isGlobalLoading = false;
+    },
+    closeSuccessMsg: (state) => {
+      state.successState = {
+        color: "#52b788",
+        msg: "",
+      };
+      state.isMasked = false;
     },
     changeMenu: (state, action) => {
-      return { ...state, navMenu: action.payload };
+      state.navMenu = action.payload;
     },
     initiateMenu: (state) => {
-      return { ...state, navMenu: [...defaultNavMenu] };
+      state.navMenu = [...defaultNavMenu];
     },
     clearMenu: (state) => {
-      return { ...state, navMenu: [] };
+      state.navMenu = [];
     },
   },
 });
@@ -90,6 +115,7 @@ export const {
   changeMenu,
   initiateMenu,
   clearMenu,
+  closeSuccessMsg,
 } = globalStateSlice.actions;
 export const selectGlobalState = (state: RootState) => state.globalState;
 export default globalStateSlice.reducer;

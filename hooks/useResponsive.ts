@@ -1,52 +1,26 @@
 import { useState, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
-import ResponsiveEnum from "../interfaces/ResponsiveEnum";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-type Responsive = "sm" | "xs" | "md" | "lg" | "xl" | "2xl";
+type Interface = "3xs" | "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
-export default function useResponsive(): ResponsiveEnum {
-  const is2xs: boolean = useMediaQuery({ query: "(max-width: 479px)" });
-  const isXs: boolean = useMediaQuery({ query: "(max-width: 639px)" });
-  const isSm: boolean = useMediaQuery({ query: "(max-width: 767px)" });
-  const isMd: boolean = useMediaQuery({ query: "(max-width: 1023px)" });
-  const isLg: boolean = useMediaQuery({ query: "(max-width: 1279px)" });
-  const isXl: boolean = useMediaQuery({ query: "(max-width: 1535px)" });
+export default function useResponsive(): Interface {
+  const is2xs: boolean = useMediaQuery("(min-width: 350px)");
+  const isXs: boolean = useMediaQuery("(min-width: 480px)");
+  const isSm: boolean = useMediaQuery("(min-width: 640px)");
+  const isMd: boolean = useMediaQuery("(min-width: 768px)");
+  const isLg: boolean = useMediaQuery("(min-width: 1024px)");
+  const isXl: boolean = useMediaQuery("(min-width: 1280px)");
+  const is2Xl: boolean = useMediaQuery("(min-width: 1536px)");
 
-  const [screen, setScreen] = useState<ResponsiveEnum>(ResponsiveEnum["2xl"]);
+  if (is2Xl) return "2xl";
+  if (isXl) return "xl";
+  if (isLg) return "lg";
+  if (isMd) return "md";
+  if (isSm) return "sm";
+  if (isXs) return "xs";
+  if (is2xs) return "2xs";
 
-  useEffect(() => {
-    if (is2xs) {
-      setScreen(ResponsiveEnum["2xs"]);
-      return;
-    }
-
-    if (isXs) {
-      setScreen(ResponsiveEnum.Xs);
-      return;
-    }
-
-    if (isSm) {
-      setScreen(ResponsiveEnum.Sm);
-      return;
-    }
-
-    if (isMd) {
-      setScreen(ResponsiveEnum.Md);
-      return;
-    }
-
-    if (isLg) {
-      setScreen(ResponsiveEnum.Lg);
-      return;
-    }
-
-    if (isXl) {
-      setScreen(ResponsiveEnum.Xl);
-      return;
-    }
-  }, [isXl, isSm, isLg, isMd, isXs, is2xs]);
-
-  return screen;
+  return "3xs";
 }
 
 export const useMobileTablet = (): boolean => {

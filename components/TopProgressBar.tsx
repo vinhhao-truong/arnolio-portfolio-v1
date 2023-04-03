@@ -5,7 +5,7 @@ import useResponsive from "../hooks/useResponsive";
 
 const TopProgressBar: React.FC = () => {
   const responsive = useResponsive();
-  const isMobileTablet: boolean = ["sm", "xs", "2xs", "md"].includes(
+  const isMobileTablet: boolean = ["sm", "xs", "2xs", "md", "3xs"].includes(
     responsive
   );
 

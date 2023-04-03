@@ -5,11 +5,15 @@ import { fades } from "../utils/motion/variants";
 import { useEffect, useState } from "react";
 import useResponsive from "../hooks/useResponsive";
 
-const Container: React.FC<ReactProps> = ({
+interface ContainerProps extends ReactProps {
+  isHiddenOnMobile?: boolean;
+}
+const Container: React.FC<ContainerProps> = ({
   className,
   children,
   style,
   id,
+  isHiddenOnMobile,
 }) => {
   const { scrollY, scrollYProgress } = useScroll();
   const [initialY, setInitialY] = useState<string>("0%");
@@ -36,7 +40,7 @@ const Container: React.FC<ReactProps> = ({
       )} w-full lg:px-[4.5rem] xl:px-40 lg:opacity-0`}
       style={getStyles(style)}
       whileInView={
-        isDesktop
+        isDesktop || !isHiddenOnMobile
           ? {
               ...fades.fadeIn,
               y: 0,

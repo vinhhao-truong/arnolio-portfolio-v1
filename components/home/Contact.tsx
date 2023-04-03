@@ -22,6 +22,7 @@ import {
   stopLoading,
 } from "../../redux/globalStateSlice";
 import ReactLoading from "react-loading";
+import Loader from "../common/Loader";
 
 //Motion for hovering effect
 const expand: TargetAndTransition = {
@@ -76,11 +77,10 @@ const Contact: React.FC<ContactProps> = () => {
   const [isFormSending, setIsFormSending] = useState<boolean>(false);
 
   const responsive = useResponsive();
-  const isXs = responsive === "xs";
-  const isSm = responsive === "sm";
-  const isMd = responsive === "md";
 
-  const isMobile: boolean = ["xs", "2xs", "sm", "md"].includes(responsive);
+  const isMobile: boolean = ["xs", "2xs", "sm", "md", "3xs"].includes(
+    responsive
+  );
 
   const [emailInput, setEmailInput] = useState<string>("");
   const [messageInput, setMessageInput] = useState<string>("");
@@ -103,7 +103,7 @@ const Contact: React.FC<ContactProps> = () => {
     e
   ) => {
     e.preventDefault();
-    dispatch(startLoading());
+    // dispatch(startLoading());
     setIsFormSending(true);
     try {
       if (emailInput && messageInput) {
@@ -123,7 +123,7 @@ const Contact: React.FC<ContactProps> = () => {
       console.log(err);
     }
     setIsFormSending(false);
-    dispatch(stopLoading());
+    // dispatch(stopLoading());
   };
 
   return (
@@ -134,7 +134,7 @@ const Contact: React.FC<ContactProps> = () => {
     >
       <SectionHeader title="Contact" />
       {/* Main section */}
-      <Container className="h-full lg:flex lg:justify-between">
+      <Container className="h-full lg:flex lg:justify-between" isHiddenOnMobile>
         {/* Urls to contact */}
         <motion.div
           onMouseEnter={() => setIsLeft(true)}
@@ -184,7 +184,7 @@ const Contact: React.FC<ContactProps> = () => {
                   <motion.a
                     href={contact.href}
                     target={isEmailHref || isTelHref ? "_self" : "_blank"}
-                    className={`lg:whitespace-nowrap lg:text-2xl hover:underline active:text-${contact.color}`}
+                    className={` lg:whitespace-nowrap lg:text-2xl hover:underline active:text-${contact.color}`}
                     animate={
                       isLeft === true || isLeft === null || isMobile
                         ? { ...fades.fadeIn }
@@ -256,18 +256,21 @@ const Contact: React.FC<ContactProps> = () => {
             ></textarea>
             <motion.button
               type="submit"
-              className="flex items-center justify-between px-4 py-1 mx-auto rounded-lg bg-blue-theme dark:text-white-theme"
-              whileHover={{
-                ...scales.scaleUp,
-                // color: colors["white-theme"],
-                // backgroundColor: colors["blue-theme"],
-                transition: {
-                  duration: 0.1,
-                  ease: "easeIn",
-                },
-              }}
+              className="flex items-center justify-center px-4 py-1 mx-auto rounded-lg disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 hover:bg-blue-theme/90 bg-blue-theme text-white-theme"
+              disabled={isFormSending}
             >
-              {isFormSending ? "Sending..." : "Send "}
+              {isFormSending ? (
+                <>
+                  Sending...
+                  <Loader
+                    className="w-[20px] ml-2"
+                    color="#000000"
+                    type="Surrounded Dot"
+                  />
+                </>
+              ) : (
+                "Send "
+              )}
             </motion.button>
           </form>
         </motion.div>

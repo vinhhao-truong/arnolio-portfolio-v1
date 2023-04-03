@@ -42,7 +42,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   const { colors } = useSelector(selectGlobalState);
   const responsive = useResponsive();
 
-  const isMobileTablet: boolean = ["2xs", "xs", "sm", "md"].includes(
+  const isMobileTablet: boolean = ["3xs", "2xs", "xs", "sm", "md"].includes(
     responsive
   );
 

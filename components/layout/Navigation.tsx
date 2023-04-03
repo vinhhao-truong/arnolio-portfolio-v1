@@ -8,8 +8,13 @@ import { useEffect, useState } from "react";
 import useResponsive from "../../hooks/useResponsive";
 import { fades, scales } from "../../utils/motion/variants";
 import Section from "../Section";
-import { useSelector } from "react-redux";
-import { selectGlobalState } from "../../redux/globalStateSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectGlobalState,
+  startLoading,
+  stopLoading,
+} from "../../redux/globalStateSlice";
+import { useRouter } from "next/router";
 
 interface NavigationProps extends ReactProps {
   menu?: NavItemInterface[];
@@ -20,9 +25,13 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const { scrollY } = useScroll();
   const [isHidden, setIsHidden] = useState(false);
   const responsive = useResponsive();
-  const isMobile: boolean = ["2xs", "xs", "sm", "md"].includes(responsive);
+  const isMobile: boolean = ["2xs", "xs", "sm", "md", "3xs"].includes(
+    responsive
+  );
 
   const MotionSection = motion(Section);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     return scrollY.onChange((pos) => {
@@ -41,7 +50,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           className={`${getClasses(
             className
           )} w-full flex justify-between h-20 items-center py-3`}
-          initial={{ y: "-1rem", opacity: 0, display: "none" }}
+          initial={{ y: "-1rem", opacity: 0 }}
           animate={
             !isHidden
               ? {
@@ -60,7 +69,9 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           {/* logo */}
           <Link href="/">
             <motion.img
-              className="rounded-full cursor-pointer h-4/5"
+              className={`rounded-full ${
+                isHidden ? "" : "cursor-pointer"
+              } h-4/5`}
               src="/rounded-icon/android-chrome-512x512.png"
               whileHover={{ ...scales.scaleUp }}
               whileTap={{ ...scales.scaleDown }}
@@ -71,11 +82,13 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           {/* main-nav */}
           <div className="flex">
             {navMenu?.map(({ title, url }: NavItemInterface, idx: number) => (
-              <Link key={idx} href={url} scroll={false}>
+              <Link key={idx} href={isHidden ? "" : url} scroll={false}>
                 <motion.a
                   whileHover={{ ...scales.scaleUp }}
                   whileTap={{ ...scales.scaleDown }}
-                  className="ml-12 text-lg font-semibold cursor-pointer"
+                  className={`ml-12 text-lg font-semibold ${
+                    isHidden ? "cursor-default" : "cursor-pointer"
+                  }`}
                 >
                   {title}
                 </motion.a>

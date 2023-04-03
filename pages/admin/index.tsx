@@ -61,7 +61,8 @@ const Admin = ({
         setTimeout(() => {
           router.push("/admin/dashboard");
         }, 1000);
-        alert(msg);
+        dispatch(stopLoading({ msg: "Signed In!" }));
+        return;
       } catch (err) {
         alert("Invalid credential!");
         setEmail("");
@@ -79,20 +80,20 @@ const Admin = ({
         <input
           required
           onChange={handleInput("email")}
-          className="arnolio-input col-span-1 text-navy-theme"
+          className="col-span-1 arnolio-input text-navy-theme"
           value={email}
           placeholder="Admin Email"
         />
         <input
           required
           onChange={handleInput("password")}
-          className="arnolio-input col-span-1 text-navy-theme"
+          className="col-span-1 arnolio-input text-navy-theme"
           value={password}
           placeholder="Admin Password"
           type="password"
         />
         <button
-          className="block mx-auto py-1 rounded-lg hover:text-blue-theme dark:hover:bg-white-theme px-4 col-span-1 text-white bg-blue-theme"
+          className="block col-span-1 px-4 py-1 mx-auto text-white rounded-lg hover:text-blue-theme dark:hover:bg-white-theme bg-blue-theme"
           type="submit"
         >
           Login

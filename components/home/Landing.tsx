@@ -20,7 +20,7 @@ const Landing: React.FC<LandingProps> = ({ className }) => {
   const isDesktop = ["lg"].includes(responsive);
   const isBigScreen = ["xl", "2xl"].includes(responsive);
   const isTablet = ["md"].includes(responsive);
-  const isMobile = ["2xs", "xs", "sm"].includes(responsive);
+  const isMobile = ["2xs", "xs", "sm", "3xs"].includes(responsive);
 
   useEffect(() => {
     scrollYProgress.onChange((v) => {
@@ -130,7 +130,7 @@ const Landing: React.FC<LandingProps> = ({ className }) => {
           className="flex flex-col items-center justify-around text-blue-200 cursor-pointer h-1/5"
         >
           <div className="text-lg xs:text-xl md:text-2xl lg:text-3xl">
-            Scroll down
+            Explore
           </div>
           <motion.div
             animate={{

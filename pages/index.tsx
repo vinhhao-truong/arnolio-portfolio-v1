@@ -4,10 +4,10 @@ import Head from "next/head";
 import Seo from "../components/Seo";
 import useResponsive from "../hooks/useResponsive";
 //home components
-import About from "../components/home/About";
-import Contact from "../components/home/Contact";
-import Landing from "../components/home/Landing";
-import Projects from "../components/home/Projects";
+import About from "../components/Home/About";
+import Contact from "../components/Home/Contact";
+import Landing from "../components/Home/Landing";
+import Projects from "../components/Home/Projects";
 //style
 import styles from "../styles/HomePage.module.scss";
 import { getClasses } from "../utils/getProps";
@@ -28,37 +28,36 @@ import {
 import { firebaseDb } from "../store/firebase";
 import { update, ref, onValue } from "firebase/database";
 import ProjectInterface from "../interfaces/ProjectInterface";
-import AboutMobile from "../components/home/AboutMobile";
+import AboutMobile from "../components/Home/AboutMobile";
 
-// export const getServerSideProps = async () => {
-//   const projects: any[] = [];
+export const getServerSideProps = async () => {
+  const projects: any[] = [];
 
-//   const projectRef = ref(firebaseDb, "project");
-//   try {
-//     onValue(projectRef, (snapshot) => {
-//       const data = snapshot.val();
-//       projects.push(...Object.values(data));
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
+  try {
+    // @ts-ignore
+    const res = await axios.get(process.env.PROJECT_API);
 
-//   return {
-//     props: {
-//       projects: projects,
-//     },
-//   };
-// };
+    projects.push(...Object.values(res.data).reverse());
+  } catch (err) {
+    console.log(err);
+  }
 
-const HomePage = () => {
+  return {
+    props: {
+      projects: projects,
+    },
+  };
+};
+
+const HomePage = ({
+  projects,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const responsive = useResponsive();
-  const isDesktop: boolean = ["lg", "xl", "2xl"].includes(responsive);
 
-  const [projectList, setProjectList] = useState<any>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  console.log("responsive", responsive);
 
   // useEffect(() => {
   //   (async () => {
@@ -75,24 +74,6 @@ const HomePage = () => {
   //     }
   //   })();
   // }, []);
-
-  useEffect(() => {
-    dispatch(initiateMenu());
-    // console.log(projects);
-
-    dispatch(startLoading());
-    (async () => {
-      try {
-        // @ts-ignore
-        const res = await axios.get(process.env.PROJECT_API);
-
-        setProjectList(Object.values(res.data).reverse());
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-    dispatch(stopLoading());
-  }, []);
 
   return (
     <>
@@ -114,7 +95,7 @@ const HomePage = () => {
         >
           <Landing className={`${getClasses(styles.landing)}`} />
           <About />
-          {projectList && <Projects projectList={projectList} />}
+          {projects && <Projects projectList={projects} />}
           <Contact />
         </motion.div>
       }

@@ -68,6 +68,11 @@ const ProgrammingTechIconList: TechIconProps[] = [
   { icon: "ion:logo-sass", color: "#cc6699", title: "SASS" },
   { icon: "mdi:bootstrap", color: "#563d7c", title: "Bootstrap" },
   { icon: "mdi:tailwind", color: "#38bdf8", title: "TailwindCSS" },
+  {
+    icon: "logos:strapi-icon",
+    color: "#8E75FF",
+    title: "Strapi",
+  },
 ];
 const OtherTechIconList: TechIconProps[] = [
   { icon: "simple-icons:postman", color: "#ef5b25", title: "Postman" },
@@ -88,11 +93,32 @@ const expTimeline: ExpTimelineProps[] = [
     isDone: false,
   },
   {
+    date: "Mar' 2023",
+    action: "Maqro Full Time Employee",
+    detail: "Improving and Upgrading the Portal",
+    isDone: false,
+    logo: (
+      <div className="w-[12%] h-full mr-2">
+        <MaqroLogo />
+      </div>
+    ),
+  },
+  {
+    date: "Jan' 2023",
+    action: "Maqro Contractor",
+    detail: "Helped launch the new Portal and the Marketing site of Maqro",
+    isDone: true,
+    logo: (
+      <div className="w-[12%] h-full mr-2">
+        <MaqroLogo />
+      </div>
+    ),
+  },
+  {
     date: "Sep' 2022",
     action: "Maqro Internship",
-    detail:
-      "Working as a front-end developer to build and enhance Maqro Portal",
-    isDone: false,
+    detail: "Worked as a front-end developer to build and enhance Maqro Portal",
+    isDone: true,
     logo: (
       <div className="w-[12%] h-full mr-2">
         <MaqroLogo />
@@ -123,8 +149,7 @@ const About: React.FC<AboutProps> = ({}) => {
   const responsive = useResponsive();
   const isBigScreen: boolean = ["xl", "2xl"].includes(responsive);
   const isDesktop: boolean = ["lg"].includes(responsive);
-  const isTablet: boolean = ["sm", "md"].includes(responsive);
-  const isMobileOrTablet: boolean = ["sm", "md", "xs", "2xs"].includes(
+  const isMobileOrTablet: boolean = ["sm", "md", "xs", "2xs", "3xs"].includes(
     responsive
   );
 
@@ -368,7 +393,10 @@ const About: React.FC<AboutProps> = ({}) => {
   return (
     <Section id="about" className="relative">
       <SectionHeader title="About" />
-      <Container className="lg:h-[80vh] lg:grid lg:grid-cols-2">
+      <Container
+        className="lg:h-[80vh] lg:grid lg:grid-cols-2"
+        isHiddenOnMobile
+      >
         {/* LEFT */}
         <div className="flex items-center justify-center lg:h-full">
           <div
