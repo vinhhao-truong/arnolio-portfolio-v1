@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
   const idToken = await admin?.getIdToken();
 
-  if (!admin) {
+  if (!idToken) {
     return {
       redirect: {
         permanent: false,
