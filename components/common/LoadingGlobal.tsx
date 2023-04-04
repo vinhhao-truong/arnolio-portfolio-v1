@@ -27,12 +27,12 @@ const LoadingGlobal: React.FC = () => {
   return (
     <div className="">
       <motion.div
-        style={{ transform: "translate(-50%, -50%)" }}
+        style={{ x: "-50%", y: "-50%" }}
         initial={{ display: "none" }}
         animate={
           // isGlobalLoading
           isGlobalLoading
-            ? { y: "8vh", display: "block", opacity: 1 }
+            ? { display: "block", opacity: 1 }
             : !!successState.msg
             ? {
                 opacity: 0,
@@ -41,7 +41,7 @@ const LoadingGlobal: React.FC = () => {
                   ease: "easeOut",
                 },
               }
-            : { y: 0, display: "none" }
+            : { display: "none" }
         }
         // className="fixed top-0 z-20 flex items-center justify-center p-4 rounded-full left-1/2 dark:bg-white-theme"
         className="fixed top-1/2 left-1/2 z-[100]"
@@ -55,6 +55,7 @@ const LoadingGlobal: React.FC = () => {
       <motion.div
         initial={{ display: "none", opacity: 0 }}
         className="fixed top-1/2 left-1/2 z-[100] flex flex-col items-center gap-4"
+        style={{ x: "-50%", y: "-50%" }}
         animate={
           // isGlobalLoading
           !!successState.msg
@@ -68,7 +69,7 @@ const LoadingGlobal: React.FC = () => {
                   ease: "backIn",
                 },
               }
-            : { y: 0, display: "none" }
+            : { display: "none" }
         }
       >
         <div className="flex justify-center">

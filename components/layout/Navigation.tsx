@@ -81,6 +81,17 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
 
           {/* main-nav */}
           <div className="flex">
+            {/* <div
+              className=""
+              onClick={() => {
+                dispatch(startLoading());
+                setTimeout(() => {
+                  dispatch(stopLoading({ msg: "success" }));
+                }, 3000);
+              }}
+            >
+              test
+            </div> */}
             {navMenu?.map(({ title, url }: NavItemInterface, idx: number) => (
               <Link key={idx} href={isHidden ? "" : url} scroll={false}>
                 <motion.a
