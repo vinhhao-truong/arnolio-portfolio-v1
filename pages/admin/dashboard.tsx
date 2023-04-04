@@ -46,8 +46,8 @@ const Dashboard = ({
     if (isLoggedIn) {
       return;
     }
-    router.push("/admin");
-  }, []);
+    router.replace("/admin");
+  }, [isLoggedIn]);
 
   const closeModal = (modalType: string) => () => {
     setIsModalOpen((prev) => ({ ...prev, [modalType]: false }));
