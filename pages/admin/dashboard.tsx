@@ -15,7 +15,7 @@ import {
   usePostNewProjectMutation,
 } from "../../redux/apis/projectsSlice";
 import { v4 } from "uuid";
-import AddProjectModal from "../../components/Admin/Dashboard/AddProjectModal";
+import AddProjectModal from "../../components/adminPage/AddProjectModal";
 import Modal from "../../components/common/Modal";
 
 export const getServerSideProps = async () => {

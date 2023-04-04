@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { InferGetServerSidePropsType, NextPage } from "next";
-import { firebaseAuth } from "../../../store/firebase";
+import { firebaseAuth } from "../../store/firebase";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { startLoading, stopLoading } from "../../../redux/globalStateSlice";
-import ProjectInterface from "../../../interfaces/ProjectInterface";
-import { lowerCaseAddSeparator } from "../../../utils/lowerCase";
-import Container from "../../Container";
-import { firebaseStorage } from "../../../store/firebase";
+import { startLoading, stopLoading } from "../../redux/globalStateSlice";
+import ProjectInterface from "../../interfaces/ProjectInterface";
+import { lowerCaseAddSeparator } from "../../utils/lowerCase";
+import Container from "../Container";
+import { firebaseStorage } from "../../store/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   useGetAllProjectsQuery,
   usePostNewProjectMutation,
-} from "../../../redux/apis/projectsSlice";
+} from "../../redux/apis/projectsSlice";
 import { v4 } from "uuid";
-import ReactProps from "../../../interfaces/ReactProps";
-import Modal from "../../common/Modal";
-import { ModalProps } from "../../../interfaces/ModalProps";
+import ReactProps from "../../interfaces/ReactProps";
+import Modal from "../common/Modal";
+import { ModalProps } from "../../interfaces/ModalProps";
 
 interface AddProejctModalProps extends ModalProps {
   idToken: string | null | undefined;

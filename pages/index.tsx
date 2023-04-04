@@ -4,10 +4,10 @@ import Head from "next/head";
 import Seo from "../components/Seo";
 import useResponsive from "../hooks/useResponsive";
 //home components
-import About from "../components/Home/About";
-import Contact from "../components/Home/Contact";
-import Landing from "../components/Home/Landing";
-import Projects from "../components/Home/Projects";
+import About from "../components/homePage/About";
+import Contact from "../components/homePage/Contact";
+import Landing from "../components/homePage/Landing";
+import Projects from "../components/homePage/Projects";
 //style
 import styles from "../styles/HomePage.module.scss";
 import { getClasses } from "../utils/getProps";
