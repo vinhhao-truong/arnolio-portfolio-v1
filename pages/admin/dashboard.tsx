@@ -26,14 +26,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
   const idToken = await admin?.getIdToken();
 
-  if (!idToken) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/admin",
-      },
-    };
-  }
+  // if (!idToken) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: "/admin",
+  //     },
+  //   };
+  // }
 
   return {
     props: {
@@ -53,6 +53,8 @@ const Dashboard = ({
   const [isModalOpen, setIsModalOpen] = useState({
     addProject: false,
   });
+
+  console.log(idToken);
 
   const closeModal = (modalType: string) => () => {
     setIsModalOpen((prev) => ({ ...prev, [modalType]: false }));
