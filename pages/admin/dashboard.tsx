@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { InferGetServerSidePropsType, NextPage } from "next";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import { firebaseAuth } from "../../store/firebase";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -18,9 +22,18 @@ import { v4 } from "uuid";
 import AddProjectModal from "../../components/adminPage/AddProjectModal";
 import Modal from "../../components/common/Modal";
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
   const idToken = await admin?.getIdToken();
+
+  if (!admin) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin",
+      },
+    };
+  }
 
   return {
     props: {
@@ -31,7 +44,6 @@ export const getServerSideProps = async () => {
 };
 
 const Dashboard = ({
-  isLoggedIn,
   idToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
@@ -41,13 +53,6 @@ const Dashboard = ({
   const [isModalOpen, setIsModalOpen] = useState({
     addProject: false,
   });
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      return;
-    }
-    router.replace("/admin");
-  }, [isLoggedIn]);
 
   const closeModal = (modalType: string) => () => {
     setIsModalOpen((prev) => ({ ...prev, [modalType]: false }));

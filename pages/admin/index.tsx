@@ -7,31 +7,29 @@ import Seo from "../../components/Seo";
 import { startLoading, stopLoading } from "../../redux/globalStateSlice";
 import { firebaseAuth } from "../../store/firebase";
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
 
+  if (admin) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin/dashboard",
+      },
+    };
+  }
+
   return {
-    props: {
-      isLoggedIn: admin ? true : false,
-    },
+    props: {},
   };
 };
 
-const Admin = ({
-  isLoggedIn,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Admin = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  //Check Auth
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/admin/dashboard");
-    }
-  }, []);
 
   const handleInput =
     (field: "email" | "password"): React.ChangeEventHandler<HTMLInputElement> =>
