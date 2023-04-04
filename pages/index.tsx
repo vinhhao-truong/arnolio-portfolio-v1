@@ -19,16 +19,6 @@ import { useRouter } from "next/router";
 import axios from "axios";
 //redux
 import { useDispatch } from "react-redux";
-import {
-  initiateMenu,
-  startLoading,
-  stopLoading,
-} from "../redux/globalStateSlice";
-//firebase
-import { firebaseDb } from "../store/firebase";
-import { update, ref, onValue } from "firebase/database";
-import ProjectInterface from "../interfaces/ProjectInterface";
-import AboutMobile from "../components/Home/AboutMobile";
 
 export const getServerSideProps = async () => {
   const projects: any[] = [];
