@@ -10,16 +10,24 @@ import Cookies from "js-cookie";
 import { getFirebaseAuthApi } from "../../store/firebaseAuth";
 import { AuthEnum } from "../../interfaces/Firebase";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const admin = firebaseAuth.currentUser;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const idToken = ctx.req.cookies.idToken;
 
-  if (admin) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/admin/dashboard",
-      },
-    };
+  if (idToken) {
+    const type: keyof typeof AuthEnum = "Get User Data";
+    try {
+      await axios.post(getFirebaseAuthApi(type), {
+        idToken,
+      });
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/admin/dashboard",
+        },
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return {

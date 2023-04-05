@@ -18,19 +18,34 @@ import { AuthEnum } from "../../interfaces/Firebase";
 import Cookies from "js-cookie";
 import { IoMdAdd } from "react-icons/io";
 import { motion } from "framer-motion";
+import { getFirebaseAuthApi } from "../../store/firebaseAuth";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  // const admin = firebaseAuth.currentUser;
-  // const idToken = await admin?.getIdToken();
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const idToken = ctx.req.cookies.idToken;
 
-  // if (!idToken) {
-  //   return {
-  //     redirect: {
-  //       permanent: false,
-  //       destination: "/admin",
-  //     },
-  //   };
-  // }
+  const type: keyof typeof AuthEnum = "Get User Data";
+
+  try {
+    await axios.post(getFirebaseAuthApi(type), {
+      idToken,
+    });
+  } catch (err) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin",
+      },
+    };
+  }
+
+  if (!idToken) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin",
+      },
+    };
+  }
 
   return {
     props: {
@@ -50,26 +65,6 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isModalOpen, setIsModalOpen] = useState({
     addProject: false,
   });
-
-  useEffect(() => {
-    if (!Cookies.get("idToken")) {
-      router.replace("/admin");
-    } else {
-      (async () => {
-        const type: keyof typeof AuthEnum = "Get User Data";
-
-        try {
-          await axios.post("/api/admin/auth", {
-            type,
-            idToken: Cookies.get("idToken"),
-          });
-        } catch (err) {
-          Cookies.remove("idToken");
-          router.replace("/admin");
-        }
-      })();
-    }
-  }, []);
 
   const closeModal = (modalType: string) => () => {
     setIsModalOpen((prev) => ({ ...prev, [modalType]: false }));
@@ -102,11 +97,11 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
       </button>
       <Container className="flex flex-col gap-4">
         <motion.div
-          whileHover={{ scale: 1.2 }}
-          className="block p-3 mx-auto my-2 rounded-full bg-blue-theme"
+          whileHover={{ scale: 1.2, transition: { duration: 0.1 } }}
+          className="block p-3 mx-auto my-2 rounded-full cursor-pointer bg-blue-theme"
           onClick={openModal("addProject")}
         >
-          <IoMdAdd className="text-lg text-white cursor-pointer" />
+          <IoMdAdd className="text-lg text-white" />
         </motion.div>
         {projects?.map((p) => {
           return <div key={v4()}>{p.name}</div>;
