@@ -2,16 +2,6 @@ import { RootState } from "./portfolioStore";
 import { Action, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import NavItemInterface from "../interfaces/NavItemInterface";
 
-const defaultColors = {
-  "red-theme": "#ef233c",
-  "white-theme": "#edf2f4",
-  "navy-theme": "#2b2d42",
-  "blue-theme": "#0077b6",
-  mask: "rgba(0, 0, 0, 0.3)",
-  "mask-bold": "rgba(0, 0, 0, 0.8)",
-  "top-layer": "rgba(255, 255, 255, 0.05)",
-};
-
 const defaultNavMenu: NavItemInterface[] = [
   {
     title: "About",
@@ -37,7 +27,6 @@ type GlobalStateProps = {
   isMaskClosable: boolean;
   currentHomeView: string;
   isGlobalLoading: boolean;
-  colors: any;
   navMenu: NavItemInterface[];
   successState: {
     color?: string;
@@ -50,7 +39,6 @@ const initialState: GlobalStateProps = {
   isMaskClosable: false,
   currentHomeView: "",
   isGlobalLoading: false,
-  colors: defaultColors,
   navMenu: defaultNavMenu,
   successState: {
     color: "#52b788",

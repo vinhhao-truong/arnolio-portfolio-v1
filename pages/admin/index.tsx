@@ -42,6 +42,14 @@ const Admin = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  useEffect(() => {
+    router.prefetch("/admin/dashboard");
+
+    if (Cookies.get("idToken")) {
+      Cookies.remove("idToken");
+    }
+  }, []);
+
   const handleInput =
     (field: "email" | "password"): React.ChangeEventHandler<HTMLInputElement> =>
     (e) => {

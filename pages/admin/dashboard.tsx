@@ -19,6 +19,7 @@ import Cookies from "js-cookie";
 import { IoMdAdd } from "react-icons/io";
 import { motion } from "framer-motion";
 import { getFirebaseAuthApi } from "../../store/firebaseAuth";
+import ProjectsTable from "../../components/adminPage/ProjectsTable";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const idToken = ctx.req.cookies.idToken;
@@ -60,8 +61,6 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { data: projects } = useGetAllProjectsQuery({});
-
   const [isModalOpen, setIsModalOpen] = useState({
     addProject: false,
   });
@@ -96,16 +95,17 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
         Sign Out
       </button>
       <Container className="flex flex-col gap-4">
-        <motion.div
-          whileHover={{ scale: 1.2, transition: { duration: 0.1 } }}
-          className="block p-3 mx-auto my-2 rounded-full cursor-pointer bg-blue-theme"
-          onClick={openModal("addProject")}
-        >
-          <IoMdAdd className="text-lg text-white" />
-        </motion.div>
-        {projects?.map((p) => {
-          return <div key={v4()}>{p.name}</div>;
-        })}
+        <div className="flex justify-start">
+          <motion.div
+            whileHover={{ scale: 1.2, transition: { duration: 0.1 } }}
+            className="p-3 my-2 rounded-full cursor-pointer bg-blue-theme"
+            onClick={openModal("addProject")}
+          >
+            <IoMdAdd className="text-lg text-white" />
+          </motion.div>
+        </div>
+
+        <ProjectsTable />
       </Container>
     </>
   );

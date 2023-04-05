@@ -53,13 +53,10 @@ const Loader: React.FC<LoaderProps> = ({ type, color, className, style }) => {
 
   const ThreeFadingDots = () => {
     return (
-      <div
-        style={{ backgroundColor: thisColor }}
-        className={styles["ThreeFadingDots"]}
-      >
-        <div className=""></div>
-        <div className=""></div>
-        <div className=""></div>
+      <div className={styles["ThreeFadingDots"]}>
+        <div style={{ backgroundColor: thisColor }} className=""></div>
+        <div style={{ backgroundColor: thisColor }} className=""></div>
+        <div style={{ backgroundColor: thisColor }} className=""></div>
       </div>
     );
   };

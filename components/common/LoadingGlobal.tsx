@@ -8,10 +8,10 @@ import { motion } from "framer-motion";
 import Loader from "./Loader";
 import { useEffect } from "react";
 import Iconify from "./Iconify";
+import systemColor from "../../utils/getSystemColor";
 
 const LoadingGlobal: React.FC = () => {
-  const { colors, isGlobalLoading, successState } =
-    useSelector(selectGlobalState);
+  const { isGlobalLoading, successState } = useSelector(selectGlobalState);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const LoadingGlobal: React.FC = () => {
         className="fixed top-1/2 left-1/2 z-[100]"
       >
         <Loader
-          color={colors["red-theme"]}
+          color={systemColor["red-theme"]}
           type="Spin Stretch"
           className="w-[100px]"
         />

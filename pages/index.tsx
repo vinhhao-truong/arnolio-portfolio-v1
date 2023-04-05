@@ -85,7 +85,8 @@ const HomePage = ({
         >
           <Landing className={`${getClasses(styles.landing)}`} />
           <About />
-          {projects && <Projects projectList={projects} />}
+          {/* {projects && <Projects projectList={projects} />} */}
+          <Projects />
           <Contact />
         </motion.div>
       }

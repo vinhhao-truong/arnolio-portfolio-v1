@@ -8,7 +8,6 @@ const projectsApi = portfolioApi.injectEndpoints({
         };
       },
       providesTags: () => [{ type: "projects", id: "all-projects" }],
-      transformResponse: (data) => Object.values(data ? data : []),
       keepUnusedDataFor: 5,
     }),
     postNewProject: build.mutation({

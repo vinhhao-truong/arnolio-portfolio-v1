@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { selectGlobalState } from "../redux/globalStateSlice";
 import { useSelector } from "react-redux";
 import useResponsive from "../hooks/useResponsive";
+import systemColor from "../utils/getSystemColor";
 
 interface ProjectThumbnailProps extends ReactProps {
   name?: string;
@@ -39,7 +40,6 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
   const [showOptions, setShowOptions] = useState<boolean | null>(null);
   const router = useRouter();
 
-  const { colors } = useSelector(selectGlobalState);
   const responsive = useResponsive();
 
   const isMobileTablet: boolean = ["3xs", "2xs", "xs", "sm", "md"].includes(
@@ -132,7 +132,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
             rel="noreferrer"
             whileHover={{
               scale: 1.2,
-              color: colors["blue-theme"],
+              color: systemColor["blue-theme"],
             }}
             whileTap={{ scale: 1 }}
             transition={{ duration: 0.2 }}
@@ -152,7 +152,7 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({
             rel="noreferrer"
             whileHover={{
               scale: 1.2,
-              color: colors["blue-theme"],
+              color: systemColor["blue-theme"],
             }}
             whileTap={{ scale: 1 }}
             transition={{ duration: 0.2 }}
