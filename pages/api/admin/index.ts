@@ -1,8 +1,8 @@
 import { NextApiResponse } from "next";
 import { NextApiRequest } from "next";
-import { firebaseAuth } from "../../store/firebase";
+import { firebaseAuth } from "../../../store/firebase";
 import { AuthError, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import ResponseData from "../../interfaces/ResponseData";
+import ResponseData from "../../../interfaces/ResponseData";
 
 const handleAdminLogin = async (
   req: NextApiRequest,
@@ -20,9 +20,13 @@ const handleAdminLogin = async (
           password
         );
 
+        const jwt = await signIn.user.getIdToken();
+
         res.status(200).send({
           status: 200,
-          data: "Signed in!",
+          data: {
+            jwt,
+          },
         });
       } catch (err) {
         res.status(404).send({

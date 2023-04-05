@@ -6,6 +6,9 @@ import { useDispatch } from "react-redux";
 import Seo from "../../components/Seo";
 import { startLoading, stopLoading } from "../../redux/globalStateSlice";
 import { firebaseAuth } from "../../store/firebase";
+import Cookies from "js-cookie";
+import { getFirebaseAuthApi } from "../../store/firebaseAuth";
+import { AuthEnum } from "../../interfaces/Firebase";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const admin = firebaseAuth.currentUser;
@@ -47,18 +50,24 @@ const Admin = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     e.preventDefault();
     if (email && password) {
       dispatch(startLoading());
+
+      const type: keyof typeof AuthEnum = "Sign In";
+
       try {
-        console.log(email);
-        const adminRes = await axios.post("/api/admin", {
-          type: "signIn",
+        const adminRes = await axios.post("/api/admin/auth", {
+          type,
+          returnSecureToken: true,
           email: email,
           password: password,
         });
 
-        const msg = await adminRes.data.data;
-        setTimeout(() => {
-          router.push("/admin/dashboard");
-        }, 1000);
+        const adminData = await adminRes.data.data;
+
+        if (adminData.idToken) {
+          Cookies.set("idToken", adminData.idToken, { expires: 1 / 24 });
+          router.replace("/admin/dashboard");
+        }
+
         dispatch(stopLoading({ msg: "Signed In!" }));
         return;
       } catch (err) {

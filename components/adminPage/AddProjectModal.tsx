@@ -33,6 +33,9 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
     demoUrl: "",
     srcCodeUrl: "",
     thumbnail: "",
+    status: "Live",
+    progress: "In Progress",
+    owner: "",
   };
 
   const router = useRouter();
@@ -95,7 +98,10 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
         const srcCodeUrl = newProject.srcCodeUrl;
 
         if (idToken) {
-          addPost({ name, demoUrl, slug, thumbnail, srcCodeUrl, idToken });
+          addPost({
+            projectData: { name, demoUrl, slug, thumbnail, srcCodeUrl },
+            idToken,
+          });
         }
       } catch (err) {
         console.log(err);

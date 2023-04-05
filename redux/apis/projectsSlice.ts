@@ -12,18 +12,14 @@ const projectsApi = portfolioApi.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     postNewProject: build.mutation({
-      query: ({ name, demoUrl, slug, thumbnail, srcCodeUrl, idToken }) => {
+      query: ({ projectData, idToken }) => {
         return {
-          url: `${process.env.PROJECT_API}?auth=${idToken}`,
+          url: `/api/project/add-project`,
           method: "POST",
           body: {
-            name,
-            demoUrl,
-            slug,
-            thumbnail,
-            srcCodeUrl,
-            halo: "halo",
+            ...projectData,
           },
+          params: { idToken },
         };
       },
       invalidatesTags: ["projects"],
