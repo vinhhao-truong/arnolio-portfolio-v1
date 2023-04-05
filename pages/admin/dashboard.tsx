@@ -9,16 +9,15 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { startLoading, stopLoading } from "../../redux/globalStateSlice";
-
 import Container from "../../components/Container";
 import { firebaseStorage } from "../../store/firebase";
-
 import { useGetAllProjectsQuery } from "../../redux/apis/projectsSlice";
 import { v4 } from "uuid";
 import AddProjectModal from "../../components/adminPage/AddProjectModal";
-
 import { AuthEnum } from "../../interfaces/Firebase";
 import Cookies from "js-cookie";
+import { IoMdAdd } from "react-icons/io";
+import { motion } from "framer-motion";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // const admin = firebaseAuth.currentUser;
@@ -102,9 +101,13 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
         Sign Out
       </button>
       <Container className="flex flex-col gap-4">
-        <div className="" onClick={openModal("addProject")}>
-          Add
-        </div>
+        <motion.div
+          whileHover={{ scale: 1.2 }}
+          className="block p-3 mx-auto my-2 rounded-full bg-blue-theme"
+          onClick={openModal("addProject")}
+        >
+          <IoMdAdd className="text-lg text-white cursor-pointer" />
+        </motion.div>
         {projects?.map((p) => {
           return <div key={v4()}>{p.name}</div>;
         })}

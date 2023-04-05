@@ -34,8 +34,6 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
     srcCodeUrl: "",
     thumbnail: "",
     status: "Live",
-    progress: "In Progress",
-    owner: "",
   };
 
   const router = useRouter();
