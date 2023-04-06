@@ -18,7 +18,7 @@ const LoadingGlobal: React.FC = () => {
     if (successState) {
       const showMsg = setTimeout(() => {
         dispatch(closeSuccessMsg());
-      }, 2800);
+      }, 2000);
 
       return () => clearTimeout(showMsg);
     }
@@ -37,7 +37,7 @@ const LoadingGlobal: React.FC = () => {
             ? {
                 opacity: 0,
                 transition: {
-                  duration: 0.5,
+                  duration: 0.3,
                   ease: "easeOut",
                 },
               }
@@ -64,7 +64,7 @@ const LoadingGlobal: React.FC = () => {
                 scale: 2,
                 transition: {
                   delay: 0.2,
-                  duration: 0.5,
+                  duration: 0.3,
                   ease: "backIn",
                 },
               }

@@ -84,7 +84,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = () => {
 
           return (
             <div
-              className="grid grid-cols-12 p-2 my-1 cursor-pointer hover:bg-blue-theme/10"
+              className="grid grid-cols-12 p-2 my-1 hover:bg-blue-theme/10"
               key={id}
             >
               <Id>{id}</Id>
@@ -95,7 +95,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = () => {
               <Action className="flex items-center">
                 <button
                   onClick={() => setSelectedProjectId(id)}
-                  className="p-1 z-1 flex justify-center items-center w-[35px] h-[35px] bg-blue-600 rounded-full hover:bg-blue-700 mr-1.5 text-white-theme"
+                  className="p-1 z-1 outline-none flex justify-center items-center w-[35px] h-[35px] bg-blue-600 rounded-full hover:bg-blue-700 mr-1.5 text-white-theme"
                 >
                   <AiTwotoneEdit className="text-sm" />
                 </button>
@@ -103,7 +103,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = () => {
                   onClick={async () => {
                     setDeletingProjectId(id);
                   }}
-                  className="p-1 z-1 flex justify-center items-center w-[35px] h-[35px] bg-red-600 rounded-full hover:bg-red-700 text-white-theme"
+                  className="p-1 z-1 outline-none flex justify-center items-center w-[35px] h-[35px] bg-red-600 rounded-full hover:bg-red-700 text-white-theme"
                 >
                   {deletingProjectId === id ? (
                     <Loader type="Surrounded Dot" className="w-[50px]" />
@@ -122,6 +122,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = () => {
           closeModal={closeEditModal}
           isOpen={!!selectedProjectId}
           initialProject={projects[selectedProjectId]}
+          id={selectedProjectId}
         />
       )}
       {deletingProjectId && (

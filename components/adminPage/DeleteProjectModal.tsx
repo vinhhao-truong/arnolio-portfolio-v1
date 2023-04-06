@@ -59,7 +59,8 @@ const DeleteProjectModal: React.FC<AddProejctModalProps> = ({
           </button>
           <button
             type="submit"
-            className="px-4 py-1 bg-red-600 rounded hover:text-white-theme/90 text-white-theme w-max"
+            disabled={isLoading}
+            className="px-4 py-1 bg-red-600 rounded disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed hover:text-white-theme/90 text-white-theme w-max"
           >
             {isLoading ? "Deleting..." : "Delete"}
           </button>

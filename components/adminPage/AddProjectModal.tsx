@@ -91,7 +91,7 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
           : "";
 
         if (uploadedThumbnail && Array.from(uploadedThumbnail).length > 0) {
-          const storageRef = ref(firebaseStorage, `projects/${slug}/thumbnail`);
+          const storageRef = ref(firebaseStorage, `projects/${slug}-thumbnail`);
           const upload = await uploadBytes(storageRef, uploadedThumbnail[0]);
           const url: string = await getDownloadURL(upload.ref);
           thumbnailUrl = url;

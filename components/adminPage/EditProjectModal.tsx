@@ -6,15 +6,27 @@ import ProjectInterface from "../../interfaces/ProjectInterface";
 import { lowerCaseAddSeparator } from "../../utils/lowerCase";
 import Container from "../Container";
 import { firebaseStorage } from "../../store/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { usePostNewProjectMutation } from "../../redux/apis/projectsSlice";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  listAll,
+} from "firebase/storage";
+import {
+  useEditProjectMutation,
+  usePostNewProjectMutation,
+} from "../../redux/apis/projectsSlice";
 import Modal from "../common/Modal";
 import { ModalProps } from "../../interfaces/ModalProps";
 import Image from "next/image";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { MdClear, MdDone } from "react-icons/md";
 
 interface EditProejctModalProps extends ModalProps {
   idToken: string | null | undefined;
   initialProject: ProjectInterface;
+  id: string;
 }
 
 const EditProjectModal: React.FC<EditProejctModalProps> = ({
@@ -22,6 +34,7 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
   isOpen,
   closeModal,
   initialProject,
+  id,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -32,40 +45,52 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
     null
   );
   const [uploadedImg, setUploadedImg] = useState<FileList | null>(null);
+  const [thisThumbnail, setThisThumbnail] = useState<string | undefined>(
+    initialProject.thumbnail
+  );
+  const [thisImgList, setThisImgList] = useState<string[] | undefined>(
+    initialProject.imgList
+  );
+  const [isDeletingImgList, setIsDeletingImgList] = useState<boolean>(false);
 
-  const [addPost, { isLoading: addLoading, data: addData, isError: addError }] =
-    usePostNewProjectMutation({});
+  const [
+    editProject,
+    { isLoading: editLoading, data: editData, isError: editError },
+  ] = useEditProjectMutation({});
 
   const resetStates = () => {
     setThisProject({ ...initialProject });
     setUploadedImg(null);
     setUploadedThumbnail(null);
+    setIsDeletingImgList(false);
   };
 
   useEffect(() => {
     setThisProject(initialProject);
+    setThisThumbnail(initialProject.thumbnail);
+    setThisImgList(initialProject.imgList);
   }, [initialProject]);
 
   useEffect(() => {
-    if (addLoading) {
+    if (editLoading) {
       dispatch(startLoading());
     } else {
-      if (addData) {
-        dispatch(stopLoading({ msg: "Project added!" }));
+      if (editData) {
+        dispatch(stopLoading({ msg: `Updated!` }));
       }
     }
-  }, [addLoading, addData]);
+  }, [editLoading, editData]);
 
   useEffect(() => {
-    if (addError) {
+    if (editError) {
       alert("Error");
     }
 
-    if (addData && !addError) {
+    if (editData && !editError) {
       resetStates();
       closeModal();
     }
-  }, [addData, addError]);
+  }, [editData, editError]);
 
   const handleCreateProject: React.FormEventHandler = async (e) => {
     e.preventDefault();
@@ -76,17 +101,10 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
         let thumbnailUrl: string = "";
         const uploadedImgList: string[] = [];
 
-        const allSpecialRegex = /[^A-Za-z0-9\ ]/g;
-
-        const slug = thisProject.name
-          ? lowerCaseAddSeparator(
-              thisProject.name.replaceAll(allSpecialRegex, " "),
-              "-"
-            )
-          : "";
+        const slug = thisProject.slug;
 
         if (uploadedThumbnail && Array.from(uploadedThumbnail).length > 0) {
-          const storageRef = ref(firebaseStorage, `projects/${slug}/thumbnail`);
+          const storageRef = ref(firebaseStorage, `projects/${slug}-thumbnail`);
           const upload = await uploadBytes(storageRef, uploadedThumbnail[0]);
           const url: string = await getDownloadURL(upload.ref);
           thumbnailUrl = url;
@@ -108,16 +126,19 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
         }
 
         const thumbnail = thumbnailUrl;
+        const editedImgList = !!uploadedImg ? { imgList: uploadedImgList } : {};
+
+        const editedThumbnail = !!uploadedThumbnail ? { thumbnail } : {};
 
         if (idToken) {
-          addPost({
+          editProject({
             projectData: {
               ...thisProject,
-              slug,
-              thumbnail,
-              imgList: uploadedImgList,
+              ...editedImgList,
+              ...editedThumbnail,
             },
             idToken,
+            id,
           });
         }
       } catch (err) {
@@ -163,16 +184,12 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
         onSubmit={handleCreateProject}
         className="grid grid-cols-1 gap-4 text-black"
       >
-        <div className="text-3xl">Add Projects</div>
-        <input
-          className="w-full border rounded-md arnolio-input"
-          value={thisProject.name}
-          type="text"
-          onChange={handleNewProjectChange("name")}
-          placeholder="Project Name *"
-          required
-          autoFocus
-        />
+        <div className="text-3xl">
+          Editing{" "}
+          <span className="text-3xl font-semibold text-blue-theme">
+            {initialProject.name}
+          </span>
+        </div>
         <input
           className="w-full border rounded-md arnolio-input"
           value={thisProject.owner}
@@ -255,11 +272,11 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
           <label htmlFor="upload-thumbnail-input" className="relative">
             <Image
               src={
-                !uploadedThumbnail ||
-                (uploadedThumbnail &&
-                  Array.from(uploadedThumbnail).length === 0)
-                  ? `https://dummyimage.com/600x400/0076b6/ffffff.jpg&text=upload`
-                  : URL.createObjectURL(uploadedThumbnail[0])
+                uploadedThumbnail && uploadedThumbnail.length
+                  ? URL.createObjectURL(uploadedThumbnail[0])
+                  : thisThumbnail
+                  ? thisThumbnail
+                  : "https://dummyimage.com/600x400/0076b6/ffffff.jpg&text=upload"
               }
               alt=""
               layout="responsive"
@@ -287,22 +304,77 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
           // value={uploadedImg}
         />
         <label htmlFor="upload-image-input">Image List</label>
+        {thisImgList && (
+          <div className="flex items-center gap-1 -my-4 text-sm leading-snug text-red-600 w-max ">
+            <RiDeleteBin5Fill />{" "}
+            <span
+              onClick={() => {
+                setIsDeletingImgList((prev) => !prev);
+              }}
+              className="cursor-pointer hover:text-red-700"
+            >
+              {isDeletingImgList ? "Are you sure?" : "Clear Image List"}
+            </span>
+            {isDeletingImgList && (
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setIsDeletingImgList(false)}
+                  className="p-1 text-xs rounded-full text-white-theme bg-blue-theme hover:brightness-90"
+                >
+                  <MdClear />
+                </button>
+                <button
+                  onClick={async () => {
+                    const storageRef = ref(
+                      firebaseStorage,
+                      `projects/${initialProject.slug}/`
+                    );
+                    try {
+                      const firebaseStorage = await listAll(storageRef);
+                      firebaseStorage.items.forEach(async (dir) => {
+                        try {
+                          await deleteObject(dir);
+                        } catch (err) {
+                          console.log(err);
+                        }
+                      });
+                      await editProject({
+                        id,
+                        idToken,
+                        projectData: {
+                          imgList: [],
+                        },
+                      });
+                    } catch (err) {
+                      console.log(err);
+                    }
+                  }}
+                  className="p-1 text-xs rounded-full text-white-theme bg-red-theme hover:brightness-90"
+                >
+                  <MdDone />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
         <div className="grid grid-cols-4 gap-x-2">
-          {(!uploadedImg ||
-            (uploadedImg && Array.from(uploadedImg).length === 0)) && (
-            <label htmlFor="upload-image-input" className="relative">
-              <Image
-                src={`https://dummyimage.com/600x400/0076b6/ffffff.jpg&text=upload`}
-                alt=""
-                layout="responsive"
-                width="100%"
-                height="60%"
-                objectFit="contain"
-                className="rounded cursor-pointer"
-              />
-            </label>
-          )}
+          {!thisImgList &&
+            (!uploadedImg ||
+              (uploadedImg && Array.from(uploadedImg).length === 0)) && (
+              <label htmlFor="upload-image-input" className="relative">
+                <Image
+                  src={`https://dummyimage.com/600x400/0076b6/ffffff.jpg&text=upload`}
+                  alt=""
+                  layout="responsive"
+                  width="100%"
+                  height="60%"
+                  objectFit="contain"
+                  className="rounded cursor-pointer"
+                />
+              </label>
+            )}
           {uploadedImg &&
+            uploadedImg.length &&
             Array.from(uploadedImg)
               .slice(0, 4)
               .map((img, idx) => {
@@ -335,6 +407,38 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
                   </label>
                 );
               })}
+          {!uploadedImg &&
+            thisImgList &&
+            thisImgList.slice(0, 4).map((img, idx) => {
+              const RenderedImage = () => {
+                return (
+                  <Image
+                    src={img}
+                    alt=""
+                    layout="responsive"
+                    width="100%"
+                    height="60%"
+                    objectFit="contain"
+                    className="rounded cursor-pointer"
+                  />
+                );
+              };
+
+              return (
+                <label
+                  htmlFor="upload-image-input"
+                  className="relative overflow-hidden"
+                  key={`preview-img-${idx}`}
+                >
+                  <RenderedImage />
+                  {idx === 3 && (
+                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-lg text-white bg-black/60">
+                      + {thisImgList.length - 4}
+                    </div>
+                  )}
+                </label>
+              );
+            })}
         </div>
 
         <button

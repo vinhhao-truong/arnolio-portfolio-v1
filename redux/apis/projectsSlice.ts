@@ -36,6 +36,20 @@ const projectsApi = portfolioApi.injectEndpoints({
       },
       invalidatesTags: ["projects"],
     }),
+    editProject: build.mutation({
+      query: ({ projectData, id, idToken }) => {
+        return {
+          url: `/api/project/edit-project`,
+          method: "PATCH",
+          body: {
+            ...projectData,
+            id,
+          },
+          params: { idToken },
+        };
+      },
+      invalidatesTags: ["projects"],
+    }),
   }),
 });
 
@@ -43,4 +57,5 @@ export const {
   useGetAllProjectsQuery,
   usePostNewProjectMutation,
   useDeleteProjectMutation,
+  useEditProjectMutation,
 } = projectsApi;
