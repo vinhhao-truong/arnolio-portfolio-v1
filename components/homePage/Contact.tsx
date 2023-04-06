@@ -23,6 +23,7 @@ import {
 } from "../../redux/globalStateSlice";
 import ReactLoading from "react-loading";
 import Loader from "../common/Loader";
+import systemColor from "../../utils/getSystemColor";
 
 //Motion for hovering effect
 const expand: TargetAndTransition = {
@@ -71,7 +72,6 @@ const Contact: React.FC<ContactProps> = () => {
   const contactRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-  const { colors } = useSelector(selectGlobalState);
 
   const [isLeft, setIsLeft] = useState<boolean | null>(null);
   const [isFormSending, setIsFormSending] = useState<boolean>(false);
