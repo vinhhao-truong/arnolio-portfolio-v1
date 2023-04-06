@@ -16,7 +16,11 @@ const Modal: React.FC<ModalProps> = ({
     <MuiModal open={isOpen} onClose={closeModal}>
       <motion.div
         initial={{ scale: 0 }}
-        animate={isOpen ? { scale: 1 } : {}}
+        animate={
+          isOpen
+            ? { scale: 1, transition: { duration: 0.2, ease: "easeOut" } }
+            : {}
+        }
         className={`${getClasses(
           className
         )} max-w-[95vw] max-h-[95vh] rounded-lg p-4 bg-white-theme fixed top-1/2 left-1/2 outline-none`}

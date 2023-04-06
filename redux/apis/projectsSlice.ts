@@ -23,8 +23,24 @@ const projectsApi = portfolioApi.injectEndpoints({
       },
       invalidatesTags: ["projects"],
     }),
+    deleteProject: build.mutation({
+      query: ({ id, idToken }) => {
+        return {
+          url: `/api/project/delete-project`,
+          method: "DELETE",
+          body: {
+            id,
+          },
+          params: { idToken },
+        };
+      },
+      invalidatesTags: ["projects"],
+    }),
   }),
 });
 
-export const { useGetAllProjectsQuery, usePostNewProjectMutation } =
-  projectsApi;
+export const {
+  useGetAllProjectsQuery,
+  usePostNewProjectMutation,
+  useDeleteProjectMutation,
+} = projectsApi;
