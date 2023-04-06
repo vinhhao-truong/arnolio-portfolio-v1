@@ -16,11 +16,6 @@ import TopLayer from "../common/TopLayer";
 import axios from "axios";
 import ResponseData from "../../interfaces/ResponseData";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectGlobalState,
-  startLoading,
-  stopLoading,
-} from "../../redux/globalStateSlice";
 import ReactLoading from "react-loading";
 import Loader from "../common/Loader";
 import systemColor from "../../utils/getSystemColor";

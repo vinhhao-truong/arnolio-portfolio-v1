@@ -47,24 +47,6 @@ const HomePage = ({
 
   const responsive = useResponsive();
 
-  console.log("responsive", responsive);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const db = ref(database, "/project");
-
-  //       onValue(db, async (snapshot) => {
-  //         const data = await snapshot.val();
-
-  //         console.log(data);
-  //       });
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  // }, []);
-
   return (
     <>
       <Seo

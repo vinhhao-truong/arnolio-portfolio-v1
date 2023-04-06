@@ -6,9 +6,9 @@ interface ProjectInterface {
   description?: string;
   logo?: string | React.ReactNode;
   thumbnail?: string;
-  imgList?: string;
+  imgList?: string[];
   color?: string;
-  lastUpdate?: number;
+  lastUpdate?: string;
   progress?: "In Progress" | "Done";
   status?: "Live" | "Down";
   owner?: "Personal" | string;

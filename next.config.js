@@ -26,6 +26,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "http",
+        hostname: "localhost:3000",
+      },
+      {
         protocol: "https",
         hostname: "dummyimage.com",
       },

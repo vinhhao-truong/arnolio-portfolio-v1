@@ -43,8 +43,7 @@ const LoadingGlobal: React.FC = () => {
               }
             : { display: "none" }
         }
-        // className="fixed top-0 z-20 flex items-center justify-center p-4 rounded-full left-1/2 dark:bg-white-theme"
-        className="fixed top-1/2 left-1/2 z-[100]"
+        className="fixed top-1/2 left-1/2 z-[2001]"
       >
         <Loader
           color={systemColor["red-theme"]}
@@ -54,7 +53,7 @@ const LoadingGlobal: React.FC = () => {
       </motion.div>
       <motion.div
         initial={{ display: "none", opacity: 0 }}
-        className="fixed top-1/2 left-1/2 z-[100] flex flex-col items-center gap-4"
+        className="fixed top-1/2 left-1/2 z-[2001] flex flex-col items-center gap-4"
         style={{ x: "-50%", y: "-50%" }}
         animate={
           // isGlobalLoading

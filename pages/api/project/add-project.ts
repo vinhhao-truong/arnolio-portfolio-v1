@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import { NextApiRequest, NextApiResponse } from "next";
 import ResponseData from "../../../interfaces/ResponseData";
 
@@ -14,6 +15,7 @@ export default async function handleAddProject(
       try {
         await axios.post(`${process.env.PROJECT_API}?auth=${idToken}`, {
           ...reqBody,
+          lastUpdate: moment().format(),
         });
 
         res.status(200).send({

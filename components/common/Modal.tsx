@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({
         animate={isOpen ? { scale: 1 } : {}}
         className={`${getClasses(
           className
-        )} max-w-[95vw] max-h-[95vh] rounded-lg p-4 bg-white fixed top-1/2 left-1/2 outline-none`}
+        )} max-w-[95vw] max-h-[95vh] rounded-lg p-4 bg-white-theme fixed top-1/2 left-1/2 outline-none`}
         style={{ x: "-50%", y: "-50%", ...getStyles(style) }}
       >
         {children}

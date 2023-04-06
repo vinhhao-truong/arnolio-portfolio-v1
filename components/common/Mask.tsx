@@ -9,7 +9,7 @@ const Mask: React.FC = () => {
   return (
     <div
       onClick={isMaskClosable ? () => dispatch(offMasked()) : () => {}}
-      className={`fixed top-0 left-0 z-20 w-full h-full backdrop-blur-lg ${
+      className={`fixed top-0 left-0 z-[2000] w-full h-full backdrop-blur-lg ${
         isMasked || isGlobalLoading || !!successState.msg ? "block" : "hidden"
       }`}
     ></div>
