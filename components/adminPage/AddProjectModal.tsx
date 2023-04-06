@@ -169,75 +169,112 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
         className="grid grid-cols-1 gap-4 text-black"
       >
         <div className="text-3xl">Add Projects</div>
-        <input
-          className="w-full border rounded-md arnolio-input"
-          value={newProject.name}
-          type="text"
-          onChange={handleNewProjectChange("name")}
-          placeholder="Project Name *"
-          required
-          autoFocus
-        />
-        <input
-          className="w-full border rounded-md arnolio-input"
-          value={newProject.owner}
-          type="text"
-          onChange={handleNewProjectChange("owner")}
-          placeholder="Owner *"
-          required
-        />
-        <input
-          className="w-full border rounded-md arnolio-input"
-          value={newProject.description}
-          type="text"
-          onChange={handleNewProjectChange("description")}
-          placeholder="Description"
-        />
+        <label htmlFor="input-name">
+          Name
+          <input
+            className="w-full border rounded-md arnolio-input"
+            value={newProject.name}
+            type="text"
+            onChange={handleNewProjectChange("name")}
+            placeholder="Project Name *"
+            required
+            autoFocus
+            name="input-name"
+            id="input-name"
+          />
+        </label>
+
+        <label htmlFor="input-owner">
+          Owner
+          <input
+            className="w-full border rounded-md arnolio-input"
+            value={newProject.owner}
+            type="text"
+            onChange={handleNewProjectChange("owner")}
+            placeholder="Owner *"
+            required
+            id="input-owner"
+            name="input-owner"
+          />
+        </label>
+
+        <label htmlFor="input-description">
+          Description
+          <input
+            className="w-full border rounded-md arnolio-input"
+            value={newProject.description}
+            type="text"
+            onChange={handleNewProjectChange("description")}
+            placeholder="Description"
+            id="input-description"
+            name="input-description"
+          />
+        </label>
+
         <div className="grid grid-cols-2 gap-2">
-          <input
-            className="w-full border rounded-md arnolio-input"
-            value={newProject.demoUrl}
-            type="text"
-            onChange={handleNewProjectChange("demoUrl")}
-            placeholder="Project Demo Url"
-          />
-          <input
-            className="w-full border rounded-md arnolio-input"
-            value={newProject.srcCodeUrl}
-            type="text"
-            onChange={handleNewProjectChange("srcCodeUrl")}
-            placeholder="Source Code Url"
-          />
-          <select
-            name="status-sel"
-            id="status-sel"
-            onChange={handleSelectChange("status")}
-            value={newProject.status}
-            className="p-0.5 rounded border"
-          >
-            {["Live", "Down"].map((s, idx) => {
-              return (
-                <option value={s} key={`status-option-${s}`}>
-                  {s}
-                </option>
-              );
-            })}
-          </select>
-          <select
-            name="status-sel"
-            id="status-sel"
-            onChange={handleSelectChange("progress")}
-            value={newProject.progress}
-            className="p-0.5 rounded border"
-          >
-            {["In Progress", "Done"].map((p, idx) => {
-              return (
-                <option value={p} key={`progress-option-${p}`}>
-                  {p}
-                </option>
-              );
-            })}
-          </select>
+          <label htmlFor="input-demo-url">
+            Demo Url
+            <input
+              className="w-full border rounded-md arnolio-input"
+              value={newProject.demoUrl}
+              type="text"
+              onChange={handleNewProjectChange("demoUrl")}
+              placeholder="Project Demo Url"
+              id="input-demo-url"
+              name="input-demo-url"
+            />
+          </label>
+
+          <label htmlFor="input-src-code">
+            Source Code Url
+            <input
+              className="w-full border rounded-md arnolio-input"
+              value={newProject.srcCodeUrl}
+              type="text"
+              onChange={handleNewProjectChange("srcCodeUrl")}
+              placeholder="Source Code Url"
+              id="input-src-code"
+              name="input-src-code"
+            />
+          </label>
+
+          <label htmlFor="status-sel" className="flex flex-col">
+            Status
+            <select
+              name="status-sel"
+              id="status-sel"
+              onChange={handleSelectChange("status")}
+              value={newProject.status}
+              className="p-0.5 rounded border"
+            >
+              {["Live", "Down"].map((s, idx) => {
+                return (
+                  <option value={s} key={`status-option-${s}`}>
+                    {s}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+
+          <label htmlFor="progress-sel" className="flex flex-col">
+            Progress
+            <select
+              name="progress-sel"
+              id="progress-sel"
+              onChange={handleSelectChange("progress")}
+              value={newProject.progress}
+              className="p-0.5 rounded border"
+            >
+              {["In Progress", "Done"].map((p, idx) => {
+                return (
+                  <option value={p} key={`progress-option-${p}`}>
+                    {p}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
         </div>
 
         {/* UPLOAD THUMBNAIL */}

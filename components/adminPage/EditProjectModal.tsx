@@ -190,66 +190,94 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
             {initialProject.name}
           </span>
         </div>
-        <input
-          className="w-full border rounded-md arnolio-input"
-          value={thisProject.owner}
-          type="text"
-          onChange={handleNewProjectChange("owner")}
-          placeholder="Owner *"
-          required
-        />
-        <input
-          className="w-full border rounded-md arnolio-input"
-          value={thisProject.description}
-          type="text"
-          onChange={handleNewProjectChange("description")}
-          placeholder="Description"
-        />
+        <label htmlFor="input-owner">
+          Owner
+          <input
+            className="w-full border rounded-md arnolio-input"
+            value={thisProject.owner}
+            type="text"
+            onChange={handleNewProjectChange("owner")}
+            placeholder="Owner *"
+            id="input-owner"
+            name="input-owner"
+            required
+          />
+        </label>
+        <label htmlFor="input-description">
+          Description
+          <input
+            className="w-full border rounded-md arnolio-input"
+            value={thisProject.description}
+            type="text"
+            onChange={handleNewProjectChange("description")}
+            placeholder="Description"
+            id="input-description"
+            name="input-description"
+          />
+        </label>
+
         <div className="grid grid-cols-2 gap-2">
-          <input
-            className="w-full border rounded-md arnolio-input"
-            value={thisProject.demoUrl}
-            type="text"
-            onChange={handleNewProjectChange("demoUrl")}
-            placeholder="Project Demo Url"
-          />
-          <input
-            className="w-full border rounded-md arnolio-input"
-            value={thisProject.srcCodeUrl}
-            type="text"
-            onChange={handleNewProjectChange("srcCodeUrl")}
-            placeholder="Source Code Url"
-          />
-          <select
-            name="status-sel"
-            id="status-sel"
-            onChange={handleSelectChange("status")}
-            value={thisProject.status}
-            className="p-0.5 rounded border"
-          >
-            {["Live", "Down"].map((s, idx) => {
-              return (
-                <option value={s} key={`status-option-${s}`}>
-                  {s}
-                </option>
-              );
-            })}
-          </select>
-          <select
-            name="status-sel"
-            id="status-sel"
-            onChange={handleSelectChange("progress")}
-            value={thisProject.progress}
-            className="p-0.5 rounded border"
-          >
-            {["In Progress", "Done"].map((p, idx) => {
-              return (
-                <option value={p} key={`progress-option-${p}`}>
-                  {p}
-                </option>
-              );
-            })}
-          </select>
+          <label htmlFor="input-demo-url">
+            Demo Url
+            <input
+              className="w-full border rounded-md arnolio-input"
+              value={thisProject.demoUrl}
+              type="text"
+              onChange={handleNewProjectChange("demoUrl")}
+              placeholder="Project Demo Url"
+              id="input-demo-url"
+              name="input-demo-url"
+            />
+          </label>
+          <label htmlFor="input-src-code">
+            Source Code Url
+            <input
+              className="w-full border rounded-md arnolio-input"
+              value={thisProject.srcCodeUrl}
+              type="text"
+              onChange={handleNewProjectChange("srcCodeUrl")}
+              placeholder="Source Code Url"
+              id="input-src-code"
+              name="input-src-code"
+            />
+          </label>
+          <label htmlFor="status-sel" className="flex flex-col">
+            Status
+            <select
+              name="status-sel"
+              id="status-sel"
+              onChange={handleSelectChange("status")}
+              value={thisProject.status}
+              className="p-0.5 rounded border"
+            >
+              {["Live", "Down"].map((s, idx) => {
+                return (
+                  <option value={s} key={`status-option-${s}`}>
+                    {s}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+
+          <label htmlFor="progress-sel" className="flex flex-col">
+            Progress
+            <select
+              name="progress-sel"
+              id="progress-sel"
+              onChange={handleSelectChange("progress")}
+              value={thisProject.progress}
+              className="p-0.5 rounded border"
+            >
+              {["In Progress", "Done"].map((p, idx) => {
+                return (
+                  <option value={p} key={`progress-option-${p}`}>
+                    {p}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
         </div>
 
         {/* UPLOAD THUMBNAIL */}
@@ -330,8 +358,8 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
                       `projects/${initialProject.slug}/`
                     );
                     try {
-                      const firebaseStorage = await listAll(storageRef);
-                      firebaseStorage.items.forEach(async (dir) => {
+                      const thisFolder = await listAll(storageRef);
+                      thisFolder.items.forEach(async (dir) => {
                         try {
                           await deleteObject(dir);
                         } catch (err) {

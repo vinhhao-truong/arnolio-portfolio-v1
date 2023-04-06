@@ -6,7 +6,7 @@ import ProjectInterface from "../../interfaces/ProjectInterface";
 import { lowerCaseAddSeparator } from "../../utils/lowerCase";
 import Container from "../Container";
 import { firebaseStorage } from "../../store/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, listAll, deleteObject } from "firebase/storage";
 import {
   useDeleteProjectMutation,
   usePostNewProjectMutation,
@@ -19,6 +19,7 @@ import Cookies from "js-cookie";
 interface AddProejctModalProps extends ModalProps {
   name: string;
   id: string;
+  slug: string;
 }
 
 const DeleteProjectModal: React.FC<AddProejctModalProps> = ({
@@ -26,6 +27,7 @@ const DeleteProjectModal: React.FC<AddProejctModalProps> = ({
   id,
   isOpen,
   closeModal,
+  slug,
 }) => {
   const [deleteProject, { isLoading }] = useDeleteProjectMutation({});
 
@@ -33,6 +35,15 @@ const DeleteProjectModal: React.FC<AddProejctModalProps> = ({
     e.preventDefault();
     try {
       await deleteProject({ id, idToken: Cookies.get("idToken") });
+      const storageRef = ref(firebaseStorage, `projects/${slug}/`);
+      const thisFolder = await listAll(storageRef);
+      thisFolder.items.forEach(async (dir) => {
+        try {
+          await deleteObject(dir);
+        } catch (err) {
+          console.log(err);
+        }
+      });
       closeModal();
     } catch (err) {
       console.log(err);
