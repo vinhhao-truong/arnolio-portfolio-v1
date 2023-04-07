@@ -131,6 +131,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = () => {
           isOpen={!!deletingProjectId}
           name={projects[deletingProjectId]?.name}
           id={deletingProjectId}
+          slug={projects[deletingProjectId]?.slug}
         />
       )}
     </>

@@ -1,3 +1,4 @@
+// "use client";
 import React, {
   forwardRef,
   ReactNode,
@@ -67,11 +68,6 @@ const ProgrammingTechIconList: TechIconProps[] = [
   { icon: "ion:logo-sass", color: "#cc6699", title: "SASS" },
   { icon: "mdi:bootstrap", color: "#563d7c", title: "Bootstrap" },
   { icon: "mdi:tailwind", color: "#38bdf8", title: "TailwindCSS" },
-  {
-    icon: "logos:strapi-icon",
-    color: "#8E75FF",
-    title: "Strapi",
-  },
 ];
 const OtherTechIconList: TechIconProps[] = [
   { icon: "simple-icons:postman", color: "#ef5b25", title: "Postman" },
@@ -92,32 +88,11 @@ const expTimeline: ExpTimelineProps[] = [
     isDone: false,
   },
   {
-    date: "Mar' 2023",
-    action: "Maqro Full Time Employee",
-    detail: "Improving and Upgrading the Portal",
-    isDone: false,
-    logo: (
-      <div className="w-[12%] h-full mr-2">
-        <MaqroLogo />
-      </div>
-    ),
-  },
-  {
-    date: "Jan' 2023",
-    action: "Maqro Contractor",
-    detail: "Helped launch the new Portal and the Marketing site of Maqro",
-    isDone: true,
-    logo: (
-      <div className="w-[12%] h-full mr-2">
-        <MaqroLogo />
-      </div>
-    ),
-  },
-  {
     date: "Sep' 2022",
     action: "Maqro Internship",
-    detail: "Worked as a front-end developer to build and enhance Maqro Portal",
-    isDone: true,
+    detail:
+      "Working as a front-end developer to build and enhance Maqro Portal",
+    isDone: false,
     logo: (
       <div className="w-[12%] h-full mr-2">
         <MaqroLogo />
@@ -148,7 +123,8 @@ const About: React.FC<AboutProps> = ({}) => {
   const responsive = useResponsive();
   const isBigScreen: boolean = ["xl", "2xl"].includes(responsive);
   const isDesktop: boolean = ["lg"].includes(responsive);
-  const isMobileOrTablet: boolean = ["sm", "md", "xs", "2xs", "3xs"].includes(
+  const isTablet: boolean = ["sm", "md"].includes(responsive);
+  const isMobileOrTablet: boolean = ["sm", "md", "xs", "2xs"].includes(
     responsive
   );
 
@@ -256,6 +232,7 @@ const About: React.FC<AboutProps> = ({}) => {
               isOnTop && isBigScreen ? 1.8 : isOnTop && isDesktop ? 1.7 : 1,
             borderRadius: isOnTop ? 0 : 8,
             rotate: isOnTop ? 0 : random,
+            zIndex: isOnTop ? 2001 : 1,
           }
         : {};
 
@@ -392,10 +369,7 @@ const About: React.FC<AboutProps> = ({}) => {
   return (
     <Section id="about" className="relative">
       <SectionHeader title="About" />
-      <Container
-        className="lg:h-[80vh] lg:grid lg:grid-cols-2"
-        isHiddenOnMobile
-      >
+      <Container className="lg:h-[80vh] lg:grid lg:grid-cols-2">
         {/* LEFT */}
         <div className="flex items-center justify-center lg:h-full">
           <div
@@ -433,9 +407,7 @@ const About: React.FC<AboutProps> = ({}) => {
                     </div>
                   ) : (
                     <Card
-                      className={`${getClasses(className)} ${colorList[idx]} ${
-                        isOnTop ? "z-30" : ""
-                      }`}
+                      className={`${getClasses(className)} ${colorList[idx]}`}
                       key={"card" + idx}
                       coord={coord}
                       onClick={() => {
@@ -548,7 +520,7 @@ const About: React.FC<AboutProps> = ({}) => {
               initial={{ opacity: 0, x: "-5vw" }}
               whileInView={
                 currentCard === 0
-                  ? { ...appear, zIndex: 30 }
+                  ? { ...appear, zIndex: 2001 }
                   : { ...disappear, zIndex: -1 }
               }
               className="absolute right-0 top-1/2 h-fit"
@@ -599,7 +571,7 @@ const About: React.FC<AboutProps> = ({}) => {
               whileInView={
                 currentCard === 1 ? { ...appear } : { ...disappear, zIndex: -1 }
               }
-              className="absolute top-0 right-0 z-30 flex flex-col w-full h-full justify-evenly"
+              className="absolute top-0 right-0 z-[2001] flex flex-col w-full h-full justify-evenly"
               onClick={() => {
                 dispatch(offMasked());
                 setCurrentCard(null);
@@ -662,7 +634,7 @@ const About: React.FC<AboutProps> = ({}) => {
               whileInView={
                 currentCard === 2 ? { ...appear } : { ...disappear, zIndex: -1 }
               }
-              className="absolute top-0 right-0 z-30 flex flex-col justify-center w-full h-full"
+              className="absolute top-0 right-0 z-[2001] flex flex-col justify-center w-full h-full"
               onClick={() => {
                 dispatch(offMasked());
                 setCurrentCard(null);

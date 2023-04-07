@@ -20,7 +20,7 @@ const Landing: React.FC<LandingProps> = ({ className }) => {
   const isDesktop = ["lg"].includes(responsive);
   const isBigScreen = ["xl", "2xl"].includes(responsive);
   const isTablet = ["md"].includes(responsive);
-  const isMobile = ["2xs", "xs", "sm", "3xs"].includes(responsive);
+  const isMobile = ["2xs", "xs", "sm"].includes(responsive);
 
   useEffect(() => {
     scrollYProgress.onChange((v) => {
@@ -109,8 +109,17 @@ const Landing: React.FC<LandingProps> = ({ className }) => {
                   ease: "backOut",
                 },
                 // opacity: [0, 1, 0],
-                y: ["-0.5rem", "0rem", "0rem", "0rem", "0.5rem"],
-                opacity: [1, 1, 1, 1, 0],
+                y: [
+                  "-0.5rem",
+                  "0rem",
+                  "0rem",
+                  "0rem",
+                  "0rem",
+                  "0rem",
+                  "0rem",
+                  "0.5rem",
+                ],
+                opacity: [1, 1, 1, 1, 1, 1, 1, 0],
               }}
               className="text-3xl text-white-theme"
             >
@@ -130,7 +139,7 @@ const Landing: React.FC<LandingProps> = ({ className }) => {
           className="flex flex-col items-center justify-around text-blue-200 cursor-pointer h-1/5"
         >
           <div className="text-lg xs:text-xl md:text-2xl lg:text-3xl">
-            Explore
+            Scroll down
           </div>
           <motion.div
             animate={{

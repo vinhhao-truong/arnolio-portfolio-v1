@@ -52,7 +52,7 @@ const globalStateSlice = createSlice({
   reducers: {
     onMasked: (state, action: PayloadAction<boolean>) => {
       state.isMasked = true;
-      state.isMaskClosable = action.payload ? true : false;
+      state.isMaskClosable = action.payload ? action.payload : false;
     },
     offMasked: (state) => {
       state.isMasked = false;

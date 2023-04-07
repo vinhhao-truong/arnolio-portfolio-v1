@@ -12,6 +12,11 @@ body {
   scroll-behavior: smooth;
   font-family: "Mukta", sans-serif;
   scrollbar-gutter: stable both-edges;
+  position: relative;
+}
+
+#__next {
+  position: relative;
 }
 
 html {

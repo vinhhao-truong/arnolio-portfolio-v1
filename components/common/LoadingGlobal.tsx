@@ -15,14 +15,14 @@ const LoadingGlobal: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (successState) {
+    if (successState.msg) {
       const showMsg = setTimeout(() => {
         dispatch(closeSuccessMsg());
       }, 2000);
 
       return () => clearTimeout(showMsg);
     }
-  }, [successState]);
+  }, [successState.msg]);
 
   return (
     <div className="">

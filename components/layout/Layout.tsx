@@ -39,15 +39,15 @@ const Layout: React.FC<ReactProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col items-center dark">
-      <Mask />
       <Navigation className={`w-full lg:px-[4.5rem] xl:px-40`} />
       <SideNav />
       {children}
-      <Footer />
+      {/* <Footer /> */}
       {/* Global Components */}
       {isScrollDown && <ScrollTopBtn />}
       <TopProgressBar />
       <LoadingGlobal />
+      <Mask />
     </div>
   );
 };
