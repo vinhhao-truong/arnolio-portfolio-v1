@@ -289,7 +289,7 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
               setUploadedThumbnail(e.target.files);
             }
           }}
-          accept=".jpeg,.jpg,.webp,.png"
+          accept=".jpeg,.jpg,.webp,.png,.svg"
           name="upload-thumbnail-input"
           id="upload-thumbnail-input"
           className="hidden"
@@ -325,7 +325,7 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
             }
           }}
           multiple
-          accept=".jpeg,.jpg,.webp,.png"
+          accept=".jpeg,.jpg,.webp,.png,.svg"
           name="upload-image-input"
           id="upload-image-input"
           className="hidden"

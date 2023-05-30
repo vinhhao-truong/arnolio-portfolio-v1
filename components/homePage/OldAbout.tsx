@@ -88,11 +88,11 @@ const expTimeline: ExpTimelineProps[] = [
     isDone: false,
   },
   {
-    date: "Sep' 2022 - Mar' 2023",
-    action: "Maqro Software Developer",
+    date: "Sep' 2022",
+    action: "Maqro Internship",
     detail:
-      "Worked as a front-end developer to build, test and, enhance Maqro Portal as well as Maqro Official",
-    isDone: true,
+      "Working as a front-end developer to build and enhance Maqro Portal",
+    isDone: false,
     logo: (
       <div className="w-[12%] h-full mr-2">
         <MaqroLogo />

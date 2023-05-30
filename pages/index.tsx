@@ -8,6 +8,7 @@ import About from "../components/homePage/About";
 import Contact from "../components/homePage/Contact";
 import Landing from "../components/homePage/Landing";
 import Projects from "../components/homePage/Projects";
+import OldProjects from "../components/homePage/OldProjects";
 //style
 import styles from "../styles/HomePage.module.scss";
 import { getClasses } from "../utils/getProps";
@@ -68,7 +69,8 @@ const HomePage = ({
           <Landing className={`${getClasses(styles.landing)}`} />
           <About />
           {/* {projects && <Projects projectList={projects} />} */}
-          <Projects projects={projects} />
+          {/* <Projects projects={projects} /> */}
+          <OldProjects projectList={projects} />
           <Contact />
         </motion.div>
       }

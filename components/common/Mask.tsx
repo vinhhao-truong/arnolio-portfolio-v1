@@ -7,7 +7,7 @@ const Mask: React.FC = () => {
     useSelector(selectGlobalState);
   const dispatch = useDispatch();
 
-  return (
+  return false ? (
     <Portal>
       <div
         onClick={isMaskClosable ? () => dispatch(offMasked()) : () => {}}
@@ -16,6 +16,8 @@ const Mask: React.FC = () => {
         }`}
       ></div>
     </Portal>
+  ) : (
+    <></>
   );
 };
 export default Mask;

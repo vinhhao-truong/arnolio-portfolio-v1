@@ -286,7 +286,7 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
               setUploadedThumbnail(e.target.files);
             }
           }}
-          accept=".jpeg,.jpg,.webp,.png"
+          accept=".jpeg,.jpg,.webp,.png,.svg"
           name="upload-thumbnail-input"
           id="upload-thumbnail-input"
           className="hidden"
