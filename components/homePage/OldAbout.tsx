@@ -433,7 +433,7 @@ const About: React.FC<AboutProps> = ({}) => {
                             className={`flex flex-col items-center h-full justify-center`}
                           >
                             <Image
-                              src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.jpg?alt=media&token=22b035c9-64cc-4dd3-844f-ab4420f20339"
+                              src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.jpg?alt=media&token=96fefede-063e-461d-89be-12e36a0c5f63&_gl=1*1iu3fhv*_ga*MTM4MjQyNjc5Ni4xNjg2MjkwMjkz*_ga_CW55HF8NVT*MTY4NjI5MDI5Mi4xLjEuMTY4NjI5MDQ5NS4wLjAuMA.."
                               alt="avatar"
                               height={156}
                               width={156}
