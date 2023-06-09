@@ -700,7 +700,7 @@ const About: React.FC<AboutProps> = ({}) => {
               >
                 <div className="flex flex-col items-center justify-center mb-4">
                   <Image
-                    src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.jpg?alt=media&token=22b035c9-64cc-4dd3-844f-ab4420f20339"
+                    src="https://firebasestorage.googleapis.com/v0/b/arnolio.appspot.com/o/arnolio-avatar.webp?alt=media&token=41ec6de0-4c2f-4c18-882f-51e7b3e1dc1a&_gl=1*s7ji5t*_ga*MTM4MjQyNjc5Ni4xNjg2MjkwMjkz*_ga_CW55HF8NVT*MTY4NjI5NDM0OS4yLjEuMTY4NjI5NDM1OS4wLjAuMA.."
                     alt="avatar"
                     height={124}
                     width={124}
