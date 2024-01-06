@@ -95,7 +95,7 @@ const Landing: React.FC<LandingProps> = ({ className }) => {
         </Delayed>
 
         <div className="mt-10 text-3xl text-center md:text-4xl lg:text-5xl">
-          How&rsquo;re you doing? Welcome to{" "}
+          How&rsquo;re you doing? Welcome to Long le
           <span className="text-red-theme">Arnold</span>&rsquo;s showcase space.
         </div>
         <div className="flex mt-6 text-xl xs:text-2xl md:text-3xl lg:text-4xl">
