@@ -9,3 +9,7 @@ test("In sentence", () => {
     lowerCaseAddSeparator("Artoo Blogs - A simple social media site", "-")
   ).toBe("artoo-blogs-a-simple-social-media-site");
 });
+
+test("con cac", () => {
+  expect(lowerCaseAddSeparator("Con Cac", "-")).toBe("con-cac");
+});
