@@ -12,6 +12,7 @@ interface ProjectInterface {
   progress?: "In Progress" | "Done";
   status?: "Live" | "Down";
   owner?: "Personal" | string;
+  isPinned: boolean;
 }
 
 export default ProjectInterface;

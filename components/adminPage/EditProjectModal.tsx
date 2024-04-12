@@ -190,6 +190,18 @@ const EditProjectModal: React.FC<EditProejctModalProps> = ({
             {initialProject.name}
           </span>
         </div>
+        <label className="flex items-center gap-2" htmlFor="checkbox-pin">
+          <input
+            type="checkbox"
+            name="checkbox-pin"
+            id="checkbox-pin"
+            checked={thisProject.isPinned}
+            onChange={() =>
+              setThisProject((prev) => ({ ...prev, isPinned: !prev.isPinned }))
+            }
+          />
+          Pinned?
+        </label>
         <label htmlFor="input-owner">
           Owner
           <input

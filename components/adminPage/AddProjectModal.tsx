@@ -30,9 +30,8 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
     status: "Live",
     owner: "",
     progress: "In Progress",
+    isPinned: false,
   };
-
-  const router = useRouter();
   const dispatch = useDispatch();
   const [newProject, setNewProject] = useState<ProjectInterface>({
     ...initialNewProject,
@@ -169,6 +168,18 @@ const AddProjectModal: React.FC<AddProejctModalProps> = ({
         className="grid grid-cols-1 gap-4 text-black"
       >
         <div className="text-3xl">Add Projects</div>
+        <label className="flex items-center gap-2" htmlFor="checkbox-pin">
+          <input
+            type="checkbox"
+            name="checkbox-pin"
+            id="checkbox-pin"
+            checked={newProject.isPinned}
+            onChange={() =>
+              setNewProject((prev) => ({ ...prev, isPinned: !prev.isPinned }))
+            }
+          />
+          Pinned?
+        </label>
         <label htmlFor="input-name">
           Name
           <input
